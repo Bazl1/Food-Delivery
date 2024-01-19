@@ -1,0 +1,40 @@
+.header {
+    padding: 5px 0;
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 100px;
+    }
+    &__logo_link {
+        img {
+            max-width: 90px;
+            width: 100%;
+            max-height: 90px;
+            height: 100vh;
+            object-fit: cover;
+        }
+    }
+
+    &__menu {
+        margin-right: auto;
+    }
+
+    &__list {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: #171717;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3;
+
+        &:hover {
+            color: #f7761f;
+        }
+    }
+}
