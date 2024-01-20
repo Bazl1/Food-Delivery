@@ -6,15 +6,12 @@
     gap: 20px;
 
     &__btn {
+        max-width: 180px;
         width: 100%;
         outline: none;
         background: transparent;
         text-align: center;
-    }
-    &__btns {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        justify-content: space-between;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

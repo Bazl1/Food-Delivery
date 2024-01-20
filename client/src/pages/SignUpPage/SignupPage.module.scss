@@ -46,6 +46,11 @@
     }
     &__text {
         margin-top: 20px;
+        span {
+            a {
+                color: rgb(12, 97, 255);
+            }
+        }
     }
     &__logo_img {
         position: absolute;

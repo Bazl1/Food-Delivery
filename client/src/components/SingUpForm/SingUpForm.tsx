@@ -2,13 +2,16 @@ import { useForm } from "react-hook-form";
 import Input from "../Input/Input";
 import s from "./SingUpForm.module.scss";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 interface IForm {
     email: string;
 }
 
-const SingUpForm = () => {
+interface SingUpFormProps {
+    role: string;
+}
+
+const SingUpForm: React.FC<SingUpFormProps> = ({ role }) => {
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -21,7 +24,12 @@ const SingUpForm = () => {
         mode: "onBlur",
     });
 
-    const Submit = () => {};
+    const Submit = (e: any) => {
+        e.preventDefault();
+        if (role === "user") {
+        }
+    };
+
     return (
         <form className={s.form} onSubmit={handleSubmit(Submit)}>
             <Input
@@ -80,14 +88,9 @@ const SingUpForm = () => {
                     },
                 }}
             />
-            <div className={s.form__btns}>
-                <button className={`${s.form__btn} btn-style-one`} type="submit">
-                    Register
-                </button>
-                <Link className={`${s.form__btn} btn-style-one`} to={"/restaurant-registration"}>
-                    Register as a restaurant
-                </Link>
-            </div>
+            <button className={`${s.form__btn} btn-style-one`} type="submit">
+                Register
+            </button>
         </form>
     );
 };
