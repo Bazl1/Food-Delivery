@@ -13,19 +13,22 @@ public class AuthMutation
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store,
         [Service] JwtTokenGenerator jwtTokenGenerator,
-        SignUpAsRestaurantInput input)
+        string email,
+        string password,
+        string name,
+        string description)
     {
-        if (store.Accounts.Any(account => account.Email == input.Email))
+        if (store.Accounts.Any(account => account.Email == email))
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage($"Account with given {input.Email} email is already exists.")
+                    .SetMessage($"Account with given {email} email is already exists.")
                     .Build()
             );
             return null;
         }
 
-        var account = Account.CreateRestaurant(input.Email, input.Password);
+        var account = Account.CreateRestaurant(email, password);
 
         var accessToken = jwtTokenGenerator.GenerateToken(account);
         var refreshToken = jwtTokenGenerator.GenerateToken(account);
@@ -34,7 +37,7 @@ public class AuthMutation
         store.Accounts.Add(account);
 
         //
-        var restaurant = Restaurant.Create(account.Id, input.Name, input.Description);
+        var restaurant = Restaurant.Create(account.Id, name, description);
         store.Restaurants.Add(restaurant);
         //
 
@@ -48,19 +51,21 @@ public class AuthMutation
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store,
         [Service] JwtTokenGenerator jwtTokenGenerator,
-        SignUpAsCustomerInput input)
+        string email,
+        string password,
+        string userName)
     {
-        if (store.Accounts.Any(account => account.Email == input.Email))
+        if (store.Accounts.Any(account => account.Email == email))
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage($"Account with given {input.Email} email is already exists.")
+                    .SetMessage($"Account with given {email} email is already exists.")
                     .Build()
             );
             return null;
         }
 
-        var account = Account.CreateCustomer(input.Email, input.Password);
+        var account = Account.CreateCustomer(email, password);
 
         var accessToken = jwtTokenGenerator.GenerateToken(account);
         var refreshToken = jwtTokenGenerator.GenerateToken(account);
@@ -69,7 +74,7 @@ public class AuthMutation
         store.Accounts.Add(account);
 
         //
-        var customer = Customer.Create(account.Id, input.UserName);
+        var customer = Customer.Create(account.Id, userName);
         store.Customers.Add(customer);
         //
 
@@ -83,19 +88,20 @@ public class AuthMutation
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store,
         [Service] JwtTokenGenerator jwtTokenGenerator,
-        SignInInput input)
+        string email,
+        string password)
     {
-        if (store.Accounts.SingleOrDefault(account => account.Email == input.Email) is not Account account)
+        if (store.Accounts.SingleOrDefault(account => account.Email == email) is not Account account)
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage($"Account with given {input.Email} email is already exists.")
+                    .SetMessage($"Account with given {email} email is already exists.")
                     .Build()
             );
             return null;
         }
 
-        if (input.Password == account.Password)
+        if (password == account.Password)
         {
             context.ReportError(
                 ErrorBuilder.New()
@@ -115,8 +121,7 @@ public class AuthMutation
     public async Task SignOut(
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,
-        [Service] FakeStore store
-    )
+        [Service] FakeStore store)
     {
         var oldRefreshToken = httpContextAccessor.HttpContext?.Request.Cookies["refresh_token"] ?? string.Empty;
         if (store.Accounts.SingleOrDefault(account => account.RefreshToken == oldRefreshToken) is not Account account)
