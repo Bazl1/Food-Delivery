@@ -9,7 +9,8 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddSingleton<FakeStore>(new FakeStore())
     .AddTransient<JwtTokenGenerator, JwtTokenGenerator>()
-    .AddGraphQL();
+    .AddGraphQL()
+    .AddHttpContextAccessor();
 
 var app = builder.Build();
 
