@@ -5,7 +5,6 @@ using FoodDelivery.OAuth;
 var builder = WebApplication.CreateBuilder(args);
 
 // CORS
-const string CORS_POLICY = "CLIENT_CORS_POLICY";
 builder.Services
     .AddCors(corsOptions => {
         corsOptions.AddDefaultPolicy(policyOptions => {
@@ -27,7 +26,7 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseCors(CORS_POLICY);
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
