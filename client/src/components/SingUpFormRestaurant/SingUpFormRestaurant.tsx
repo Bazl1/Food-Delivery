@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
 import Input from "../Input/Input";
-import s from "./SingUpForm.module.scss";
+import s from "./SingUpFormRestaurant.module.scss";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { SIGN_UP_AS_CUSTOMER } from "./Registration";
+import { SIGN_UP_AS_RESTAURANT } from "./Registration";
 
 interface IForm {
     email: string;
 }
 
-const SingUpForm = () => {
+const SingUpFormRestaurant = () => {
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const [signUpAsCustomer, { data, error }] = useMutation(SIGN_UP_AS_CUSTOMER);
+    const [signUpAsCustomer, { data, error }] = useMutation(SIGN_UP_AS_RESTAURANT);
 
     const {
         register,
@@ -57,7 +57,7 @@ const SingUpForm = () => {
                 }}
             />
             <Input
-                text="Your name"
+                text="Your restaurant name"
                 type="text"
                 name="name"
                 value={name}
@@ -96,6 +96,26 @@ const SingUpForm = () => {
                     },
                 }}
             />
+            <Input
+                text="Restaurant description"
+                type="text"
+                name="description"
+                value={password}
+                setValue={setPassword}
+                register={register}
+                errors={errors}
+                validationOptions={{
+                    required: "Required field",
+                    minLength: {
+                        value: 8,
+                        message: "Minimum password length 8 characters",
+                    },
+                    maxLength: {
+                        value: 21,
+                        message: "Maximum password length 8 characters",
+                    },
+                }}
+            />
             <button className={`${s.form__btn} btn-style-one`} type="submit">
                 Register
             </button>
@@ -103,4 +123,4 @@ const SingUpForm = () => {
     );
 };
 
-export default SingUpForm;
+export default SingUpFormRestaurant;

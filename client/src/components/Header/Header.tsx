@@ -5,7 +5,7 @@ import s from "./Header.module.scss";
 const Header = () => {
     const location = useLocation();
 
-    const pathsWithoutHeader = ["/registration"];
+    const pathsWithoutHeader = ["/registration", "/registration-restaurant"];
 
     // Если текущий путь в списке, не отображаем хедер
     if (pathsWithoutHeader.includes(location.pathname)) {

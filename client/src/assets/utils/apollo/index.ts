@@ -1,38 +1,44 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { ApolloClient, InMemoryCache, useMutation } from "@apollo/client";
+// import { createHttpLink } from "@apollo/client/link/http";
+// import { setContext } from "@apollo/client/link/context";
+// import { REFRESH_TOKEN } from "./Refresh";
 
-const httpLink = createHttpLink({
-    uri: "http://localhost:4000/graphql",
-});
+// const httpLink = createHttpLink({
+//     uri: "http://localhost:5252/graphql",
+// });
 
-const authLink = setContext(async (_, { headers }) => {
-    const token = localStorage.getItem("token");
+// const [refreshToken] = useMutation(REFRESH_TOKEN);
 
-    if (token) {
-        try {
-            const response = await AuthService.refresh();
-            const newToken = response.data.result.accessToken;
-            localStorage.setItem("token", newToken);
-            return {
-                headers: {
-                    ...headers,
-                    authorization: `Bearer ${newToken}`,
-                },
-            };
-        } catch (error) {
-            console.log("Не удалось обновить токен");
-        }
-    }
+// const authLink = setContext(async (_, { headers }) => {
+//     const token = localStorage.getItem("token");
 
-    return {
-        headers: {
-            ...headers,
-        },
-    };
-});
+//     if (token) {
+//         try {
+//             const response = await refreshToken();
+
+//             const newToken = response.data.accessToken;
+//             localStorage.setItem("token", newToken);
+//             return {
+//                 headers: {
+//                     ...headers,
+//                     authorization: `Bearer ${newToken}`,
+//                 },
+//             };
+//         } catch (error) {
+//             console.log("Failed to refresh token");
+//         }
+//     }
+
+//     return {
+//         headers: {
+//             ...headers,
+//         },
+//     };
+// });
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    // link: authLink.concat(httpLink),
+    uri: "http://localhost:5252/graphql",
     cache: new InMemoryCache(),
 });
 

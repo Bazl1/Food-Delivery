@@ -1,10 +1,10 @@
-import SingUpForm from "../../components/SingUpForm/SingUpForm";
-import s from "./SignupPage.module.scss";
+import s from "./SignUpPageRestaurant.module.scss";
 import banner from "../../assets/img/banner.png";
 import logo from "../../assets/img/Logo.svg";
 import { Link } from "react-router-dom";
+import SingUpFormRestaurant from "../../components/SingUpFormRestaurant/SingUpFormRestaurant";
 
-const SignupPage = () => {
+const SignupPageRestaurant = () => {
     return (
         <main className="main">
             <section className={s.signup}>
@@ -20,9 +20,9 @@ const SignupPage = () => {
                                 <h2 className={s.signup__title}>
                                     Welcome
                                     <br />
-                                    register for further actions
+                                    Register your restaurant
                                 </h2>
-                                <SingUpForm role="user" />
+                                <SingUpFormRestaurant />
                                 <p className={s.signup__text}>
                                     Already have an account?{" "}
                                     <span>
@@ -41,4 +41,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default SignupPageRestaurant;
