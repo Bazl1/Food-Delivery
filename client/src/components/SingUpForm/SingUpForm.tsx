@@ -35,7 +35,8 @@ const SingUpForm = () => {
         if (error) {
             throw new Error(error.message);
         }
-        localStorage.setItem("token", data.refreshToken);
+        console.log(data);
+        // localStorage.setItem("token", data.accessToken);
     };
 
     return (
