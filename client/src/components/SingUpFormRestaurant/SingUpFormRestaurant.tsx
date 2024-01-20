@@ -13,6 +13,7 @@ const SingUpFormRestaurant = () => {
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
 
     const [signUpAsCustomer, { data, error }] = useMutation(SIGN_UP_AS_RESTAURANT);
 
@@ -100,18 +101,18 @@ const SingUpFormRestaurant = () => {
                 text="Restaurant description"
                 type="text"
                 name="description"
-                value={password}
-                setValue={setPassword}
+                value={description}
+                setValue={setDescription}
                 register={register}
                 errors={errors}
                 validationOptions={{
                     required: "Required field",
                     minLength: {
-                        value: 8,
+                        value: 10,
                         message: "Minimum password length 8 characters",
                     },
                     maxLength: {
-                        value: 21,
+                        value: 32,
                         message: "Maximum password length 8 characters",
                     },
                 }}

@@ -27,7 +27,7 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseCors(CORS_POLICY);
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
