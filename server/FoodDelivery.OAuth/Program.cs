@@ -4,6 +4,19 @@ using FoodDelivery.OAuth;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS
+const string CORS_POLICY = "CLIENT_CORS_POLICY";
+builder.Services
+    .AddCors(corsOptions => {
+        corsOptions.AddDefaultPolicy(policyOptions => {
+            policyOptions
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    });
+
 // Services
 builder.Services
     .AddJwtAuthentication(builder.Configuration)
@@ -13,6 +26,8 @@ builder.Services
     .AddHttpContextAccessor();
 
 var app = builder.Build();
+
+app.UseCors(CORS_POLICY);
 
 app.UseAuthentication();
 app.UseAuthorization();
