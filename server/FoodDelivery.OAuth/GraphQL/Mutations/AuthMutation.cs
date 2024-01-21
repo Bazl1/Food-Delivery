@@ -113,6 +113,9 @@ public class AuthMutation
 
         var accessToken = jwtTokenGenerator.GenerateToken(account);
         var refreshToken = jwtTokenGenerator.GenerateToken(account);
+        
+        account.RefreshToken = refreshToken;
+
         httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh_token", refreshToken);
 
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
