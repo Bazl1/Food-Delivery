@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     const [signIn, { error }] = useMutation(AUTH, {
         onCompleted: (data) => {
-            localStorage.setItem("token", data.signIn.accessToken);
+            localStorage.setItem("token", data?.signIn?.accessToken);
         },
     });
 

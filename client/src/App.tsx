@@ -14,7 +14,8 @@ function App() {
 
     const handleRefreshToken = async () => {
         await refreshToken();
-        localStorage.setItem("token", data.refreshToken.accessToken);
+        const token = data?.refreshToken?.accessToken;
+        localStorage.setItem("token", token);
     };
 
     useEffect(() => {

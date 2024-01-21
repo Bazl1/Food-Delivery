@@ -18,7 +18,7 @@ const SingUpForm = () => {
 
     const [signUpAsCustomer, { error }] = useMutation(SIGN_UP_AS_CUSTOMER, {
         onCompleted: (data) => {
-            localStorage.setItem("token", data.signUpAsCustomer.accessToken);
+            localStorage.setItem("token", data?.signUpAsCustomer?.accessToken);
         },
     });
 
