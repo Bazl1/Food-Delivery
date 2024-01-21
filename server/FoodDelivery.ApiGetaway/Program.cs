@@ -20,6 +20,8 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseCors();
+
 app.MapGraphQL("/graphql");
 
 app.Run();
