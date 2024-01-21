@@ -2,12 +2,39 @@ using System.Security.Claims;
 using FoodDelivery.OAuth.Data.Stores;
 using FoodDelivery.OAuth.Domain.Entities;
 using FoodDelivery.OAuth.GraphQL.Schemas;
+using FoodDelivery.OAuth.Services;
 using HotChocolate.Resolvers;
 
 namespace FoodDelivery.OAuth.GraphQL.Queries;
 
 public class AuthQuery
 {
+    public async Task<AuthType?> RefreshToken(
+        IResolverContext context,
+        [Service] IHttpContextAccessor httpContextAccessor,
+        [Service] FakeStore store,
+        [Service] JwtTokenGenerator jwtTokenGenerator)
+    {
+        var oldRefreshToken = httpContextAccessor.HttpContext?.Request.Cookies["refresh_token"] ?? string.Empty;
+        if (store.Accounts.SingleOrDefault(account => account.RefreshToken == oldRefreshToken) is not Account account)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Invalid refresh token.")
+                    .Build()
+            );
+            return null;
+        }
+
+        var accessToken = jwtTokenGenerator.GenerateToken(account);
+        var refreshToken = jwtTokenGenerator.GenerateToken(account);
+
+        account.RefreshToken = refreshToken;
+        httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh_token", refreshToken);
+
+        return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
+    }
+
     public async Task<AccountType?> GetAccountInfo(
         IResolverContext context,
         ClaimsPrincipal claimsPrincipal,
