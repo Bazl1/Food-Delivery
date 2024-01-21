@@ -101,7 +101,7 @@ public class AuthMutation
             return null;
         }
 
-        if (password == account.Password)
+        if (password != account.Password)
         {
             context.ReportError(
                 ErrorBuilder.New()
