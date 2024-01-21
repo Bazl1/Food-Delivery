@@ -34,9 +34,14 @@ const Header = () => {
                             </li>
                         </ul>
                     </nav>
-                    <Link className={`${s.header__btn} btn-style-one`} to={"/registration"}>
-                        Sign Up
-                    </Link>
+                    <div className={s.header__btns}>
+                        <Link className={`${s.header__btn_two} btn-style-two`} to={"/authorization"}>
+                            Sign In
+                        </Link>
+                        <Link className={`${s.header__btn_one} btn-style-one`} to={"/registration"}>
+                            Sign Up
+                        </Link>
+                    </div>
                 </div>
             </div>
         </header>

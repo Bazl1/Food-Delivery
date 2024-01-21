@@ -37,4 +37,15 @@
             color: #f7761f;
         }
     }
+    &__btns {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    &__btn_one {
+        color: #f7761f !important;
+        &:hover {
+            color: #fff !important;
+        }
+    }
 }

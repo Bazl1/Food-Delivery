@@ -14,7 +14,11 @@ const SingUpForm = () => {
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const [signUpAsCustomer, { data, error }] = useMutation(SIGN_UP_AS_CUSTOMER);
+    const [signUpAsCustomer, { error }] = useMutation(SIGN_UP_AS_CUSTOMER, {
+        onCompleted: (data) => {
+            localStorage.setItem("token", data.signUpAsCustomer.accessToken);
+        },
+    });
 
     const {
         register,
@@ -24,8 +28,8 @@ const SingUpForm = () => {
         mode: "onBlur",
     });
 
-    const Submit = () => {
-        signUpAsCustomer({
+    const Submit = async () => {
+        await signUpAsCustomer({
             variables: {
                 email: email,
                 password: password,
@@ -35,8 +39,6 @@ const SingUpForm = () => {
         if (error) {
             throw new Error(error.message);
         }
-        console.log(data);
-        // localStorage.setItem("token", data.accessToken);
     };
 
     return (
