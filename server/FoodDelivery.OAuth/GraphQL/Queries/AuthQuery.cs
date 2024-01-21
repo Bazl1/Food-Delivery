@@ -45,7 +45,7 @@ public class AuthQuery
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage("Invalid refresh token.")
+                    .SetMessage("Invalid access token.")
                     .Build()
             );
             return null;
@@ -64,7 +64,7 @@ public class AuthQuery
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage("Invalid refresh token.")
+                    .SetMessage("Invalid access token.")
                     .Build()
             );
             return null;
@@ -92,7 +92,7 @@ public class AuthQuery
         {
             context.ReportError(
                 ErrorBuilder.New()
-                    .SetMessage("Invalid refresh token.")
+                    .SetMessage("Invalid access token.")
                     .Build()
             );
             return null;
