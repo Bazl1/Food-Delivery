@@ -45,6 +45,9 @@
         border-bottom-right-radius: 8px;
     }
     &__text {
+        display: flex;
+        align-items: center;
+        gap: 5px;
         margin-top: 20px;
         span {
             a {

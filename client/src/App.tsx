@@ -5,8 +5,22 @@ import Header from "./components/Header/Header";
 import SignupPage from "./pages/SignUpPage/SignupPage";
 import SignupPageRestaurant from "./pages/SignUpPageRestaurant/SignUpPageRestaurant";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import { useEffect } from "react";
+import { REFRESH_TOKEN } from "./graphql/Refresh";
+import { useMutation } from "@apollo/client";
 
 function App() {
+    const [refreshToken, { data }] = useMutation(REFRESH_TOKEN);
+
+    const handleRefreshToken = async () => {
+        await refreshToken();
+        localStorage.setItem("token", data.refreshToken.accessToken);
+    };
+
+    useEffect(() => {
+        handleRefreshToken();
+    }, []);
+
     return (
         <div className="wrapper">
             <Router>

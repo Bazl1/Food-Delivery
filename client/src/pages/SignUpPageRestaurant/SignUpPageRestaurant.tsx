@@ -12,11 +12,6 @@ const SignupPageRestaurant = () => {
                     <div className={s.signup__inner}>
                         <div className={s.signup__box}>
                             <div className={s.signup__columns}>
-                                <div className={s.signup__logo}>
-                                    <Link to={"/"}>
-                                        <img className={s.signup__logo_img} src={logo} alt="logo" />
-                                    </Link>
-                                </div>
                                 <h2 className={s.signup__title}>
                                     Welcome
                                     <br />
@@ -24,7 +19,7 @@ const SignupPageRestaurant = () => {
                                 </h2>
                                 <SingUpFormRestaurant />
                                 <p className={s.signup__text}>
-                                    Already have an account?{" "}
+                                    Already have an account?
                                     <span>
                                         <Link to={"/authorization"}>Log in</Link>
                                     </span>

@@ -3,10 +3,13 @@ import Input from "../Input/Input";
 import s from "./SingUpFormRestaurant.module.scss";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { SIGN_UP_AS_RESTAURANT } from "./Registration";
+import { SIGN_UP_AS_RESTAURANT } from "../../graphql/RegistrationRestaurant";
 
 interface IForm {
     email: string;
+    name: string;
+    password: string;
+    description: string;
 }
 
 const SingUpFormRestaurant = () => {
