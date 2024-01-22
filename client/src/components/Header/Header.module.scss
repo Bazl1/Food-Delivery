@@ -42,10 +42,16 @@
         align-items: center;
         gap: 30px;
     }
-    &__btn_one {
+    &__btn_one,
+    &__logout_btn {
         color: #f7761f !important;
         &:hover {
             color: #fff !important;
         }
+    }
+    &__user_box {
+        display: flex;
+        align-items: center;
+        gap: 30px;
     }
 }
