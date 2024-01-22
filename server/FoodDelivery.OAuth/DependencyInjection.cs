@@ -1,7 +1,6 @@
 using System.Text;
 using FoodDelivery.OAuth.GraphQL.Mutations;
 using FoodDelivery.OAuth.GraphQL.Queries;
-using FoodDelivery.OAuth.GraphQL.Schemas;
 using FoodDelivery.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
