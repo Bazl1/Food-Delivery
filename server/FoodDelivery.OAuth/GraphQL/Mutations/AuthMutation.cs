@@ -2,6 +2,7 @@ using FoodDelivery.OAuth.Data.Stores;
 using FoodDelivery.OAuth.Domain.Entities;
 using FoodDelivery.OAuth.GraphQL.Schemas;
 using FoodDelivery.OAuth.Services;
+using HotChocolate.Authorization;
 using HotChocolate.Resolvers;
 
 namespace FoodDelivery.OAuth.GraphQL.Mutations;
@@ -121,6 +122,7 @@ public class AuthMutation
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
     }
 
+    [Authorize]
     public async Task SignOut(
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,

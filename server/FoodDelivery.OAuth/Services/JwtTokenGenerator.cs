@@ -41,4 +41,23 @@ public class JwtTokenGenerator
         return new JwtSecurityTokenHandler()
             .WriteToken(securityToken);
     }
+
+    public JwtSecurityToken? VerifyToken(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudience = _jwtSettings.Audience,
+            ValidIssuer = _jwtSettings.Issuer,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
+        };
+
+        new JwtSecurityTokenHandler()
+            .ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+
+        return validatedToken as JwtSecurityToken;
+    }
 }
