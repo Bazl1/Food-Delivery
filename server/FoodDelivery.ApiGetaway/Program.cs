@@ -16,11 +16,16 @@ builder.Services
 
 // Services
 builder.Services
-    .AddRemoteGraphQL();
+    .AddJwtAuthentication(builder.Configuration)
+    .AddRemoteGraphQL()
+    .AddHttpContextAccessor();
 
 var app = builder.Build();
 
 app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGraphQL("/graphql");
 
