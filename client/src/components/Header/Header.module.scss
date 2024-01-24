@@ -52,6 +52,28 @@
     &__user_box {
         display: flex;
         align-items: center;
-        gap: 30px;
+        gap: 15px;
+    }
+    &__small_btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #f7761f;
+        color: #f7761f;
+        border-radius: 8px;
+        transition:
+            background 0.2s,
+            color 0.2s;
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        &:hover {
+            background: #f7761f;
+            color: #fff;
+        }
     }
 }

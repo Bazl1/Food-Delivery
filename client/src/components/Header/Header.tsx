@@ -2,18 +2,25 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/img/Logo.svg";
 import s from "./Header.module.scss";
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { USER_EMAIL } from "../../graphql/GetUserInfo";
+import { useMutation, useQuery } from "@apollo/client";
+import { USER_EMAIL } from "../../graphql/GetUserInfo.query";
+import { IoBag } from "react-icons/io5";
+import { IoSettingsSharp } from "react-icons/io5";
+// import { LOGOUT } from "../../graphql/Logout.mutatuin";
 
 const Header = () => {
     const [userName, setUserName] = useState<string | undefined>(undefined);
+    const [userRole, setUserRole] = useState<string | undefined>(undefined);
 
     const { data } = useQuery(USER_EMAIL, {
         fetchPolicy: "cache-and-network",
     });
 
+    // const [signOut] = useMutation(LOGOUT);
+
     useEffect(() => {
         setUserName(data?.accountInfo?.email);
+        setUserRole(data?.accountInfo?.role);
     }, [data]);
 
     const location = useLocation();
@@ -45,15 +52,28 @@ const Header = () => {
                                     Catalog
                                 </Link>
                             </li>
+                            {userRole === "Restaurant" && (
+                                <Link className={`${s.header__btn_one} btn-style-one`} to={"/"}>
+                                    My Restaurant
+                                </Link>
+                            )}
                         </ul>
                     </nav>
                     {userName !== undefined ? (
                         <div className={s.header__user_box}>
-                            <div className={s.header__user}>
-                                Welcome ~ Maxim<span>{userName}</span>
-                            </div>
-                            <div>Card Icon</div>
-                            <button className={`${s.header__logout_btn} btn-style-one`}>Logout</button>
+                            {userRole === "Customer" ? (
+                                ""
+                            ) : (
+                                <Link to={"#"} className={s.header__small_btn}>
+                                    <IoSettingsSharp />
+                                </Link>
+                            )}
+                            <Link to={"#"} className={s.header__small_btn}>
+                                <IoBag />
+                            </Link>
+                            <button onClick={() => {}} className={`${s.header__logout_btn} btn-style-one`}>
+                                Logout
+                            </button>
                         </div>
                     ) : (
                         <div className={s.header__btns}>

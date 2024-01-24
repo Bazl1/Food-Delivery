@@ -6,7 +6,7 @@ import SignupPage from "./pages/SignUpPage/SignupPage";
 import SignupPageRestaurant from "./pages/SignUpPageRestaurant/SignUpPageRestaurant";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { useEffect } from "react";
-import { REFRESH_TOKEN } from "./graphql/Refresh";
+import { REFRESH_TOKEN } from "./graphql/Refresh.mutation";
 import { useMutation } from "@apollo/client";
 
 function App() {
@@ -14,8 +14,9 @@ function App() {
 
     const handleRefreshToken = async () => {
         await refreshToken();
-        const token = data?.refreshToken?.accessToken;
-        localStorage.setItem("token", token);
+        if (data?.refreshToken?.accessToken !== null && data?.refreshToken?.accessToken !== undefined) {
+            localStorage.setItem("token", data.refreshToken?.accessToken);
+        }
     };
 
     useEffect(() => {

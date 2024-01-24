@@ -3,7 +3,7 @@ import Input from "../Input/Input";
 import s from "./SingUpForm.module.scss";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { SIGN_UP_AS_CUSTOMER } from "../../graphql/RegistrationCustomer";
+import { SIGN_UP_AS_CUSTOMER } from "../../graphql/RegistrationCustomer.mutation";
 
 interface IForm {
     email: string;
@@ -18,7 +18,12 @@ const SingUpForm = () => {
 
     const [signUpAsCustomer, { error }] = useMutation(SIGN_UP_AS_CUSTOMER, {
         onCompleted: (data) => {
-            localStorage.setItem("token", data?.signUpAsCustomer?.accessToken);
+            if (
+                data.signUpAsCustomer?.accessToken !== null &&
+                data.signUpAsCustomer?.accessToken !== undefined
+            ) {
+                localStorage.setItem("token", data.signUpAsCustomer?.accessToken);
+            }
         },
     });
 

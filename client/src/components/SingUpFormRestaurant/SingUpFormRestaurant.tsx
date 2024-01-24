@@ -3,7 +3,7 @@ import Input from "../Input/Input";
 import s from "./SingUpFormRestaurant.module.scss";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { SIGN_UP_AS_RESTAURANT } from "../../graphql/RegistrationRestaurant";
+import { SIGN_UP_AS_RESTAURANT } from "../../graphql/RegistrationRestaurant.mutation";
 
 interface IForm {
     email: string;
@@ -18,7 +18,16 @@ const SingUpFormRestaurant = () => {
     const [password, setPassword] = useState<string>("");
     const [description, setDescription] = useState<string>("");
 
-    const [signUpAsCustomer, { data, error }] = useMutation(SIGN_UP_AS_RESTAURANT);
+    const [signUpAsRestaurant, { error }] = useMutation(SIGN_UP_AS_RESTAURANT, {
+        onCompleted: (data) => {
+            if (
+                data.signUpAsRestaurant?.accessToken !== null &&
+                data.signUpAsRestaurant?.accessToken !== undefined
+            ) {
+                localStorage.setItem("token", data.signUpAsRestaurant?.accessToken);
+            }
+        },
+    });
 
     const {
         register,
@@ -29,17 +38,17 @@ const SingUpFormRestaurant = () => {
     });
 
     const Submit = () => {
-        signUpAsCustomer({
+        signUpAsRestaurant({
             variables: {
                 email: email,
                 password: password,
-                userName: name,
+                name: name,
+                description: description,
             },
         });
         if (error) {
             throw new Error(error.message);
         }
-        localStorage.setItem("token", data.refreshToken);
     };
 
     return (

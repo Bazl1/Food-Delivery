@@ -3,7 +3,7 @@ import s from "./LoginForm.module.scss";
 import Input from "../Input/Input";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { AUTH } from "../../graphql/Authorization";
+import { AUTH } from "../../graphql/Authorization.mutation.ts";
 
 interface IForm {
     email: string;
@@ -16,7 +16,9 @@ const LoginForm = () => {
 
     const [signIn, { error }] = useMutation(AUTH, {
         onCompleted: (data) => {
-            localStorage.setItem("token", data?.signIn?.accessToken);
+            if (data.signIn?.accessToken !== null && data.signIn?.accessToken !== undefined) {
+                localStorage.setItem("token", data.signIn?.accessToken);
+            }
         },
     });
 

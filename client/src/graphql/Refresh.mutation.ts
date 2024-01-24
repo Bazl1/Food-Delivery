@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql } from "../__generated__/gql";
 
-export const REFRESH_TOKEN = gql`
+export const REFRESH_TOKEN = gql(`
     mutation refreshToken {
         refreshToken {
             accessToken
         }
     }
-`;
+`);
