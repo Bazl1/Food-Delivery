@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import { useEffect } from "react";
 import { REFRESH_TOKEN } from "./graphql/Refresh.mutation";
 import { useMutation } from "@apollo/client";
+import SettingsRestaurantPage from "./pages/SettingsRestaurantPage/SettingsRestaurantPage";
 
 function App() {
     const [refreshToken, { data }] = useMutation(REFRESH_TOKEN);
@@ -29,6 +30,7 @@ function App() {
                 <ScrollToTop />
                 <Header />
                 <Routes>
+                    <Route path="/restaurant-settings" element={<SettingsRestaurantPage />} />
                     <Route path="/authorization" element={<LoginPage />} />
                     <Route path="/registration" element={<SignupPage />} />
                     <Route path="/registration-restaurant" element={<SignupPageRestaurant />} />

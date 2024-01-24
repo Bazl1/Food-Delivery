@@ -24,7 +24,6 @@ const Header = () => {
     }, [data]);
 
     const location = useLocation();
-
     const pathsWithoutHeader = ["/registration", "/registration-restaurant", "/authorization"];
 
     if (pathsWithoutHeader.includes(location.pathname)) {
