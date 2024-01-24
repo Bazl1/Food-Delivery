@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("../../../node_modules/reset.css/reset.css");
+@import url("./font.scss");
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    color: #171717;
+    background: #eceef8;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    max-height: 100vh;
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex: 0 0 auto;
+}
+
+.container-fluid {
+    max-width: 1960px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.btn-style-one {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #171717;
+    padding: 12px 32px;
+    border: 1px solid #f7761f;
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    transition:
+        background 0.3s,
+        color 0.2s,
+        box-shadow 0.3s;
+
+    &:hover {
+        color: #fff;
+        background: #f7761f;
+        box-shadow: 0 10px 10px rgba(#171717, 0.1);
+    }
+}
+
+.btn-style-two {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #171717;
+    padding: 12px 32px;
+    border: 1px solid #fffcf9;
+    background: #fffcf9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+        border-color 0.3s,
+        box-shadow 0.3s;
+
+    &:hover {
+        border-color: #171717;
+        box-shadow: 0 10px 10px rgba(#171717, 0.1);
+    }
+}
