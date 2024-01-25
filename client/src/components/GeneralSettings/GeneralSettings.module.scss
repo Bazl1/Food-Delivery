@@ -1,0 +1,56 @@
+.settings {
+    &__title {
+        font-family: "Arlon";
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    &__form {
+        max-width: 800px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__btn {
+        max-width: 210px;
+        background: #f7761f !important;
+        color: #fff !important;
+    }
+
+    &__skeleton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 300px;
+        background: rgba(#171717, 0.1);
+        border-radius: 12px;
+        svg {
+            width: 100px;
+            height: 100px;
+            color: rgba(#171717, 0.2);
+        }
+    }
+    &__upload_img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    &__input_file_upload {
+        position: relative;
+        cursor: pointer;
+    }
+    &__upload_input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        outline: 0;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        user-select: none;
+    }
+}

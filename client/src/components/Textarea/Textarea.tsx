@@ -1,8 +1,7 @@
-import s from "./Input.module.scss";
+import s from "./Textarea.module.scss";
 
 interface InputProps {
     text: string;
-    type: string;
     name: string;
     value: string;
     setValue: (value: string) => void;
@@ -10,10 +9,8 @@ interface InputProps {
     errors: any;
     validationOptions?: any;
 }
-
-const Input: React.FC<InputProps> = ({
+const Textarea: React.FC<InputProps> = ({
     text,
-    type,
     name,
     value,
     setValue,
@@ -23,17 +20,17 @@ const Input: React.FC<InputProps> = ({
 }) => {
     return (
         <label className={s.input__label}>
-            <input
+            <textarea
                 {...register(name, validationOptions)}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 className={s.input}
-                type={type}
                 placeholder={text}
-            />
+                rows="5"
+            ></textarea>
             {errors[name] && <p className={s.input__error}>{errors[name]?.message}</p>}
         </label>
     );
 };
 
-export default Input;
+export default Textarea;

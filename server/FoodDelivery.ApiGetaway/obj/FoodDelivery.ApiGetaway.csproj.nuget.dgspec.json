@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj": {}
+    "c:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj": {
+    "c:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj",
+        "projectUniqueName": "c:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj",
         "projectName": "FoodDelivery.ApiGetaway",
-        "projectPath": "C:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj",
+        "projectPath": "c:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\FoodDelivery.ApiGetaway.csproj",
         "packagesPath": "C:\\Users\\dazma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\obj\\",
+        "outputPath": "c:\\Users\\dazma\\Desktop\\React\\Food Delivery\\server\\FoodDelivery.ApiGetaway\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,9 +49,17 @@
               "target": "Package",
               "version": "[13.8.1, )"
             },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[13.8.1, )"
+            },
             "HotChocolate.Stitching": {
               "target": "Package",
               "version": "[13.8.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

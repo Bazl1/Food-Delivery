@@ -8,6 +8,7 @@
     border-radius: 3px;
     padding: 12px 20px;
     cursor: pointer;
+    resize: none;
 
     &::placeholder {
         font-family: "Raleway";
@@ -16,6 +17,7 @@
         font-weight: 400;
         color: rgba(#171717, 0.3);
     }
+
     &__error {
         font-size: 12px;
         font-weight: 400;
