@@ -102,7 +102,7 @@ const SingUpForm = () => {
                     },
                     maxLength: {
                         value: 21,
-                        message: "Maximum password length 8 characters",
+                        message: "Maximum password length 21 characters",
                     },
                 }}
             />

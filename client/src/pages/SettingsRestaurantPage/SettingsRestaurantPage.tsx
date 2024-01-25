@@ -1,4 +1,5 @@
 import GeneralSettings from "../../components/GeneralSettings/GeneralSettings";
+import SecuritySetting from "../../components/SecuritySetting/SecuritySetting";
 import s from "./SettingsRestaurantPage.module.scss";
 
 const SettingsRestaurantPage = () => {
@@ -12,7 +13,7 @@ const SettingsRestaurantPage = () => {
                                 <GeneralSettings />
                             </div>
                             <div className={s.settings__item}>
-                                <GeneralSettings />
+                                <SecuritySetting />
                             </div>
                         </div>
                     </div>
