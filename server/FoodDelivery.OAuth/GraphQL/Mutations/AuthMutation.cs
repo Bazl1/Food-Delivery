@@ -206,59 +206,53 @@ public class AuthMutation
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
     }
 
-    public async Task<string> TestUpdate(IFile tsts)
+    [Authorize(Roles = ["Restaurant"])]
+    public async Task<RestaurantType?> UpdateRestaurant(
+        IResolverContext context,
+        [Service] IHttpContextAccessor httpContextAccessor,
+        [Service] FakeStore store,
+        [Service] ImageService imageService,
+        string? name = null,
+        string? description = null,
+        IFile? banner = null)
     {
-        Console.Write("file");
-        return "HUI";
+        var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Invalid access token.")
+                    .Build()
+            );
+            return null;
+        }
+
+        if (name != null)
+        {
+            restaurant.Name = name;
+        }
+        if (description != null)
+        {
+            restaurant.Description = description;
+        }
+        if (banner != null)
+        {
+            try
+            {
+                restaurant.BannerUrl = $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host}/{await imageService.Create(banner)}";
+            }
+            catch (Exception ex)
+            {
+                context.ReportError(
+                    ErrorBuilder.New()
+                        .SetMessage("Error loading image, try again later.")
+                        .Build()
+                );
+                return null;
+            }
+        }
+
+        var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
+        return RestaurantType.Create(account, restaurant);
     }
-
-    // [Authorize(Roles = ["Restaurant"])]
-    // public async Task<RestaurantType?> UpdateRestaurant(
-    //     IResolverContext context,
-    //     [Service] IHttpContextAccessor httpContextAccessor,
-    //     [Service] FakeStore store,
-    //     [Service] ImageService imageService,
-    //     string? name = null,
-    //     string? description = null,
-    //     IFile? banner = null)
-    // {
-    //     var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    //     if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)
-    //     {
-    //         context.ReportError(
-    //             ErrorBuilder.New()
-    //                 .SetMessage("Invalid access token.")
-    //                 .Build()
-    //         );
-    //         return null;
-    //     }
-
-    //     if (name != null)
-    //     {
-    //         restaurant.Name = name;
-    //     }
-    //     if (description != null)
-    //     {
-    //         restaurant.Description = description;
-    //     }
-    //     if (banner != null)
-    //     {
-    //         try
-    //         {
-    //             restaurant.BannerUrl = $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host}/{await imageService.Create(banner)}";
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             context.ReportError(
-    //                 ErrorBuilder.New()
-    //                     .SetMessage("Error loading image, try again later.")
-    //                     .Build()
-    //             );
-    //             return null;
-    //         }
-    //     }
-
-    //     var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
-    //     return RestaurantType.Create(account, restaurant);
-    // }
 }
