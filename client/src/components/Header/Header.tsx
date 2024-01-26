@@ -1,30 +1,43 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/Logo.svg";
 import s from "./Header.module.scss";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { USER_EMAIL } from "../../graphql/GetUserInfo.query";
+import { GET_ROLE } from "../../graphql/GetUserInfo.query";
 import { IoBag } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
-// import { LOGOUT } from "../../graphql/Logout.mutatuin";
+import { LOGOUT } from "../../graphql/Logout.mutatuin";
 
 const Header = () => {
-    const [userName, setUserName] = useState<string | undefined>(undefined);
     const [userRole, setUserRole] = useState<string | undefined>(undefined);
 
-    // const [signOut] = useMutation(LOGOUT);
-
-    const { data } = useQuery(USER_EMAIL, {
-        fetchPolicy: "cache-and-network",
+    const [signOut] = useMutation(LOGOUT, {
+        onCompleted(data) {
+            if (data.signOut) {
+                localStorage.removeItem("token");
+                navigate("/");
+                refetch();
+                setUserRole(undefined);
+            }
+        },
     });
 
-    useEffect(() => {
-        setUserName(data?.accountInfo?.email);
-        setUserRole(data?.accountInfo?.role);
-    }, [data]);
+    const { refetch } = useQuery(GET_ROLE, {
+        fetchPolicy: "cache-and-network",
+        onCompleted(data) {
+            setUserRole(data.accountInfo?.role);
+        },
+    });
 
+    const navigate = useNavigate();
     const location = useLocation();
     const pathsWithoutHeader = ["/registration", "/registration-restaurant", "/authorization"];
+
+    useEffect(() => {
+        if (!pathsWithoutHeader.includes(location.pathname)) {
+            refetch();
+        }
+    }, [location.pathname]);
 
     if (pathsWithoutHeader.includes(location.pathname)) {
         return null;
@@ -58,19 +71,24 @@ const Header = () => {
                             )}
                         </ul>
                     </nav>
-                    {userName !== undefined ? (
+                    {userRole !== undefined ? (
                         <div className={s.header__user_box}>
                             {userRole === "Customer" ? (
-                                ""
+                                <Link to={"/settings"} className={s.header__small_btn}>
+                                    <IoSettingsSharp />
+                                </Link>
                             ) : (
-                                <Link to={"#"} className={s.header__small_btn}>
+                                <Link to={"/restaurant-settings"} className={s.header__small_btn}>
                                     <IoSettingsSharp />
                                 </Link>
                             )}
                             <Link to={"#"} className={s.header__small_btn}>
                                 <IoBag />
                             </Link>
-                            <button onClick={() => {}} className={`${s.header__logout_btn} btn-style-one`}>
+                            <button
+                                onClick={() => signOut()}
+                                className={`${s.header__logout_btn} btn-style-one`}
+                            >
                                 Logout
                             </button>
                         </div>

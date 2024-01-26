@@ -1,9 +1,8 @@
 import { gql } from "../__generated__/gql";
 
-export const USER_EMAIL = gql(`
+export const GET_ROLE = gql(`
     query accountInfo {
         accountInfo {
-            email
             role
         }
     }
