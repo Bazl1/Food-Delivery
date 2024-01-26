@@ -11,20 +11,12 @@ import { IoSettingsSharp } from "react-icons/io5";
 const Header = () => {
     const [userName, setUserName] = useState<string | undefined>(undefined);
     const [userRole, setUserRole] = useState<string | undefined>(undefined);
-    const [data, setData] = useState<any>(null);
 
     // const [signOut] = useMutation(LOGOUT);
 
-    const fetchData = async () => {
-        const { data } = await useQuery(USER_EMAIL, {
-            fetchPolicy: "cache-and-network",
-        });
-        setData(data);
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const { data } = useQuery(USER_EMAIL, {
+        fetchPolicy: "cache-and-network",
+    });
 
     useEffect(() => {
         setUserName(data?.accountInfo?.email);
