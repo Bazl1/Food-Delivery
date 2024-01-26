@@ -36,7 +36,7 @@ public static class DependencyInjection
                         )
                     };
                 });
-        
+
         services.AddAuthorization();
 
         return services;
@@ -49,6 +49,7 @@ public static class DependencyInjection
             .AddAuthorization()
             .AddMutationType<AuthMutation>()
             .AddQueryType<AuthQuery>()
+            .AddType<UploadType>()
             .UseDefaultPipeline();
 
         return services;

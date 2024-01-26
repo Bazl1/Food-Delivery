@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using FoodDelivery.OAuth.Data.Stores;
 using FoodDelivery.OAuth.Domain.Entities;
 using FoodDelivery.OAuth.GraphQL.Schemas;
@@ -114,7 +115,7 @@ public class AuthMutation
 
         var accessToken = jwtTokenGenerator.GenerateToken(account);
         var refreshToken = jwtTokenGenerator.GenerateToken(account);
-        
+
         account.RefreshToken = refreshToken;
 
         httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh_token", refreshToken);
@@ -123,7 +124,7 @@ public class AuthMutation
     }
 
     [Authorize]
-    public async Task SignOut(
+    public async Task<bool> SignOut(
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store)
@@ -136,13 +137,47 @@ public class AuthMutation
                     .SetMessage("Invalid refresh token.")
                     .Build()
             );
-            return;
+            return false;
         }
 
         account.RefreshToken = null;
         httpContextAccessor.HttpContext?.Response.Cookies.Delete("refresh_token");
 
-        return;
+        return true;
+    }
+
+    [Authorize(Roles = ["Restaurant"])]
+    public async Task<RestaurantType?> PasswordChange(
+        IResolverContext context,
+        [Service] IHttpContextAccessor httpContextAccessor,
+        [Service] FakeStore store,
+        string password)
+    {
+        var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Accounts.SingleOrDefault(account => account.Id == accountId) is not Account account)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Invalid access token.")
+                    .Build()
+            );
+            return null;
+        }
+
+        if (password != account.Password)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Password mismatch.")
+                    .Build()
+            );
+            return null;
+        }
+
+        account.Password = password;
+
+        var restaurant = store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId);
+        return RestaurantType.Create(account, restaurant);
     }
 
     public async Task<AuthType?> RefreshToken(
@@ -170,4 +205,60 @@ public class AuthMutation
 
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
     }
+
+    public async Task<string> TestUpdate(IFile tsts)
+    {
+        Console.Write("file");
+        return "HUI";
+    }
+
+    // [Authorize(Roles = ["Restaurant"])]
+    // public async Task<RestaurantType?> UpdateRestaurant(
+    //     IResolverContext context,
+    //     [Service] IHttpContextAccessor httpContextAccessor,
+    //     [Service] FakeStore store,
+    //     [Service] ImageService imageService,
+    //     string? name = null,
+    //     string? description = null,
+    //     IFile? banner = null)
+    // {
+    //     var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    //     if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)
+    //     {
+    //         context.ReportError(
+    //             ErrorBuilder.New()
+    //                 .SetMessage("Invalid access token.")
+    //                 .Build()
+    //         );
+    //         return null;
+    //     }
+
+    //     if (name != null)
+    //     {
+    //         restaurant.Name = name;
+    //     }
+    //     if (description != null)
+    //     {
+    //         restaurant.Description = description;
+    //     }
+    //     if (banner != null)
+    //     {
+    //         try
+    //         {
+    //             restaurant.BannerUrl = $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host}/{await imageService.Create(banner)}";
+    //         }
+    //         catch (Exception ex)
+    //         {
+    //             context.ReportError(
+    //                 ErrorBuilder.New()
+    //                     .SetMessage("Error loading image, try again later.")
+    //                     .Build()
+    //             );
+    //             return null;
+    //         }
+    //     }
+
+    //     var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
+    //     return RestaurantType.Create(account, restaurant);
+    // }
 }
