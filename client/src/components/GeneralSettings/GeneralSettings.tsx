@@ -4,6 +4,9 @@ import s from "./GeneralSettings.module.scss";
 import { useForm } from "react-hook-form";
 import Textarea from "../Textarea/Textarea";
 import { BsImages } from "react-icons/bs";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_RESTAURANT_BANNER } from "../../graphql/GetRestaurantInfo.query";
+import { CHANGE_GENERAL_SETTINGS } from "../../graphql/GeneralSettings.mutation";
 
 interface IForm {
     name: string;
@@ -13,10 +16,17 @@ interface IForm {
 const GeneralSettings = () => {
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [imgUrl, setImgUrl] = useState<any>("");
+    const [imgUrl, setImgUrl] = useState<any>(undefined);
 
-    const load = true;
     const refImg = useRef<HTMLImageElement | null>(null);
+
+    useQuery(GET_RESTAURANT_BANNER, {
+        onCompleted(data) {
+            setImgUrl(data.restaurantInfo?.bannerUrl);
+        },
+    });
+
+    const [updateRestaurant] = useMutation(CHANGE_GENERAL_SETTINGS);
 
     const {
         register,
@@ -25,8 +35,6 @@ const GeneralSettings = () => {
     } = useForm<IForm>({
         mode: "onBlur",
     });
-
-    const Submit = async () => {};
 
     const readURL = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target;
@@ -42,6 +50,18 @@ const GeneralSettings = () => {
         }
     };
 
+    const Submit = async () => {
+        const formData = new FormData();
+        formData.append("image", imgUrl);
+        await updateRestaurant({
+            variables: {
+                name: name,
+                description: description,
+                banner: formData,
+            },
+        });
+    };
+
     return (
         <div className={s.settings}>
             <h3 className={s.settings__title}>General settings</h3>
@@ -53,7 +73,7 @@ const GeneralSettings = () => {
                         onChange={readURL}
                         accept="image/png, image/jpeg"
                     />
-                    {load ? (
+                    {imgUrl === undefined ? (
                         <div className={s.settings__skeleton}>
                             <BsImages />
                         </div>
@@ -61,7 +81,7 @@ const GeneralSettings = () => {
                         <img
                             ref={refImg}
                             id="file_upload"
-                            src=""
+                            src={imgUrl}
                             alt="banner"
                             className={s.settings__upload_img}
                         />
