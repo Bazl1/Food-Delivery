@@ -192,7 +192,7 @@ public class AuthMutation
             return null;
         }
 
-        if (account.Password == oldPassword)
+        if (account.Password != oldPassword)
         {
             context.ReportError(
                 ErrorBuilder.New()
