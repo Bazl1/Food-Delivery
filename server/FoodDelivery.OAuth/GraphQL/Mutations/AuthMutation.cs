@@ -124,7 +124,7 @@ public class AuthMutation
     }
 
     [Authorize]
-    public async Task SignOut(
+    public async Task<bool> SignOut(
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store)
@@ -137,13 +137,13 @@ public class AuthMutation
                     .SetMessage("Invalid refresh token.")
                     .Build()
             );
-            return;
+            return false;
         }
 
         account.RefreshToken = null;
         httpContextAccessor.HttpContext?.Response.Cookies.Delete("refresh_token");
 
-        return;
+        return true;
     }
 
     public async Task<AuthType?> RefreshToken(
