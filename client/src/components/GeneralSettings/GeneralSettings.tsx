@@ -52,12 +52,14 @@ const GeneralSettings = () => {
 
     const Submit = async () => {
         const formData = new FormData();
-        formData.append("image", imgUrl);
-        await updateRestaurant({
+        // formData.append("name", name);
+        // formData.append("description", description);
+        formData.append("file", imgUrl);
+        updateRestaurant({
             variables: {
                 name: name,
                 description: description,
-                banner: formData,
+                banner: imgUrl,
             },
         });
     };
@@ -73,7 +75,7 @@ const GeneralSettings = () => {
                         onChange={readURL}
                         accept="image/png, image/jpeg"
                     />
-                    {imgUrl === undefined ? (
+                    {imgUrl === undefined || imgUrl === "" ? (
                         <div className={s.settings__skeleton}>
                             <BsImages />
                         </div>
@@ -96,7 +98,6 @@ const GeneralSettings = () => {
                     register={register}
                     errors={errors}
                     validationOptions={{
-                        required: "Required field",
                         minLength: {
                             value: 5,
                             message: "Minimum length 5 characters",
@@ -115,7 +116,6 @@ const GeneralSettings = () => {
                     register={register}
                     errors={errors}
                     validationOptions={{
-                        required: "Required field",
                         minLength: {
                             value: 5,
                             message: "Minimum length 5 characters",

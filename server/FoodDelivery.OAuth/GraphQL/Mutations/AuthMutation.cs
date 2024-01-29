@@ -214,7 +214,8 @@ public class AuthMutation
         [Service] ImageService imageService,
         string? name = null,
         string? description = null,
-        IFile? banner = null)
+        IFile? banner = null
+        )
     {
         var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)

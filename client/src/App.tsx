@@ -11,7 +11,7 @@ import { useMutation } from "@apollo/client";
 import SettingsRestaurantPage from "./pages/SettingsRestaurantPage/SettingsRestaurantPage";
 
 function App() {
-    const [refreshToken, { data }] = useMutation(REFRESH_TOKEN, {
+    const [refreshToken] = useMutation(REFRESH_TOKEN, {
         onCompleted: (data) => {
             if (data.refreshToken?.accessToken !== null && data.refreshToken?.accessToken !== undefined) {
                 localStorage.setItem("token", data.refreshToken?.accessToken);

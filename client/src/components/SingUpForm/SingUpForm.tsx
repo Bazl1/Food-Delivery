@@ -27,6 +27,7 @@ const SingUpForm = () => {
                 data.signUpAsCustomer?.accessToken !== undefined
             ) {
                 localStorage.setItem("token", data.signUpAsCustomer?.accessToken);
+                navigate("/");
             }
         },
         onError(error) {
@@ -51,7 +52,6 @@ const SingUpForm = () => {
                 userName: name,
             },
         });
-        navigate("/");
     };
 
     return (

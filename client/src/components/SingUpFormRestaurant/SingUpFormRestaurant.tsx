@@ -29,6 +29,7 @@ const SingUpFormRestaurant = () => {
                 data.signUpAsRestaurant?.accessToken !== undefined
             ) {
                 localStorage.setItem("token", data.signUpAsRestaurant?.accessToken);
+                navigate("/");
             }
         },
         onError(error) {
@@ -54,7 +55,6 @@ const SingUpFormRestaurant = () => {
                 description: description,
             },
         });
-        navigate("/");
     };
 
     return (
