@@ -172,6 +172,41 @@ public class AuthMutation
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
     }
 
+    [Authorize]
+    public async Task<AccountType?> PasswordChange(
+        IResolverContext context,
+        ClaimsPrincipal claimsPrincipal,
+        [Service] FakeStore store,
+        string oldPassword,
+        string password
+    )
+    {
+        var accountId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Accounts.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Account account)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Invalid access token.")
+                    .Build()
+            );
+            return null;
+        }
+
+        if (account.Password == oldPassword)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Old password mismatch.")
+                    .Build()
+            );
+            return null;
+        }
+
+        account.Password = password;
+
+        return AccountType.Create(account);
+    }
+
     public async Task<RestaurantType?> UpdateRestaurant(
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,
