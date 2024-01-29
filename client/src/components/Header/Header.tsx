@@ -64,6 +64,11 @@ const Header = () => {
                                     Catalog
                                 </Link>
                             </li>
+                            <li className={s.header__item}>
+                                <Link className={s.header__link} to={"/restaurants"}>
+                                    Restaurants
+                                </Link>
+                            </li>
                             {userRole === "Restaurant" && (
                                 <Link className={`${s.header__btn_one} btn-style-one`} to={"/"}>
                                     My Restaurant

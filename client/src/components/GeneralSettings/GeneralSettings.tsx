@@ -53,7 +53,7 @@ const GeneralSettings = () => {
 
     const Submit = async () => {
         const formData = new FormData();
-        formData.append("file", imgUrl);
+        formData.append("image", imgUrl);
 
         const response = await fetch("https://example.com/api/endpoint", {
             method: "POST",
