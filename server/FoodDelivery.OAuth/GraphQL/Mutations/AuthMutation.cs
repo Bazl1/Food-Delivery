@@ -126,11 +126,12 @@ public class AuthMutation
     [Authorize]
     public async Task<bool> SignOut(
         IResolverContext context,
+        ClaimsPrincipal claimsPrincipal,
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store)
     {
-        var oldRefreshToken = httpContextAccessor.HttpContext?.Request.Cookies["refresh_token"] ?? string.Empty;
-        if (store.Accounts.SingleOrDefault(account => account.RefreshToken == oldRefreshToken) is not Account account)
+        var accountId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Accounts.SingleOrDefault(account => account.Id == accountId) is not Account account)
         {
             context.ReportError(
                 ErrorBuilder.New()
@@ -142,7 +143,6 @@ public class AuthMutation
 
         account.RefreshToken = null;
         httpContextAccessor.HttpContext?.Response.Cookies.Delete("refresh_token");
-
         return true;
     }
 
