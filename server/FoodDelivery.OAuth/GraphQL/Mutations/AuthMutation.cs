@@ -176,17 +176,9 @@ public class AuthMutation
         IResolverContext context,
         [Service] IHttpContextAccessor httpContextAccessor,
         [Service] FakeStore store,
-<<<<<<< HEAD
-        [Service] ImageService imageService,
-        string? name = null,
-        string? description = null,
-        IFile? banner = null
-        )
-=======
         string name,
         string description,
         string bannerUrl)
->>>>>>> dev-server
     {
         var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)
