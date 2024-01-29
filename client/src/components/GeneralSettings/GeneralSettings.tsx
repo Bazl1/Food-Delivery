@@ -55,7 +55,7 @@ const GeneralSettings = () => {
         const formData = new FormData();
         formData.append("image", imgUrl);
 
-        const response = await fetch("https://example.com/api/endpoint", {
+        const response = await fetch("http://localhost:5234/api/images", {
             method: "POST",
             body: formData,
         }).catch(() => {
@@ -69,7 +69,7 @@ const GeneralSettings = () => {
             variables: {
                 name: name,
                 description: description,
-                banner: responseData,
+                banner: "",
             },
         });
     };

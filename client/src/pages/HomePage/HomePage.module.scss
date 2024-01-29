@@ -80,7 +80,7 @@
     }
 
     &__items {
-        width: calc(150px * 15);
+        width: calc(250px * 15);
         display: flex;
         animation: scrollFrom 15s linear infinite;
         justify-content: space-between;
@@ -89,7 +89,7 @@
         animation: scrollTo 15s linear infinite;
     }
     &__item {
-        width: 150px;
+        width: 250px;
         font-size: 24px;
         text-align: center;
         font-weight: 500;
@@ -101,12 +101,12 @@
             transform: translateX(0px);
         }
         100% {
-            transform: translateX(calc(-150px * 5));
+            transform: translateX(calc(-250px * 3));
         }
     }
     @keyframes scrollTo {
         0% {
-            transform: translateX(calc(-150px * 5));
+            transform: translateX(calc(-250px * 3));
         }
         100% {
             transform: translateX(0px);
