@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // CORS
 builder.Services
-    .AddCors(corsOptions => {
-        corsOptions.AddDefaultPolicy(policyOptions => {
+    .AddCors(corsOptions =>
+    {
+        corsOptions.AddDefaultPolicy(policyOptions =>
+        {
             policyOptions
                 .WithOrigins("http://localhost:5173", "http://localhost:5234")
                 .AllowAnyHeader()

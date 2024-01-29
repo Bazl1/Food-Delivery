@@ -1,4 +1,5 @@
 
+using FoodDelivery.Dtos;
 using FoodDelivery.ImageStore.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ public static class ImagesEndpoints
         Console.WriteLine(url);
     }
 
-    private static async Task<Results<Ok<string>, BadRequest>> LoadImage(
+    private static async Task<Results<Ok<ImageDto>, BadRequest>> LoadImage(
         HttpContext context,
         [FromServices] ImageServce imageServce)
     {
@@ -30,7 +31,7 @@ public static class ImagesEndpoints
         {
             var fileName = await imageServce.AddAsync(context.Request.Form.Files.First());
             var url = $"http://localhost:5075/{fileName}";
-            return TypedResults.Ok(url);
+            return TypedResults.Ok(ImageDto.Create(url));
         }
         catch
         {
