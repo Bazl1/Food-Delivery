@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n    mutation signIn($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            accessToken\n        }\n    }\n": types.SignInDocument,
-    "\n    mutation updateRestaurant($name: String, $description: String, $banner: Upload) {\n        updateRestaurant(name: $name, description: $description, banner: $banner) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
+    "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
     "\n    query restaurantInfo {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantInfoDocument,
     "\n    query accountInfo {\n        accountInfo {\n            role\n        }\n    }\n": types.AccountInfoDocument,
     "\n    mutation  signOut{\n        signOut\n    }\n": types.SignOutDocument,
@@ -44,7 +44,7 @@ export function gql(source: "\n    mutation signIn($email: String!, $password: S
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    mutation updateRestaurant($name: String, $description: String, $banner: Upload) {\n        updateRestaurant(name: $name, description: $description, banner: $banner) {\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation updateRestaurant($name: String, $description: String, $banner: Upload) {\n        updateRestaurant(name: $name, description: $description, banner: $banner) {\n            id\n        }\n    }\n"];
+export function gql(source: "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

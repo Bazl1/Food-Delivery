@@ -55,7 +55,7 @@ const GeneralSettings = () => {
         const formData = new FormData();
         formData.append("image", imgUrl);
 
-        const response = await fetch("http://localhost:5234/api/images", {
+        const response = await fetch("http://localhost:5075/api/images", {
             method: "POST",
             body: formData,
         }).catch(() => {
@@ -64,12 +64,11 @@ const GeneralSettings = () => {
         });
 
         const responseData = await response.json();
-
         updateRestaurant({
             variables: {
                 name: name,
                 description: description,
-                banner: "",
+                bannerUrl: responseData.url,
             },
         });
     };
