@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using FoodDelivery.OAuth.Data.Stores;
 using FoodDelivery.OAuth.Domain.Entities;
 using FoodDelivery.OAuth.GraphQL.Schemas;
@@ -169,5 +170,41 @@ public class AuthMutation
         httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh_token", refreshToken);
 
         return AuthType.Create(accessToken, refreshToken, AccountType.Create(account));
+    }
+
+    public async Task<RestaurantType?> UpdateRestaurant(
+        IResolverContext context,
+        [Service] IHttpContextAccessor httpContextAccessor,
+        [Service] FakeStore store,
+        string name,
+        string description,
+        string bannerUrl)
+    {
+        var accountId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == accountId) is not Restaurant restaurant)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Invalid access token.")
+                    .Build()
+            );
+            return null;
+        }
+
+        if (name != string.Empty)
+        {
+            restaurant.Name = name;
+        }
+        if (description != string.Empty)
+        {
+            restaurant.Description = description;
+        }
+        if (bannerUrl != string.Empty)
+        {
+            restaurant.BannerUrl = bannerUrl;
+        }
+
+        var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
+        return RestaurantType.Create(account, restaurant);
     }
 }

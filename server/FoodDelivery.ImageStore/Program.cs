@@ -1,6 +1,9 @@
-using FoodDelivery.Getaway;
+using FoodDelivery.ImageStore.Endpoints;
+using FoodDelivery.ImageStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<ImageServce>();
 
 // CORS
 builder.Services
@@ -9,27 +12,20 @@ builder.Services
         corsOptions.AddDefaultPolicy(policyOptions =>
         {
             policyOptions
-                .WithOrigins("http://localhost:5173")
+                .WithOrigins("http://localhost:5173", "http://localhost:5234")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
         });
     });
 
-// Services
-builder.Services
-    .AddJwtAuthentication(builder.Configuration)
-    .AddRemoteGraphQL()
-    .AddHttpContextAccessor();
-
 var app = builder.Build();
 
 app.UseCors();
 
-app.UseApiGatewayMiddleware();
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseStaticFiles();
 
-app.MapGraphQL("/graphql");
+app.MapGroup("api/images")
+    .MapImagesEndpoints();
 
 app.Run();

@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
+using FoodDelivery.Getaway.Middlewares;
 using FoodDelivery.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -50,7 +51,8 @@ public static class DependencyInjection
             {
                 client.BaseAddress = new Uri("http://localhost:5252/graphql");
             })
-            .AddHttpMessageHandler((provider) => {
+            .AddHttpMessageHandler((provider) =>
+            {
                 var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
                 return new AuthHeaderHandler(httpContextAccessor);
             });
@@ -60,5 +62,10 @@ public static class DependencyInjection
             .AddRemoteSchema(OAuthService, ignoreRootTypes: false);
 
         return services;
+    }
+
+    public static IApplicationBuilder UseApiGatewayMiddleware(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<ApiGatewayMiddleware>();
     }
 }
