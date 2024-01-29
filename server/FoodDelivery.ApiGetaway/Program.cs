@@ -1,6 +1,4 @@
-using FoodDelivery.OAuth.Data.Stores;
-using FoodDelivery.OAuth.Services;
-using FoodDelivery.OAuth;
+using FoodDelivery.Getaway;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +7,7 @@ builder.Services
     .AddCors(corsOptions => {
         corsOptions.AddDefaultPolicy(policyOptions => {
             policyOptions
-                .WithOrigins("http://localhost:5173", "http://localhost:5234")
+                .WithOrigins("http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
@@ -19,9 +17,7 @@ builder.Services
 // Services
 builder.Services
     .AddJwtAuthentication(builder.Configuration)
-    .AddSingleton<FakeStore>(new FakeStore())
-    .AddGraphQL()
-    .AddTransient<JwtTokenGenerator, JwtTokenGenerator>()
+    .AddRemoteGraphQL()
     .AddHttpContextAccessor();
 
 var app = builder.Build();
