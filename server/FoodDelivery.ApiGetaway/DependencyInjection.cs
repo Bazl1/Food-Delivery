@@ -63,9 +63,4 @@ public static class DependencyInjection
 
         return services;
     }
-
-    public static IApplicationBuilder UseApiGatewayMiddleware(this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<ApiGatewayMiddleware>();
-    }
 }
