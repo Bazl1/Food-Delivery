@@ -66,4 +66,17 @@ public class AuthQuery
         var restaurant = store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == account?.Id);
         return RestaurantType.Create(account, restaurant);
     }
+
+    public async Task<List<RestaurantType>> GetRestaurants(
+        IResolverContext context,
+        [Service] FakeStore store)
+    {
+        var restaurants = new List<RestaurantType>();
+        foreach (var restaurant in store.Restaurants)
+        {
+            var account = store.Accounts.SingleOrDefault(account => account.Id == restaurant.Id);
+            restaurants.Add(RestaurantType.Create(account, restaurant));
+        }
+        return restaurants;
+    }
 }

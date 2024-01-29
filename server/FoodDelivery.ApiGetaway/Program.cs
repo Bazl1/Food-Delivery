@@ -26,7 +26,6 @@ var app = builder.Build();
 
 app.UseCors();
 
-app.UseApiGatewayMiddleware();
 app.UseAuthentication();
 app.UseAuthorization();
 
