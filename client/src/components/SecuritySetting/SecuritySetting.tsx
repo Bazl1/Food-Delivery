@@ -3,8 +3,9 @@ import Input from "../Input/Input";
 import s from "./SecuritySetting.module.scss";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { CHANGE_PASSWORD } from "../../graphql/ChangePassword.mutation";
+
 import toast, { Toaster } from "react-hot-toast";
+import { CHANGE_PASSWORD } from "../../graphql/ChangePassword.mutation";
 
 interface IForm {
     password: string;
@@ -37,6 +38,7 @@ const SecuritySetting = () => {
         if (password === confirmPassword) {
             await passwordChange({
                 variables: {
+                    oldPassword: oldPassword,
                     password: password,
                 },
             });

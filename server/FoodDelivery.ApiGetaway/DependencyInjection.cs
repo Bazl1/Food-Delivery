@@ -1,6 +1,5 @@
 using System.Net.Http.Headers;
 using System.Text;
-using FoodDelivery.Getaway.Middlewares;
 using FoodDelivery.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
