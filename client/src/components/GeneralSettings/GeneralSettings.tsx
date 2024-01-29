@@ -3,6 +3,7 @@ import Input from "../Input/Input";
 import s from "./GeneralSettings.module.scss";
 import { useForm } from "react-hook-form";
 import Textarea from "../Textarea/Textarea";
+import toast, { Toaster } from "react-hot-toast";
 import { BsImages } from "react-icons/bs";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_RESTAURANT_BANNER } from "../../graphql/GetRestaurantInfo.query";
@@ -52,85 +53,97 @@ const GeneralSettings = () => {
 
     const Submit = async () => {
         const formData = new FormData();
-        // formData.append("name", name);
-        // formData.append("description", description);
         formData.append("file", imgUrl);
+
+        const response = await fetch("https://example.com/api/endpoint", {
+            method: "POST",
+            body: formData,
+        }).catch(() => {
+            toast.error("Error loading image");
+            throw new Error("Error loading image");
+        });
+
+        const responseData = await response.json();
+
         updateRestaurant({
             variables: {
                 name: name,
                 description: description,
-                banner: imgUrl,
+                banner: responseData,
             },
         });
     };
 
     return (
-        <div className={s.settings}>
-            <h3 className={s.settings__title}>General settings</h3>
-            <form className={s.settings__form} onSubmit={handleSubmit(Submit)}>
-                <label className={s.settings__input_file_upload}>
-                    <input
-                        className={s.settings__upload_input}
-                        type="file"
-                        onChange={readURL}
-                        accept="image/png, image/jpeg"
-                    />
-                    {imgUrl === undefined || imgUrl === "" ? (
-                        <div className={s.settings__skeleton}>
-                            <BsImages />
-                        </div>
-                    ) : (
-                        <img
-                            ref={refImg}
-                            id="file_upload"
-                            src={imgUrl}
-                            alt="banner"
-                            className={s.settings__upload_img}
+        <>
+            <div className={s.settings}>
+                <h3 className={s.settings__title}>General settings</h3>
+                <form className={s.settings__form} onSubmit={handleSubmit(Submit)}>
+                    <label className={s.settings__input_file_upload}>
+                        <input
+                            className={s.settings__upload_input}
+                            type="file"
+                            onChange={readURL}
+                            accept="image/png, image/jpeg"
                         />
-                    )}
-                </label>
-                <Input
-                    text="Change your restaurant name"
-                    type="text"
-                    name="name"
-                    value={name}
-                    setValue={setName}
-                    register={register}
-                    errors={errors}
-                    validationOptions={{
-                        minLength: {
-                            value: 5,
-                            message: "Minimum length 5 characters",
-                        },
-                        maxLength: {
-                            value: 100,
-                            message: "Maximum length 100 characters",
-                        },
-                    }}
-                />
-                <Textarea
-                    text="Change description"
-                    name="description"
-                    value={description}
-                    setValue={setDescription}
-                    register={register}
-                    errors={errors}
-                    validationOptions={{
-                        minLength: {
-                            value: 5,
-                            message: "Minimum length 5 characters",
-                        },
-                        maxLength: {
-                            value: 100,
-                            message: "Maximum length 100 characters",
-                        },
-                    }}
-                />
-                <button className={`${s.settings__btn} btn-style-one`} type="submit">
-                    Save changes
-                </button>
-            </form>
-        </div>
+                        {imgUrl === undefined || imgUrl === "" ? (
+                            <div className={s.settings__skeleton}>
+                                <BsImages />
+                            </div>
+                        ) : (
+                            <img
+                                ref={refImg}
+                                id="file_upload"
+                                src={imgUrl}
+                                alt="banner"
+                                className={s.settings__upload_img}
+                            />
+                        )}
+                    </label>
+                    <Input
+                        text="Change your restaurant name"
+                        type="text"
+                        name="name"
+                        value={name}
+                        setValue={setName}
+                        register={register}
+                        errors={errors}
+                        validationOptions={{
+                            minLength: {
+                                value: 5,
+                                message: "Minimum length 5 characters",
+                            },
+                            maxLength: {
+                                value: 100,
+                                message: "Maximum length 100 characters",
+                            },
+                        }}
+                    />
+                    <Textarea
+                        text="Change description"
+                        name="description"
+                        value={description}
+                        setValue={setDescription}
+                        register={register}
+                        errors={errors}
+                        validationOptions={{
+                            minLength: {
+                                value: 5,
+                                message: "Minimum length 5 characters",
+                            },
+                            maxLength: {
+                                value: 100,
+                                message: "Maximum length 100 characters",
+                            },
+                        }}
+                    />
+                    <button className={`${s.settings__btn} btn-style-one`} type="submit">
+                        Save changes
+                    </button>
+                </form>
+            </div>
+            <Toaster position="bottom-left" reverseOrder={false} />
+        </>
     );
 };
 

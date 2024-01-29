@@ -3,7 +3,7 @@ import { createHttpLink } from "@apollo/client/link/http";
 import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:5252/graphql",
+    uri: "http://localhost:5234/graphql",
     credentials: "include",
 });
 
