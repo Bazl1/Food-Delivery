@@ -1,14 +1,16 @@
+using System.Net.Http.Headers;
 using System.Text;
-using FoodDelivery.OAuth.GraphQL.Mutations;
-using FoodDelivery.OAuth.GraphQL.Queries;
+using FoodDelivery.Getaway.Middlewares;
 using FoodDelivery.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FoodDelivery.OAuth;
+namespace FoodDelivery.Getaway;
 
 public static class DependencyInjection
 {
+    private const string OAuthService = "OAuthService";
+
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services
@@ -36,21 +38,34 @@ public static class DependencyInjection
                         )
                     };
                 });
-        
+
         services.AddAuthorization();
 
         return services;
     }
 
-    public static IServiceCollection AddGraphQL(this IServiceCollection services)
+    public static IServiceCollection AddRemoteGraphQL(this IServiceCollection services)
     {
         services
+            .AddHttpClient(OAuthService, client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5252/graphql");
+            })
+            .AddHttpMessageHandler((provider) =>
+            {
+                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+                return new AuthHeaderHandler(httpContextAccessor);
+            });
+
+        services
             .AddGraphQLServer()
-            .AddAuthorization()
-            .AddMutationType<AuthMutation>()
-            .AddQueryType<AuthQuery>()
-            .UseDefaultPipeline();
+            .AddRemoteSchema(OAuthService, ignoreRootTypes: false);
 
         return services;
+    }
+
+    public static IApplicationBuilder UseApiGatewayMiddleware(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<ApiGatewayMiddleware>();
     }
 }

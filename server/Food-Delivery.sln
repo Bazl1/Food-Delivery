@@ -5,7 +5,11 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{2BE85354-9B98-4942-B6BF-2BDE8DED60AB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.ApiGetaway", "FoodDelivery.ApiGetaway\FoodDelivery.ApiGetaway.csproj", "{164DA2BF-448B-4A72-970A-8098C77B3FF6}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.OAuth", "FoodDelivery.OAuth\FoodDelivery.OAuth.csproj", "{43AAACFB-56BC-4896-B52A-23A4AA22AB62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodDelivery.ImageStore", "FoodDelivery.ImageStore\FoodDelivery.ImageStore.csproj", "{0A5F0765-57F9-408C-8704-EE4001C768A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,15 +17,24 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{164DA2BF-448B-4A72-970A-8098C77B3FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164DA2BF-448B-4A72-970A-8098C77B3FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164DA2BF-448B-4A72-970A-8098C77B3FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164DA2BF-448B-4A72-970A-8098C77B3FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43AAACFB-56BC-4896-B52A-23A4AA22AB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43AAACFB-56BC-4896-B52A-23A4AA22AB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43AAACFB-56BC-4896-B52A-23A4AA22AB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43AAACFB-56BC-4896-B52A-23A4AA22AB62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5F0765-57F9-408C-8704-EE4001C768A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5F0765-57F9-408C-8704-EE4001C768A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5F0765-57F9-408C-8704-EE4001C768A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5F0765-57F9-408C-8704-EE4001C768A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{164DA2BF-448B-4A72-970A-8098C77B3FF6} = {2BE85354-9B98-4942-B6BF-2BDE8DED60AB}
 		{43AAACFB-56BC-4896-B52A-23A4AA22AB62} = {2BE85354-9B98-4942-B6BF-2BDE8DED60AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
