@@ -14,11 +14,11 @@ public class Mutations
     public async Task<ProductType?> CreateProduct(
         IResolverContext context,
         ClaimsPrincipal claimsPrincipal,
-        Store store,
+        [Service] Store store,
         string title,
         string description,
         string picture,
-        decimal price,
+        string price,
         List<string> categories
     )
     {
@@ -43,7 +43,7 @@ public class Mutations
             return null;
         }
 
-        var product = Product.Create(accountId, title, description, picture, price);
+        var product = Product.Create(accountId, title, description, picture, Decimal.Parse(price));
         foreach (var categoryTitle in categories)
         {
             var category = store.Categories.SingleOrDefault(category => category.Title == categoryTitle);
