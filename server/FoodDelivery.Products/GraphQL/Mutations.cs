@@ -14,7 +14,7 @@ public class Mutations
     public async Task<ProductType?> CreateProduct(
         IResolverContext context,
         ClaimsPrincipal claimsPrincipal,
-        Store store,
+        [Service] Store store,
         string title,
         string description,
         string picture,

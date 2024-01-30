@@ -9,6 +9,7 @@ namespace FoodDelivery.Getaway;
 public static class DependencyInjection
 {
     private const string OAuthService = "OAuthService";
+    private const string ProductsService = "ProductsService";
 
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
@@ -57,8 +58,20 @@ public static class DependencyInjection
             });
 
         services
+            .AddHttpClient(ProductsService, client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5149/graphql");
+            })
+            .AddHttpMessageHandler((provider) =>
+            {
+                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+                return new AuthHeaderHandler(httpContextAccessor);
+            });
+
+        services
             .AddGraphQLServer()
-            .AddRemoteSchema(OAuthService, ignoreRootTypes: false);
+            .AddRemoteSchema(OAuthService, ignoreRootTypes: false)
+            .AddRemoteSchema(ProductsService, ignoreRootTypes: false);
 
         return services;
     }
