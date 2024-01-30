@@ -10,6 +10,7 @@ import { REFRESH_TOKEN } from "./graphql/Refresh.mutation";
 import { useMutation } from "@apollo/client";
 import SettingsRestaurantPage from "./pages/SettingsRestaurantPage/SettingsRestaurantPage";
 import RestaurantsPage from "./pages/RestaurantsPage/RestaurantsPage";
+import CreateProduct from "./pages/CreateProduct/CreateProduct";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -31,6 +32,7 @@ function App() {
                 <Header />
                 <Routes>
                     <Route path="/restaurant-settings" element={<SettingsRestaurantPage />} />
+                    <Route path="/create-product" element={<CreateProduct />} />
 
                     <Route path="/authorization" element={<LoginPage />} />
                     <Route path="/registration" element={<SignupPage />} />
