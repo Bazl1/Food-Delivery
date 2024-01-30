@@ -1,6 +1,5 @@
-using FoodDelivery.OAuth.Data.Stores;
-using FoodDelivery.OAuth.Services;
-using FoodDelivery.OAuth;
+using FoodDelivery.Products;
+using FoodDelivery.Products.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +17,11 @@ builder.Services
         });
     });
 
-// Services
 builder.Services
+    .AddHttpContextAccessor()
+    .AddSingleton<Store>(new Store())
     .AddJwtAuthentication(builder.Configuration)
-    .AddSingleton<FakeStore>(new FakeStore())
-    .AddGraphQL()
-    .AddTransient<JwtTokenGenerator, JwtTokenGenerator>()
-    .AddHttpContextAccessor();
+    .AddGraphQL();
 
 var app = builder.Build();
 
