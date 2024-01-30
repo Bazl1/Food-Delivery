@@ -8,6 +8,8 @@ import Textarea from "../../components/Textarea/Textarea";
 import Select from "react-select";
 import { categorys } from "../../assets/utils/Categorys";
 import "./Select.scss";
+import { useMutation } from "@apollo/client";
+import { CREATE_PRODUCT } from "../../graphql/CreateProduct.mutation";
 
 interface IForm {
     name: string;
@@ -28,6 +30,20 @@ const CreateProduct = () => {
         formState: { errors },
     } = useForm<IForm>({
         mode: "onBlur",
+    });
+
+    const [createProduct] = useMutation(CREATE_PRODUCT, {
+        onCompleted() {
+            toast.success("Product successfully created");
+            setName("");
+            setDescription("");
+            setCategory([]);
+            setPrice("");
+            setImgUrl(undefined);
+        },
+        onError(error) {
+            toast.success(error.message);
+        },
     });
 
     const readURL = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +74,16 @@ const CreateProduct = () => {
         const responseData = await response.json();
 
         const categoryOfStrings = category.map((obj: any) => obj.value);
+
+        createProduct({
+            variables: {
+                title: name,
+                description: description,
+                picture: responseData.url,
+                price: price,
+                categories: categoryOfStrings,
+            },
+        });
     };
 
     return (
@@ -66,9 +92,8 @@ const CreateProduct = () => {
                 <section className={s.create}>
                     <div className="container">
                         <div className={s.create__inner}>
-                            <h2 className={s.create__title}>Add your product</h2>
-
                             <div className={s.create__box}>
+                                <h2 className={s.create__title}>Add your product</h2>
                                 <form className={s.create__form} onSubmit={handleSubmit(Submit)}>
                                     <label className={s.create__input_file_upload}>
                                         <input

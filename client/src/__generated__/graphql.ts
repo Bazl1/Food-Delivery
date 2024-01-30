@@ -14,6 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** The built-in `Decimal` scalar type. */
+  Decimal: { input: any; output: any; }
 };
 
 export type AccountType = {
@@ -30,8 +32,30 @@ export enum ApplyPolicy {
   Validation = 'VALIDATION'
 }
 
-export type AuthMutation = {
-  __typename?: 'AuthMutation';
+export type AuthType = {
+  __typename?: 'AuthType';
+  accessToken: Scalars['String']['output'];
+  account: AccountType;
+  refreshToken: Scalars['String']['output'];
+};
+
+export type CategoryType = {
+  __typename?: 'CategoryType';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type CustomerType = {
+  __typename?: 'CustomerType';
+  email: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  password: Scalars['String']['output'];
+  userName: Scalars['String']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createProduct?: Maybe<ProductType>;
   passwordChange?: Maybe<AccountType>;
   refreshToken?: Maybe<AuthType>;
   signIn?: Maybe<AuthType>;
@@ -42,26 +66,35 @@ export type AuthMutation = {
 };
 
 
-export type AuthMutationPasswordChangeArgs = {
+export type MutationCreateProductArgs = {
+  categories: Array<Scalars['String']['input']>;
+  description: Scalars['String']['input'];
+  picture: Scalars['String']['input'];
+  price: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+
+export type MutationPasswordChangeArgs = {
   oldPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 
-export type AuthMutationSignInArgs = {
+export type MutationSignInArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 
-export type AuthMutationSignUpAsCustomerArgs = {
+export type MutationSignUpAsCustomerArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   userName: Scalars['String']['input'];
 };
 
 
-export type AuthMutationSignUpAsRestaurantArgs = {
+export type MutationSignUpAsRestaurantArgs = {
   description: Scalars['String']['input'];
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -69,34 +102,42 @@ export type AuthMutationSignUpAsRestaurantArgs = {
 };
 
 
-export type AuthMutationUpdateRestaurantArgs = {
+export type MutationUpdateRestaurantArgs = {
   bannerUrl: Scalars['String']['input'];
   description: Scalars['String']['input'];
   name: Scalars['String']['input'];
 };
 
-export type AuthQuery = {
-  __typename?: 'AuthQuery';
+export type ProductType = {
+  __typename?: 'ProductType';
+  categories: Array<CategoryType>;
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  picture: Scalars['String']['output'];
+  price: Scalars['Decimal']['output'];
+  restaurant?: Maybe<ProductsService_RestaurantType>;
+  title: Scalars['String']['output'];
+};
+
+export type ProductsService_RestaurantType = {
+  __typename?: 'ProductsService_RestaurantType';
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type Query = {
+  __typename?: 'Query';
   accountInfo?: Maybe<AccountType>;
   customerInfo?: Maybe<CustomerType>;
+  productById?: Maybe<ProductType>;
   restaurantInfo?: Maybe<RestaurantType>;
   restaurants: Array<RestaurantType>;
   verify: Scalars['Boolean']['output'];
 };
 
-export type AuthType = {
-  __typename?: 'AuthType';
-  accessToken: Scalars['String']['output'];
-  account: AccountType;
-  refreshToken: Scalars['String']['output'];
-};
 
-export type CustomerType = {
-  __typename?: 'CustomerType';
-  email: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  password: Scalars['String']['output'];
-  userName: Scalars['String']['output'];
+export type QueryProductByIdArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type RestaurantType = {
@@ -115,7 +156,7 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'AuthMutation', signIn?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'AuthType', accessToken: string } | null };
 
 export type PasswordChangeMutationVariables = Exact<{
   oldPassword: Scalars['String']['input'];
@@ -123,7 +164,18 @@ export type PasswordChangeMutationVariables = Exact<{
 }>;
 
 
-export type PasswordChangeMutation = { __typename?: 'AuthMutation', passwordChange?: { __typename?: 'AccountType', id: string } | null };
+export type PasswordChangeMutation = { __typename?: 'Mutation', passwordChange?: { __typename?: 'AccountType', id: string } | null };
+
+export type CreateProductMutationVariables = Exact<{
+  title: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  picture: Scalars['String']['input'];
+  price: Scalars['String']['input'];
+  categories: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'ProductType', id: string } | null };
 
 export type UpdateRestaurantMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -132,27 +184,27 @@ export type UpdateRestaurantMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRestaurantMutation = { __typename?: 'AuthMutation', updateRestaurant?: { __typename?: 'RestaurantType', id: string } | null };
+export type UpdateRestaurantMutation = { __typename?: 'Mutation', updateRestaurant?: { __typename?: 'RestaurantType', id: string } | null };
 
 export type RestaurantInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RestaurantInfoQuery = { __typename?: 'AuthQuery', restaurantInfo?: { __typename?: 'RestaurantType', bannerUrl: string } | null };
+export type RestaurantInfoQuery = { __typename?: 'Query', restaurantInfo?: { __typename?: 'RestaurantType', bannerUrl: string } | null };
 
 export type AccountInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountInfoQuery = { __typename?: 'AuthQuery', accountInfo?: { __typename?: 'AccountType', role: string } | null };
+export type AccountInfoQuery = { __typename?: 'Query', accountInfo?: { __typename?: 'AccountType', role: string } | null };
 
 export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignOutMutation = { __typename?: 'AuthMutation', signOut: boolean };
+export type SignOutMutation = { __typename?: 'Mutation', signOut: boolean };
 
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RefreshTokenMutation = { __typename?: 'AuthMutation', refreshToken?: { __typename?: 'AuthType', accessToken: string } | null };
+export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'AuthType', accessToken: string } | null };
 
 export type SignUpAsCustomerMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -161,7 +213,7 @@ export type SignUpAsCustomerMutationVariables = Exact<{
 }>;
 
 
-export type SignUpAsCustomerMutation = { __typename?: 'AuthMutation', signUpAsCustomer?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignUpAsCustomerMutation = { __typename?: 'Mutation', signUpAsCustomer?: { __typename?: 'AuthType', accessToken: string } | null };
 
 export type SignUpAsRestaurantMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -171,11 +223,12 @@ export type SignUpAsRestaurantMutationVariables = Exact<{
 }>;
 
 
-export type SignUpAsRestaurantMutation = { __typename?: 'AuthMutation', signUpAsRestaurant?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignUpAsRestaurantMutation = { __typename?: 'Mutation', signUpAsRestaurant?: { __typename?: 'AuthType', accessToken: string } | null };
 
 
 export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
 export const PasswordChangeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"passwordChange"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"passwordChange"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"oldPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<PasswordChangeMutation, PasswordChangeMutationVariables>;
+export const CreateProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"picture"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"price"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categories"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProduct"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"Argument","name":{"kind":"Name","value":"picture"},"value":{"kind":"Variable","name":{"kind":"Name","value":"picture"}}},{"kind":"Argument","name":{"kind":"Name","value":"price"},"value":{"kind":"Variable","name":{"kind":"Name","value":"price"}}},{"kind":"Argument","name":{"kind":"Name","value":"categories"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categories"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateProductMutation, CreateProductMutationVariables>;
 export const UpdateRestaurantDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateRestaurant"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bannerUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRestaurant"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"Argument","name":{"kind":"Name","value":"bannerUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bannerUrl"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateRestaurantMutation, UpdateRestaurantMutationVariables>;
 export const RestaurantInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"restaurantInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"restaurantInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bannerUrl"}}]}}]}}]} as unknown as DocumentNode<RestaurantInfoQuery, RestaurantInfoQueryVariables>;
 export const AccountInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"accountInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accountInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<AccountInfoQuery, AccountInfoQueryVariables>;
