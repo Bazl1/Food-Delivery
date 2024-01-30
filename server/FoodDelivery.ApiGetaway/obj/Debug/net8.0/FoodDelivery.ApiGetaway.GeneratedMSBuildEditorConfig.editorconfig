@@ -9,11 +9,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FoodDelivery.ApiGetaway
 build_property.RootNamespace = FoodDelivery.ApiGetaway
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\kiril\Projects\www Projects\Food-Delivery\server\FoodDelivery.ApiGetaway\
+=======
+build_property.ProjectDir = c:\Users\dazma\Desktop\React\Food Delivery\server\FoodDelivery.ApiGetaway\
+>>>>>>> 9fdd215a4085c67af85f7847417ed1ef841133f0
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+<<<<<<< HEAD
 build_property.MSBuildProjectDirectory = C:\Users\kiril\Projects\www Projects\Food-Delivery\server\FoodDelivery.ApiGetaway
+=======
+build_property.MSBuildProjectDirectory = c:\Users\dazma\Desktop\React\Food Delivery\server\FoodDelivery.ApiGetaway
+>>>>>>> 9fdd215a4085c67af85f7847417ed1ef841133f0
 build_property._RazorSourceGeneratorDebug = 
