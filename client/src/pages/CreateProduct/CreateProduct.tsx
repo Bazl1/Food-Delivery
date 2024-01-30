@@ -56,6 +56,8 @@ const CreateProduct = () => {
             throw new Error("Error loading image");
         });
         const responseData = await response.json();
+
+        const categoryOfStrings = category.map((obj: any) => obj.value);
     };
 
     return (
