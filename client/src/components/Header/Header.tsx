@@ -10,6 +10,7 @@ import { LOGOUT } from "../../graphql/Logout.mutatuin";
 
 const Header = () => {
     const [userRole, setUserRole] = useState<string | undefined>(undefined);
+    const [userId, setUserId] = useState<string | undefined>(undefined);
 
     const [signOut] = useMutation(LOGOUT, {
         onCompleted(data) {
@@ -18,6 +19,7 @@ const Header = () => {
                 navigate("/");
                 refetch();
                 setUserRole(undefined);
+                setUserId(undefined);
             }
         },
     });
@@ -26,6 +28,7 @@ const Header = () => {
         fetchPolicy: "cache-and-network",
         onCompleted(data) {
             setUserRole(data.accountInfo?.role);
+            setUserId(data.accountInfo?.id);
         },
     });
 
@@ -70,7 +73,10 @@ const Header = () => {
                                 </Link>
                             </li>
                             {userRole === "Restaurant" && (
-                                <Link className={`${s.header__btn_one} btn-style-one`} to={"/"}>
+                                <Link
+                                    className={`${s.header__btn_one} btn-style-one`}
+                                    to={`/restaurant/:${userId}`}
+                                >
                                     My Restaurant
                                 </Link>
                             )}

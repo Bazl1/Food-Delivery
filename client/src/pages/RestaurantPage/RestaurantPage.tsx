@@ -2,9 +2,32 @@ import { useState } from "react";
 import ProductItems from "../../components/ProductItems/ProductItems";
 import s from "./RestaurantPage.module.scss";
 import { ProductType } from "../../__generated__/graphql";
+import { useQuery } from "@apollo/client";
+import { RESTAURANT_INFO, RESTAURANT_PRODUCTS } from "../../graphql/GetRastaurantInfo.query";
 
 const RestaurantPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
+    const [userId, setUserId] = useState<string | undefined>(undefined);
+
+    //refetch
+    useQuery(RESTAURANT_INFO, {
+        onCompleted(data) {
+            console.log(data);
+            setUserId(data.restaurantInfo?.id);
+        },
+    });
+
+    useQuery(RESTAURANT_PRODUCTS, {
+        variables: {
+            page: 0,
+            limit: 12,
+            restaurantId: userId,
+        },
+        onCompleted: (data) => {
+            console.log(data);
+            setProducts(data.search);
+        },
+    });
 
     return (
         <main className="main">

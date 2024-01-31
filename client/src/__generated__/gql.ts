@@ -17,8 +17,10 @@ const documents = {
     "\n    mutation passwordChange($oldPassword: String!, $password: String!){\n        passwordChange(oldPassword: $oldPassword, password: $password){\n            id\n        }\n    }\n": types.PasswordChangeDocument,
     "\n    mutation createProduct(\n        $title: String!\n        $description: String!\n        $picture: String!\n        $price: String!\n        $categories: [String!]!\n    ) {\n        createProduct(\n            title: $title\n            description: $description\n            picture: $picture\n            price: $price\n            categories: $categories\n        ) {\n            id\n        }\n    }\n": types.CreateProductDocument,
     "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
-    "\n    query restaurantInfo {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantInfoDocument,
-    "\n    query accountInfo {\n        accountInfo {\n            role\n        }\n    }\n": types.AccountInfoDocument,
+    "\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n": types.RestaurantInfoDocument,
+    "\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n": types.SearchDocument,
+    "\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantBannerDocument,
+    "\n    query accountInfo {\n        accountInfo {\n            id\n            role\n        }\n    }\n": types.AccountInfoDocument,
     "\n    mutation  signOut{\n        signOut\n    }\n": types.SignOutDocument,
     "\n    mutation refreshToken {\n        refreshToken {\n            accessToken\n        }\n    }\n": types.RefreshTokenDocument,
     "\n    mutation signUpAsCustomer($email: String!, $password: String!, $userName: String!) {\n        signUpAsCustomer(email: $email, password: $password, userName: $userName) {\n            accessToken\n        }\n    }\n": types.SignUpAsCustomerDocument,
@@ -58,11 +60,19 @@ export function gql(source: "\n    mutation updateRestaurant($name: String!, $de
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    query restaurantInfo {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n"): (typeof documents)["\n    query restaurantInfo {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n"];
+export function gql(source: "\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n"): (typeof documents)["\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    query accountInfo {\n        accountInfo {\n            role\n        }\n    }\n"): (typeof documents)["\n    query accountInfo {\n        accountInfo {\n            role\n        }\n    }\n"];
+export function gql(source: "\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n"): (typeof documents)["\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n"): (typeof documents)["\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query accountInfo {\n        accountInfo {\n            id\n            role\n        }\n    }\n"): (typeof documents)["\n    query accountInfo {\n        accountInfo {\n            id\n            role\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

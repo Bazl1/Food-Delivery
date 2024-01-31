@@ -6,7 +6,7 @@ import Textarea from "../Textarea/Textarea";
 import toast, { Toaster } from "react-hot-toast";
 import { BsImages } from "react-icons/bs";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_RESTAURANT_BANNER } from "../../graphql/GetRestaurantInfo.query";
+import { GET_RESTAURANT_BANNER } from "../../graphql/GetRestaurantBanner.query";
 import { CHANGE_GENERAL_SETTINGS } from "../../graphql/GeneralSettings.mutation";
 
 interface IForm {
