@@ -2,6 +2,17 @@ import { Link } from "react-router-dom";
 import Search from "../../components/Search/Search";
 import s from "./HomePage.module.scss";
 
+import logo1 from "../../assets/img/logos/Burger_King.png";
+import logo2 from "../../assets/img/logos/Coca-Cola.png";
+import logo3 from "../../assets/img/logos/Dominos.png";
+import logo4 from "../../assets/img/logos/KFC.png";
+import logo5 from "../../assets/img/logos/McDonalds.png";
+import logo6 from "../../assets/img/logos/Pepsi_logo.png";
+import logo7 from "../../assets/img/logos/Pizza_Hut.png";
+import logo8 from "../../assets/img/logos/Starbucks_Coffe.png";
+import logo9 from "../../assets/img/logos/Subway.png";
+import logo10 from "../../assets/img/logos/Wendys.png";
+
 const HomePage = () => {
     return (
         <main className="main">
@@ -22,40 +33,257 @@ const HomePage = () => {
                         <h2 className={s.partners__title}>Our partners</h2>
                         <div className={s.partners__items_box}>
                             <div className={s.partners__items}>
-                                <div className={s.partners__item}>Convenience</div>
-                                <div className={s.partners__item}>Speed</div>
-                                <div className={s.partners__item}>Time-saving</div>
-                                <div className={s.partners__item}>Variety</div>
-                                <div className={s.partners__item}>Safety</div>
-                                <div className={s.partners__item}>Comfort</div>
-                                <div className={s.partners__item}>Contactless</div>
-                                <div className={s.partners__item}>Flexibility</div>
-                                <div className={s.partners__item}>Wide selection</div>
-                                <div className={s.partners__item}>Order tracking</div>
-                                <div className={s.partners__item}>Promotions</div>
-                                <div className={s.partners__item}>Simplicity</div>
-                                <div className={s.partners__item}>Saved effort</div>
-                                <div className={s.partners__item}>Healthy options</div>
-                                <div className={s.partners__item}>Support local restaurants</div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                            </div>
+                            <div className={s.partners__items} aria-hidden="true">
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
                             </div>
                         </div>
                         <div className={s.partners__items_box}>
                             <div className={`${s.partners__items} ${s.partners__items_to}`}>
-                                <div className={s.partners__item}>Stress-free</div>
-                                <div className={s.partners__item}>Personalized choices</div>
-                                <div className={s.partners__item}>Elimination of waiting</div>
-                                <div className={s.partners__item}>Expense control</div>
-                                <div className={s.partners__item}>Menu optimization</div>
-                                <div className={s.partners__item}>Regular discounts</div>
-                                <div className={s.partners__item}>Eco-friendly</div>
-                                <div className={s.partners__item}>Pre-order option</div>
-                                <div className={s.partners__item}>Informative reviews</div>
-                                <div className={s.partners__item}>Freshness guarantee</div>
-                                <div className={s.partners__item}>Online payment option</div>
-                                <div className={s.partners__item}>No need to cook</div>
-                                <div className={s.partners__item}>Privacy</div>
-                                <div className={s.partners__item}>24/7 service</div>
-                                <div className={s.partners__item}>Charity support option</div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                            </div>
+                            <div
+                                className={`${s.partners__items} ${s.partners__items_to}`}
+                                aria-hidden="true"
+                            >
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo1} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo2} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo3} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo4} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo5} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo6} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo7} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo8} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo9} alt="img" />
+                                </div>
+                                <div className={s.partners__item}>
+                                    <img className={s.partners__item_img} src={logo10} alt="img" />
+                                </div>
                             </div>
                         </div>
                         <Link to={"/registration-restaurant"} className={`btn-style-one ${s.partners__btn}`}>

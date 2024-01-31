@@ -11,6 +11,8 @@ import { useMutation } from "@apollo/client";
 import SettingsRestaurantPage from "./pages/SettingsRestaurantPage/SettingsRestaurantPage";
 import RestaurantsPage from "./pages/RestaurantsPage/RestaurantsPage";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
+import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
+import SingleProduct from "./pages/SingleProduct/SingleProduct";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -38,6 +40,8 @@ function App() {
                     <Route path="/registration" element={<SignupPage />} />
                     <Route path="/registration-restaurant" element={<SignupPageRestaurant />} />
 
+                    <Route path="/product/:id" element={<SingleProduct />} />
+                    <Route path="/restaurant/:id" element={<RestaurantPage />} />
                     <Route path="/restaurants" element={<RestaurantsPage />} />
                     <Route path="/" element={<HomePage />} />
                 </Routes>
