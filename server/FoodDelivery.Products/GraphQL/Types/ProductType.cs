@@ -12,11 +12,11 @@ public class ProductType
     public decimal Price { get; set; }
     public List<CategoryType> Categories { get; set; } = new();
 
-    public static ProductType From(Product product)
+    public static ProductType From(Product product, GrpcService.RestaurantInfoResponse? restaurantInfo)
         => new ProductType
         {
             Id = product.Id,
-            Restaurant = null,
+            Restaurant = restaurantInfo is null ? null : RestaurantType.From(restaurantInfo),
             Title = product.Title,
             Description = product.Description,
             Picture = product.Picture,

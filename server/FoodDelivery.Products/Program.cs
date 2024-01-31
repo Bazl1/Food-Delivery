@@ -3,28 +3,20 @@ using FoodDelivery.Products.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// CORS
 builder.Services
-    .AddCors(corsOptions =>
-    {
-        corsOptions.AddDefaultPolicy(policyOptions =>
-        {
-            policyOptions
-                .WithOrigins("http://localhost:5173", "http://localhost:5234", "http://localhost:5149")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
-    });
-
-builder.Services
+    .DI_AddCorsWithOrigins(
+        "http://localhost:5173",
+        "http://localhost:5234",
+        "http://localhost:5149")
     .AddHttpContextAccessor()
-    .AddSingleton<Store>(new Store())
-    .AddJwtAuthentication(builder.Configuration)
-    .AddGraphQL();
+    .AddSingleton<FakeStore>(new FakeStore())
+    .DI_AddAuthentication(builder.Configuration)
+    .DI_AddGraphQL()
+    .DI_AddGrpcClients();
 
 var app = builder.Build();
 
+// app.UseHttpsRedirection();
 app.UseCors();
 
 app.UseAuthentication();

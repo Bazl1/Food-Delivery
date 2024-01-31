@@ -1,29 +1,20 @@
 using FoodDelivery.OAuth.Data.Stores;
 using FoodDelivery.OAuth.Services;
 using FoodDelivery.OAuth;
+using FoodDelivery.OAuth.gRPC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// CORS
 builder.Services
-    .AddCors(corsOptions =>
-    {
-        corsOptions.AddDefaultPolicy(policyOptions =>
-        {
-            policyOptions
-                .WithOrigins("http://localhost:5173", "http://localhost:5234", "http://localhost:5149")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
-    });
-
-// Services
-builder.Services
-    .AddJwtAuthentication(builder.Configuration)
+    .DI_AddCorsWithOrigins(
+        "http://localhost:5173",
+        "http://localhost:5234",
+        "http://localhost:5149")
+    .DI_AddAuthentication(builder.Configuration)
     .AddSingleton<FakeStore>(new FakeStore())
-    .AddGraphQL()
+    .DI_AddGraphQL()
     .AddTransient<JwtTokenGenerator, JwtTokenGenerator>()
+    .DI_AddGrpc()
     .AddHttpContextAccessor();
 
 var app = builder.Build();
@@ -34,5 +25,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGraphQL("/graphql");
+app.MapGrpcService<RestaurantService>();
 
 app.Run();
