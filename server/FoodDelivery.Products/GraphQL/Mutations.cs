@@ -14,7 +14,8 @@ public class Mutations
     public async Task<ProductType?> CreateProduct(
         IResolverContext context,
         ClaimsPrincipal claimsPrincipal,
-        [Service] Store store,
+        [Service] FakeStore store,
+        [Service] GrpcService.Restaurant.RestaurantClient _restaurantClient,
         string title,
         string description,
         string picture,
@@ -64,6 +65,22 @@ public class Mutations
         }
         store.Products.Add(product);
 
-        return ProductType.From(product);
+        GrpcService.RestaurantInfoResponse restaurantInfo = null;
+        try
+        {
+            restaurantInfo = await _restaurantClient.GetRestaurantInfoAsync(
+                new GrpcService.RestaurantInfoRequest
+                {
+                    Id = accountId
+                }
+            );
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error calling GetRestaurantInfoAsync: {ex.Message}");
+            restaurantInfo = null;
+        }
+
+        return ProductType.From(product, restaurantInfo);
     }
 }

@@ -2,7 +2,7 @@ using FoodDelivery.Domain.Entities;
 
 namespace FoodDelivery.Products.Stores;
 
-public class Store
+public class FakeStore
 {
     public List<Product> Products { get; set; } = new();
     public List<Category> Categories { get; set; } = new()
