@@ -1,17 +1,14 @@
-using System.Net.Http.Headers;
 using System.Text;
+using FoodDelivery.GraphQL;
 using FoodDelivery.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FoodDelivery.Getaway;
+namespace FoodDelivery.Products;
 
 public static class DependencyInjection
 {
-    private const string OAuthService = "OAuthService";
-    private const string ProductsService = "ProductsService";
-
-    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection DI_AddAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
@@ -44,34 +41,42 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddRemoteGraphQL(this IServiceCollection services)
+    public static IServiceCollection DI_AddGraphQL(this IServiceCollection services)
     {
         services
-            .AddHttpClient(OAuthService, client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5252/graphql");
-            })
-            .AddHttpMessageHandler((provider) =>
-            {
-                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
-                return new AuthHeaderHandler(httpContextAccessor);
-            });
-
-        services
-            .AddHttpClient(ProductsService, client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5149/graphql");
-            })
-            .AddHttpMessageHandler((provider) =>
-            {
-                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
-                return new AuthHeaderHandler(httpContextAccessor);
-            });
-
-        services
             .AddGraphQLServer()
-            .AddRemoteSchema(OAuthService, ignoreRootTypes: false)
-            .AddRemoteSchema(ProductsService, ignoreRootTypes: false);
+            .AddAuthorization()
+            .AddMutationType<Mutations>()
+            .AddQueryType<Queries>()
+            .UseDefaultPipeline();
+
+        return services;
+    }
+
+    public static IServiceCollection DI_AddGrpcClients(this IServiceCollection services)
+    {
+        services
+            .AddGrpcClient<GrpcService.Restaurant.RestaurantClient>(options =>
+            {
+                options.Address = new Uri("https://localhost:7254");
+            });
+
+        return services;
+    }
+
+    public static IServiceCollection DI_AddCorsWithOrigins(this IServiceCollection services, params string[] origins)
+    {
+        services.AddCors(corsOptions =>
+        {
+            corsOptions.AddDefaultPolicy(policyOptions =>
+            {
+                policyOptions
+                    .WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
 
         return services;
     }

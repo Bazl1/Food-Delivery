@@ -1,7 +1,5 @@
-using FoodDelivery.OAuth.Data.Stores;
-using FoodDelivery.OAuth.Services;
-using FoodDelivery.OAuth;
-using FoodDelivery.OAuth.gRPC.Services;
+using FoodDelivery.Products;
+using FoodDelivery.Products.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,21 +8,20 @@ builder.Services
         "http://localhost:5173",
         "http://localhost:5234",
         "http://localhost:5149")
-    .DI_AddAuthentication(builder.Configuration)
+    .AddHttpContextAccessor()
     .AddSingleton<FakeStore>(new FakeStore())
+    .DI_AddAuthentication(builder.Configuration)
     .DI_AddGraphQL()
-    .AddTransient<JwtTokenGenerator, JwtTokenGenerator>()
-    .DI_AddGrpc()
-    .AddHttpContextAccessor();
+    .DI_AddGrpcClients();
 
 var app = builder.Build();
 
+// app.UseHttpsRedirection();
 app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGraphQL("/graphql");
-app.MapGrpcService<RestaurantService>();
 
 app.Run();
