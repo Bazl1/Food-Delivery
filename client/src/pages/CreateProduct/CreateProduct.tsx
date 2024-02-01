@@ -10,6 +10,7 @@ import { categorys } from "../../assets/utils/Categorys";
 import "./Select.scss";
 import { useMutation } from "@apollo/client";
 import { CREATE_PRODUCT } from "../../graphql/CreateProduct.mutation";
+// import { RESTAURANT_PRODUCTS } from "../../graphql/GetRastaurantInfo.query";
 
 interface IForm {
     name: string;
@@ -44,6 +45,16 @@ const CreateProduct = () => {
         onError(error) {
             toast.success(error.message);
         },
+        // update(cache, { data: { createProduct } }: any) {
+        //     const { search }: any = cache.readQuery({ query: RESTAURANT_PRODUCTS });
+
+        //     cache.writeQuery({
+        //         query: RESTAURANT_PRODUCTS,
+        //         data: {
+        //             search: [createProduct, ...search],
+        //         },
+        //     });
+        // },
     });
 
     const readURL = (event: React.ChangeEvent<HTMLInputElement>) => {

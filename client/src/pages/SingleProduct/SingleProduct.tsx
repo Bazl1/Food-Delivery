@@ -1,28 +1,51 @@
 import s from "./SingleProduct.module.scss";
-import demo from "../../assets/img/banner.png";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCT_BY_ID } from "../../graphql/GetProductById.query";
 
 const SingleProduct = () => {
+    const { id = "" } = useParams<string>();
+
+    const { data, loading } = useQuery(GET_PRODUCT_BY_ID, {
+        variables: {
+            id: id.slice(1),
+        },
+    });
+
     return (
         <main className="main">
             <section className={s.product}>
                 <div className="container">
                     <div className={s.product__inner}>
-                        <div className={s.product__columns}>
-                            <img className={s.product__img} src={demo} alt="img" />
-                        </div>
-                        <div className={s.product__columns}>
-                            <h2 className={s.product__title}>Product titlte</h2>
-                            <h4 className={s.product__price}>10$</h4>
-                            <p className={s.product__text}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus rerum
-                                dolores reiciendis perferendis, molestias doloribus excepturi maiores! Est,
-                                deserunt debitis fuga magni vero culpa illo explicabo quis dolore nisi labore.
-                                Alias minus autem commodi, perspiciatis voluptas fugiat earum facilis eum
-                                sunt! Vel illo eius error minima corrupti? Ratione quae earum enim numquam
-                                sit. Perferendis saepe, debitis voluptas dicta cumque suscipit.
-                            </p>
-                            <button className={`${s.product__btn} btn-style-one`}>Add to cart</button>
-                        </div>
+                        {!loading ? (
+                            <>
+                                <div className={s.product__columns}>
+                                    <img
+                                        className={s.product__img}
+                                        src={data?.productById?.picture}
+                                        alt="img"
+                                    />
+                                </div>
+                                <div className={s.product__columns}>
+                                    <h2 className={s.product__title}>{data?.productById?.title}</h2>
+                                    <h4 className={s.product__price}>{data?.productById?.price}$</h4>
+                                    <p className={s.product__text}>{data?.productById?.description}</p>
+                                    <button className={`${s.product__btn} btn-style-one`}>Add to cart</button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className={s.product__columns}>
+                                    <div className={s.product__skeleton_img}></div>
+                                </div>
+                                <div className={s.product__columns}>
+                                    <div className={s.product__skeleton_title}></div>
+                                    <div className={s.product__skeleton_price}></div>
+                                    <div className={s.product__skeleton_description}></div>
+                                    <div className={s.product__skeleton_btn}></div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>

@@ -4,7 +4,8 @@
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 30px 20px;
     }
-    &__item {
+    &__item,
+    &__skeleton {
         text-decoration: none;
         border: 1px solid rgba(#171717, 0.3);
         background: #fff;
@@ -36,5 +37,70 @@
         &:hover {
             color: #fff !important;
         }
+    }
+
+    &__skeleton_img {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        background: #d6d8e1;
+        margin-bottom: 15px;
+    }
+    &__skeleton_title {
+        width: 100%;
+        height: 30px;
+        border-radius: 4px;
+        background: #d6d8e1;
+        margin-bottom: 10px;
+    }
+    &__skeleton_price {
+        width: 30%;
+        height: 30px;
+        border-radius: 4px;
+        background: #d6d8e1;
+        margin-bottom: 20px;
+    }
+    &__skeleton_btn {
+        width: 50%;
+        height: 45px;
+        border-radius: 8px;
+        background: #d6d8e1;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 50px;
+    }
+    &__pagination_item {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid rgba(#171717, 0.3);
+        font-size: 18px;
+        line-height: 40px;
+        font-weight: 500;
+        color: #171717;
+        text-align: center;
+        cursor: pointer;
+        transition:
+            background 0.3s,
+            color 0.3s,
+            border-color 0.3s;
+
+        &:hover {
+            background: #f7761f;
+            color: #fff;
+            border-color: #f7761f;
+            box-shadow: 0 0 5px rgba(#171717, 0.1);
+        }
+    }
+    &__pagination_skeleton {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #d6d8e1;
     }
 }

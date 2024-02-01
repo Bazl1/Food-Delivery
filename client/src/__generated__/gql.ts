@@ -17,6 +17,7 @@ const documents = {
     "\n    mutation passwordChange($oldPassword: String!, $password: String!){\n        passwordChange(oldPassword: $oldPassword, password: $password){\n            id\n        }\n    }\n": types.PasswordChangeDocument,
     "\n    mutation createProduct(\n        $title: String!\n        $description: String!\n        $picture: String!\n        $price: String!\n        $categories: [String!]!\n    ) {\n        createProduct(\n            title: $title\n            description: $description\n            picture: $picture\n            price: $price\n            categories: $categories\n        ) {\n            id\n        }\n    }\n": types.CreateProductDocument,
     "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
+    "\n    query productById($id: String!){\n        productById(id: $id){\n            id\n            picture\n            title\n            description\n            price\n        }\n    }\n": types.ProductByIdDocument,
     "\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n": types.RestaurantInfoDocument,
     "\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n": types.SearchDocument,
     "\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantBannerDocument,
@@ -57,6 +58,10 @@ export function gql(source: "\n    mutation createProduct(\n        $title: Stri
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query productById($id: String!){\n        productById(id: $id){\n            id\n            picture\n            title\n            description\n            price\n        }\n    }\n"): (typeof documents)["\n    query productById($id: String!){\n        productById(id: $id){\n            id\n            picture\n            title\n            description\n            price\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
