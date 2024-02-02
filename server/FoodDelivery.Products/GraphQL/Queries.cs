@@ -1,9 +1,8 @@
 using FoodDelivery.Domain.Entities;
 using FoodDelivery.GraphQL.Types;
 using FoodDelivery.Products.Stores;
-using HotChocolate;
-using System.Linq;
 using HotChocolate.Resolvers;
+using FoodDelivery.Products.GraphQL.Types;
 
 namespace FoodDelivery.GraphQL;
 
@@ -43,7 +42,7 @@ public class Queries
         return ProductType.From(product, restaurantInfo);
     }
 
-    public async Task<IEnumerable<ProductType>> Search(
+    public async Task<ProductsType> Search(
         IResolverContext context,
         [Service] FakeStore store,
         [Service] GrpcService.Restaurant.RestaurantClient _restaurantClient,
@@ -53,14 +52,23 @@ public class Queries
         List<string>? categories = null,
         string? predicate = null)
     {
+        if (page <= 0)
+        {
+            page = 1;
+        }
 
-        return store.Products
+        var products = store.Products
             .Where(product =>
                 (restaurantId == null || product.RestaurantId == restaurantId) &&
                 (categories == null || product.Categories.Any(category => categories.Any(categoryTitle => categoryTitle == category.Title))) &&
                 (predicate == null || (product.Title.ToUpper().Contains(predicate.ToUpper()) || product.Description.ToUpper().Contains(predicate.ToUpper())))
             )
-            .Skip(page * limit)
+            .ToList();
+
+        var pageCount = (int)Math.Ceiling((float)products.Count() / (float)limit);
+
+        var productsPage = products
+            .Skip((page - 1) * limit)
             .Take(limit)
             .Select(product =>
             {
@@ -78,5 +86,8 @@ public class Queries
                 return ProductType.From(product, restaurantInfo);
             })
             .ToList();
+
+
+        return ProductsType.From(productsPage, pageCount);
     }
 }
