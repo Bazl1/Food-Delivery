@@ -83,4 +83,37 @@ public class Mutations
 
         return ProductType.From(product, restaurantInfo);
     }
+
+    [Authorize(Roles = ["Restaurant"])]
+    public async Task<bool> DeleteProduct(
+        IResolverContext context,
+        ClaimsPrincipal claimsPrincipal,
+        [Service] FakeStore store,
+        string id)
+    {
+        var accountId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (store.Products.SingleOrDefault(product => product.Id == id) is not Product product)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Product with given id is not found.")
+                    .Build()
+            );
+            return false;
+        }
+
+        if (product.RestaurantId == accountId)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage("Permission denied.")
+                    .Build()
+            );
+            return false;
+        }
+
+        store.Products.Remove(product);
+
+        return true;
+    }
 }
