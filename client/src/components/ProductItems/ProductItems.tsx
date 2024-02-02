@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 interface ProductItemsProps {
     products: ProductType[];
-    limit: number;
+    pages: number;
     loading: boolean;
     setActivePage: (value: number) => void;
     activePage: number;
@@ -13,24 +13,16 @@ interface ProductItemsProps {
 }
 const ProductItems: React.FC<ProductItemsProps> = ({
     products,
-    limit,
+    pages,
     loading,
     setActivePage,
     activePage,
     productsRefetch,
 }) => {
-    const [pages, setPages] = useState<number | null>(null);
-    const padinationClac = () => {
-        const pages = Math.ceil(products.length / limit);
-        setPages(pages);
-    };
-    useEffect(() => {
-        padinationClac();
-    }, [products, limit]);
-
     useEffect(() => {
         productsRefetch();
     }, [activePage]);
+
     return (
         <>
             <div className={s.restaurant__items}>

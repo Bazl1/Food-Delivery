@@ -82,7 +82,7 @@ const RestaurantPage = () => {
                         )}
                         <ProductItems
                             products={products}
-                            limit={2}
+                            pages={2}
                             loading={productLoading}
                             setActivePage={setActivePage}
                             activePage={activePage}

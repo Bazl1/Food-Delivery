@@ -1,0 +1,14 @@
+.cart {
+    padding: 50px 0;
+    &__title {
+        font-family: "Arlon";
+        font-size: 42px;
+        margin-bottom: 50px;
+    }
+    &__items {
+        padding: 45px 35px;
+        background: #fff;
+        border: 1px solid rgba(#171717, 0.3);
+        border-radius: 12px;
+    }
+}
