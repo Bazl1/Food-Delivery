@@ -102,7 +102,7 @@ public class Mutations
             return false;
         }
 
-        if (product.RestaurantId == accountId)
+        if (product.RestaurantId != accountId)
         {
             context.ReportError(
                 ErrorBuilder.New()
