@@ -4,8 +4,8 @@ namespace FoodDelivery.GraphQL.Types;
 
 public class CategoryType
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = null!;
+    public int? Id { get; set; }
+    public string? Title { get; set; } = null!;
 
     public static CategoryType From(Category category)
         => new CategoryType
