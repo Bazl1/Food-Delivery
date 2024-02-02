@@ -11,17 +11,15 @@ export const RESTAURANT_INFO = gql(`
 `);
 
 export const RESTAURANT_PRODUCTS = gql(`
-    query search($page: Int!, $limit: Int!, $restaurantId: String){
+    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){
         search(page: $page, limit: $limit, restaurantId: $restaurantId){
-            id
-            picture
-            title
-            price
-            categories{
+            products{
                 id
+                picture
                 title
+                price
             }
-            description
+            pageCount
         }
     }
 `);

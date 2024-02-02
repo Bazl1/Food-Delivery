@@ -19,13 +19,14 @@ const documents = {
     "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
     "\n    query productById($id: String!){\n        productById(id: $id){\n            id\n            picture\n            title\n            description\n            price\n        }\n    }\n": types.ProductByIdDocument,
     "\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n": types.RestaurantInfoDocument,
-    "\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n": types.SearchDocument,
+    "\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n": types.GetProductsDocument,
     "\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantBannerDocument,
     "\n    query accountInfo {\n        accountInfo {\n            id\n            role\n        }\n    }\n": types.AccountInfoDocument,
     "\n    mutation  signOut{\n        signOut\n    }\n": types.SignOutDocument,
     "\n    mutation refreshToken {\n        refreshToken {\n            accessToken\n        }\n    }\n": types.RefreshTokenDocument,
     "\n    mutation signUpAsCustomer($email: String!, $password: String!, $userName: String!) {\n        signUpAsCustomer(email: $email, password: $password, userName: $userName) {\n            accessToken\n        }\n    }\n": types.SignUpAsCustomerDocument,
     "\n    mutation signUpAsRestaurant($email: String!, $password: String!, $name: String!, $description: String!) {\n        signUpAsRestaurant(email: $email, password: $password, name: $name, description: $description) {\n            accessToken\n        }\n    }\n": types.SignUpAsRestaurantDocument,
+    "\n    query searchOnRestaurant($page: Int!, $limit: Int!, $predicate: String, $restaurantId: String){\n        search(page: $page, limit: $limit, predicate: $predicate, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n": types.SearchOnRestaurantDocument,
 };
 
 /**
@@ -69,7 +70,7 @@ export function gql(source: "\n    query restaurantInfo {\n        restaurantInf
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n"): (typeof documents)["\n    query search($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            id\n            picture\n            title\n            price\n            categories{\n                id\n                title\n            }\n            description\n        }\n    }\n"];
+export function gql(source: "\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"): (typeof documents)["\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -94,6 +95,10 @@ export function gql(source: "\n    mutation signUpAsCustomer($email: String!, $p
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    mutation signUpAsRestaurant($email: String!, $password: String!, $name: String!, $description: String!) {\n        signUpAsRestaurant(email: $email, password: $password, name: $name, description: $description) {\n            accessToken\n        }\n    }\n"): (typeof documents)["\n    mutation signUpAsRestaurant($email: String!, $password: String!, $name: String!, $description: String!) {\n        signUpAsRestaurant(email: $email, password: $password, name: $name, description: $description) {\n            accessToken\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query searchOnRestaurant($page: Int!, $limit: Int!, $predicate: String, $restaurantId: String){\n        search(page: $page, limit: $limit, predicate: $predicate, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"): (typeof documents)["\n    query searchOnRestaurant($page: Int!, $limit: Int!, $predicate: String, $restaurantId: String){\n        search(page: $page, limit: $limit, predicate: $predicate, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

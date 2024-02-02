@@ -1,7 +1,7 @@
 import s from "./CartItem.module.scss";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 import demo from "../../assets/img/bannerLogin.jpg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const CartItem = () => {
     const [count, setCount] = useState<number>(1);

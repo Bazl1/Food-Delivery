@@ -2,12 +2,21 @@ import { useForm } from "react-hook-form";
 import { FaArrowRightLong } from "react-icons/fa6";
 import s from "./Search.module.scss";
 import { useState } from "react";
+import { ProductType } from "../../__generated__/graphql";
+import { useLazyQuery } from "@apollo/client";
+import { SEARCH } from "../../graphql/Search.mutation";
 
 interface IForm {
     search: string;
 }
 
-const Search = () => {
+interface SearchProps {
+    setProducts: (value: ProductType[]) => void;
+    setPages: (value: number) => void;
+    userId: string | null;
+}
+
+const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null }) => {
     const [text, setText] = useState<string>("");
     const {
         register,
@@ -17,7 +26,22 @@ const Search = () => {
         mode: "onBlur",
     });
 
-    const Submit = async () => {};
+    const [searchOnRestaurant] = useLazyQuery(SEARCH, {
+        onCompleted(data) {
+            setProducts(data.search.products);
+            setPages(data.search.pageCount);
+        },
+    });
+    const Submit = async () => {
+        searchOnRestaurant({
+            variables: {
+                page: 0,
+                limit: -1,
+                restaurantId: userId,
+                predicate: text,
+            },
+        });
+    };
 
     return (
         <form className={s.search} onSubmit={handleSubmit(Submit)}>

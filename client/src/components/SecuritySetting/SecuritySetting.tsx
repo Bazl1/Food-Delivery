@@ -28,6 +28,9 @@ const SecuritySetting = () => {
     const [passwordChange] = useMutation(CHANGE_PASSWORD, {
         onCompleted() {
             toast.success("Password changed successfully");
+            setOldPassword("");
+            setPassword("");
+            setConfirmPassword("");
         },
         onError(error) {
             toast.error(error.message);

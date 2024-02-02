@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ProductType } from "../../__generated__/graphql";
 import s from "./ProductItems.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
 interface ProductItemsProps {
     products: ProductType[];
@@ -35,12 +36,21 @@ const ProductItems: React.FC<ProductItemsProps> = ({
                                 to={`/product/:${product.id}`}
                                 className={s.restaurant__item}
                             >
-                                <img className={s.restaurant__item_img} src={product.picture} alt="img" />
+                                <img
+                                    className={s.restaurant__item_img}
+                                    src={product.picture || ""}
+                                    alt="img"
+                                />
                                 <h4 className={s.restaurant__item_title}>{product.title}</h4>
                                 <div className={s.restaurant__item_price}>{product.price}$</div>
-                                <button className={`${s.restaurant__item_btn} btn-style-one`}>
-                                    Add to cart
-                                </button>
+                                <div className={s.restaurant__item_btns}>
+                                    <button className={`${s.restaurant__item_btn} btn-style-one`}>
+                                        Add to cart
+                                    </button>
+                                    <button className={s.restaurant__item_delete}>
+                                        <FiTrash2 />
+                                    </button>
+                                </div>
                             </Link>
                         );
                     })
@@ -75,11 +85,8 @@ const ProductItems: React.FC<ProductItemsProps> = ({
             </div>
             <div className={s.restaurant__pagination}>
                 {!loading ? (
-                    pages && (
+                    pages !== 1 && (
                         <>
-                            <div onClick={() => setActivePage(0)} className={s.restaurant__pagination_item}>
-                                0
-                            </div>
                             {Array.from({ length: pages }, (_, index) => (
                                 <div
                                     key={index}

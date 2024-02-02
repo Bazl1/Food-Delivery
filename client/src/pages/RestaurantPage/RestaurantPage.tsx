@@ -10,6 +10,7 @@ import Search from "../../components/Search/Search";
 const RestaurantPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [activePage, setActivePage] = useState<number>(0);
+    const [pages, setPages] = useState<number>(0);
     const [userId, setUserId] = useState<string | undefined>(undefined);
 
     const {
@@ -25,11 +26,12 @@ const RestaurantPage = () => {
     const { loading: productLoading, refetch: productsRefetch } = useQuery(RESTAURANT_PRODUCTS, {
         variables: {
             page: activePage,
-            limit: 2,
+            limit: 4,
             restaurantId: userId,
         },
         onCompleted: (data) => {
-            setProducts(data.search);
+            setProducts(data.search.products);
+            setPages(data.search.pageCount);
         },
     });
 
@@ -72,7 +74,11 @@ const RestaurantPage = () => {
                                 >
                                     Create product
                                 </Link>
-                                <Search />
+                                <Search
+                                    setProducts={setProducts}
+                                    setPages={setPages}
+                                    userId={userId || null}
+                                />
                             </div>
                         ) : (
                             <div className={s.restaurant__panel}>
@@ -82,7 +88,7 @@ const RestaurantPage = () => {
                         )}
                         <ProductItems
                             products={products}
-                            pages={2}
+                            pages={pages}
                             loading={productLoading}
                             setActivePage={setActivePage}
                             activePage={activePage}
