@@ -14,6 +14,7 @@ import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import CartPage from "./pages/CartPage/CartPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -34,6 +35,7 @@ function App() {
                 <ScrollToTop />
                 <Header />
                 <Routes>
+                    <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/cart" element={<CartPage />} />
 
                     <Route path="/restaurant-settings" element={<SettingsRestaurantPage />} />

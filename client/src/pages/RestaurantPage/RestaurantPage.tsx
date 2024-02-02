@@ -36,6 +36,7 @@ const RestaurantPage = () => {
     });
 
     useEffect(() => {
+        productsRefetch();
         refetch();
     }, []);
 

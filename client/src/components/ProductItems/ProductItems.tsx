@@ -3,6 +3,9 @@ import { ProductType } from "../../__generated__/graphql";
 import s from "./ProductItems.module.scss";
 import { useEffect } from "react";
 import { FiTrash2 } from "react-icons/fi";
+import { useMutation } from "@apollo/client";
+import { DELETE_PRODUCT } from "../../graphql/DeleteProduct.mutation";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ProductItemsProps {
     products: ProductType[];
@@ -20,9 +23,28 @@ const ProductItems: React.FC<ProductItemsProps> = ({
     activePage,
     productsRefetch,
 }) => {
+    const [deleteProduct] = useMutation(DELETE_PRODUCT, {
+        onCompleted() {
+            toast.success("Product removed successfully");
+            productsRefetch();
+        },
+        onError(error) {
+            toast.error(error.message);
+        },
+    });
+
     useEffect(() => {
         productsRefetch();
     }, [activePage]);
+
+    const handleDelete = async (e: any, id: string) => {
+        e.preventDefault();
+        await deleteProduct({
+            variables: {
+                id: id,
+            },
+        });
+    };
 
     return (
         <>
@@ -44,10 +66,20 @@ const ProductItems: React.FC<ProductItemsProps> = ({
                                 <h4 className={s.restaurant__item_title}>{product.title}</h4>
                                 <div className={s.restaurant__item_price}>{product.price}$</div>
                                 <div className={s.restaurant__item_btns}>
-                                    <button className={`${s.restaurant__item_btn} btn-style-one`}>
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                        }}
+                                        className={`${s.restaurant__item_btn} btn-style-one`}
+                                    >
                                         Add to cart
                                     </button>
-                                    <button className={s.restaurant__item_delete}>
+                                    <button
+                                        onClick={(e) => {
+                                            handleDelete(e, product.id || "");
+                                        }}
+                                        className={s.restaurant__item_delete}
+                                    >
                                         <FiTrash2 />
                                     </button>
                                 </div>
@@ -107,6 +139,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({
                     </>
                 )}
             </div>
+            <Toaster position="bottom-left" reverseOrder={false} />
         </>
     );
 };
