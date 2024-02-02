@@ -16,7 +16,7 @@ public class JwtTokenGenerator
         _jwtSettings = options.Value;
     }
 
-    public string GenerateToken(Account account)
+    public string GenerateAccessToken(Account account)
     {
         var claims = new List<Claim>
         {
@@ -34,7 +34,7 @@ public class JwtTokenGenerator
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.Expiry),
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.AccessExpiry),
             signingCredentials: signingCredentials
         );
 
@@ -60,7 +60,7 @@ public class JwtTokenGenerator
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.Expiry),
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.RefreshExpiry),
             signingCredentials: signingCredentials
         );
 
