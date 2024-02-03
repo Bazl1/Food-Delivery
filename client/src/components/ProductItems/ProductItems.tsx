@@ -6,6 +6,8 @@ import { FiTrash2 } from "react-icons/fi";
 import { useMutation } from "@apollo/client";
 import { DELETE_PRODUCT } from "../../graphql/DeleteProduct.mutation";
 import toast, { Toaster } from "react-hot-toast";
+import { useCart } from "../../assets/hooks/useCart";
+import ProductItemSkeleton from "../ProductItemSkeleton/ProductItemSkeleton";
 
 interface ProductItemsProps {
     products: ProductType[];
@@ -26,7 +28,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({
     const [deleteProduct] = useMutation(DELETE_PRODUCT, {
         onCompleted() {
             toast.success("Product removed successfully");
-            productsRefetch();
+            productsRefetch(); // разобраться
         },
         onError(error) {
             toast.error(error.message);
@@ -69,6 +71,7 @@ const ProductItems: React.FC<ProductItemsProps> = ({
                                     <button
                                         onClick={(e) => {
                                             e.preventDefault();
+                                            useCart(product.id || "", true);
                                         }}
                                         className={`${s.restaurant__item_btn} btn-style-one`}
                                     >
@@ -88,30 +91,10 @@ const ProductItems: React.FC<ProductItemsProps> = ({
                     })
                 ) : (
                     <>
-                        <div className={s.restaurant__skeleton}>
-                            <div className={s.restaurant__skeleton_img}></div>
-                            <div className={s.restaurant__skeleton_title}></div>
-                            <div className={s.restaurant__skeleton_price}></div>
-                            <div className={s.restaurant__skeleton_btn}></div>
-                        </div>
-                        <div className={s.restaurant__skeleton}>
-                            <div className={s.restaurant__skeleton_img}></div>
-                            <div className={s.restaurant__skeleton_title}></div>
-                            <div className={s.restaurant__skeleton_price}></div>
-                            <div className={s.restaurant__skeleton_btn}></div>
-                        </div>
-                        <div className={s.restaurant__skeleton}>
-                            <div className={s.restaurant__skeleton_img}></div>
-                            <div className={s.restaurant__skeleton_title}></div>
-                            <div className={s.restaurant__skeleton_price}></div>
-                            <div className={s.restaurant__skeleton_btn}></div>
-                        </div>
-                        <div className={s.restaurant__skeleton}>
-                            <div className={s.restaurant__skeleton_img}></div>
-                            <div className={s.restaurant__skeleton_title}></div>
-                            <div className={s.restaurant__skeleton_price}></div>
-                            <div className={s.restaurant__skeleton_btn}></div>
-                        </div>
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
                     </>
                 )}
             </div>
