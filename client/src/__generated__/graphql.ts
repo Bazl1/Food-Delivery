@@ -20,10 +20,10 @@ export type Scalars = {
 
 export type AccountType = {
   __typename?: 'AccountType';
-  email: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  password: Scalars['String']['output'];
-  role: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
 };
 
 export enum ApplyPolicy {
@@ -34,9 +34,9 @@ export enum ApplyPolicy {
 
 export type AuthType = {
   __typename?: 'AuthType';
-  accessToken: Scalars['String']['output'];
-  account: AccountType;
-  refreshToken: Scalars['String']['output'];
+  accessToken?: Maybe<Scalars['String']['output']>;
+  account?: Maybe<AccountType>;
+  refreshToken?: Maybe<Scalars['String']['output']>;
 };
 
 export type CategoryType = {
@@ -47,10 +47,10 @@ export type CategoryType = {
 
 export type CustomerType = {
   __typename?: 'CustomerType';
-  email: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  password: Scalars['String']['output'];
-  userName: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
 };
 
 export type Mutation = {
@@ -204,12 +204,12 @@ export type QuerySearchArgs = {
 
 export type RestaurantType = {
   __typename?: 'RestaurantType';
-  bannerUrl: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  email: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  password: Scalars['String']['output'];
+  bannerUrl?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
 };
 
 export type SignInMutationVariables = Exact<{
@@ -218,7 +218,7 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'AuthType', accessToken?: string | null } | null };
 
 export type PasswordChangeMutationVariables = Exact<{
   oldPassword: Scalars['String']['input'];
@@ -226,7 +226,7 @@ export type PasswordChangeMutationVariables = Exact<{
 }>;
 
 
-export type PasswordChangeMutation = { __typename?: 'Mutation', passwordChange?: { __typename?: 'AccountType', id: string } | null };
+export type PasswordChangeMutation = { __typename?: 'Mutation', passwordChange?: { __typename?: 'AccountType', id?: string | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   title: Scalars['String']['input'];
@@ -253,12 +253,12 @@ export type UpdateRestaurantMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRestaurantMutation = { __typename?: 'Mutation', updateRestaurant?: { __typename?: 'RestaurantType', id: string } | null };
+export type UpdateRestaurantMutation = { __typename?: 'Mutation', updateRestaurant?: { __typename?: 'RestaurantType', id?: string | null } | null };
 
 export type GetRestaurantsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRestaurantsQuery = { __typename?: 'Query', restaurants: Array<{ __typename?: 'RestaurantType', id: string, name: string, bannerUrl: string, description: string }> };
+export type GetRestaurantsQuery = { __typename?: 'Query', restaurants: Array<{ __typename?: 'RestaurantType', id?: string | null, name?: string | null, bannerUrl?: string | null, description?: string | null }> };
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -270,7 +270,7 @@ export type ProductByIdQuery = { __typename?: 'Query', productById?: { __typenam
 export type RestaurantInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RestaurantInfoQuery = { __typename?: 'Query', restaurantInfo?: { __typename?: 'RestaurantType', id: string, bannerUrl: string, name: string } | null };
+export type RestaurantInfoQuery = { __typename?: 'Query', restaurantInfo?: { __typename?: 'RestaurantType', id?: string | null, bannerUrl?: string | null, name?: string | null } | null };
 
 export type GetProductsQueryVariables = Exact<{
   page: Scalars['Int']['input'];
@@ -284,12 +284,12 @@ export type GetProductsQuery = { __typename?: 'Query', search: { __typename?: 'P
 export type RestaurantBannerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RestaurantBannerQuery = { __typename?: 'Query', restaurantInfo?: { __typename?: 'RestaurantType', bannerUrl: string } | null };
+export type RestaurantBannerQuery = { __typename?: 'Query', restaurantInfo?: { __typename?: 'RestaurantType', bannerUrl?: string | null } | null };
 
 export type AccountInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountInfoQuery = { __typename?: 'Query', accountInfo?: { __typename?: 'AccountType', id: string, role: string } | null };
+export type AccountInfoQuery = { __typename?: 'Query', accountInfo?: { __typename?: 'AccountType', id?: string | null, role?: string | null } | null };
 
 export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -299,7 +299,7 @@ export type SignOutMutation = { __typename?: 'Mutation', signOut: boolean };
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'AuthType', accessToken: string } | null };
+export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'AuthType', accessToken?: string | null } | null };
 
 export type SignUpAsCustomerMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -308,7 +308,7 @@ export type SignUpAsCustomerMutationVariables = Exact<{
 }>;
 
 
-export type SignUpAsCustomerMutation = { __typename?: 'Mutation', signUpAsCustomer?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignUpAsCustomerMutation = { __typename?: 'Mutation', signUpAsCustomer?: { __typename?: 'AuthType', accessToken?: string | null } | null };
 
 export type SignUpAsRestaurantMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -318,7 +318,7 @@ export type SignUpAsRestaurantMutationVariables = Exact<{
 }>;
 
 
-export type SignUpAsRestaurantMutation = { __typename?: 'Mutation', signUpAsRestaurant?: { __typename?: 'AuthType', accessToken: string } | null };
+export type SignUpAsRestaurantMutation = { __typename?: 'Mutation', signUpAsRestaurant?: { __typename?: 'AuthType', accessToken?: string | null } | null };
 
 export type SearchOnRestaurantQueryVariables = Exact<{
   page: Scalars['Int']['input'];

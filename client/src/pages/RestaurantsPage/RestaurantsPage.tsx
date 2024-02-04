@@ -2,17 +2,20 @@ import { Link } from "react-router-dom";
 import s from "./RestaurantsPage.module.scss";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_RESTAURANT } from "../../graphql/GetAllRestaurant.query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RestaurantType } from "../../__generated__/graphql";
 
 const RestaurantsPage = () => {
     const [restaurant, setRestaurant] = useState<RestaurantType[] | undefined>(undefined);
-    useQuery(GET_ALL_RESTAURANT, {
+    const { refetch } = useQuery(GET_ALL_RESTAURANT, {
         onCompleted(data) {
             setRestaurant(data.restaurants);
         },
     });
 
+    useEffect(() => {
+        refetch();
+    }, []);
     return (
         <main className="main">
             <section className={s.restaurants}>
@@ -36,7 +39,7 @@ const RestaurantsPage = () => {
                                             <p className={s.restaurants__text}>{rest.description}</p>
                                             <div className={s.restaurants__overlay}></div>
                                             <img
-                                                className={s.restaurant__banner}
+                                                className={s.restaurants__banner}
                                                 src={rest.bannerUrl || ""}
                                                 alt="banner"
                                             />
