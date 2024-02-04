@@ -10,6 +10,7 @@ public static class DependencyInjection
 {
     private const string OAuthService = "OAuthService";
     private const string ProductsService = "ProductsService";
+    private const string OrdersService = "OrdersService";
 
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
@@ -69,9 +70,21 @@ public static class DependencyInjection
             });
 
         services
+            .AddHttpClient(OrdersService, client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5277/graphql");
+            })
+            .AddHttpMessageHandler((provider) =>
+            {
+                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+                return new AuthHeaderHandler(httpContextAccessor);
+            });
+
+        services
             .AddGraphQLServer()
             .AddRemoteSchema(OAuthService, ignoreRootTypes: false)
-            .AddRemoteSchema(ProductsService, ignoreRootTypes: false);
+            .AddRemoteSchema(ProductsService, ignoreRootTypes: false)
+            .AddRemoteSchema(OrdersService, ignoreRootTypes: false);
 
         return services;
     }

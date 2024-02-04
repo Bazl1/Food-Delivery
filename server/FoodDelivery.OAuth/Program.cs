@@ -25,6 +25,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGraphQL("/graphql");
-app.MapGrpcService<RestaurantService>();
+app.MapGrpcService<AccountsService>();
 
 app.Run();

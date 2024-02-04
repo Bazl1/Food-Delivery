@@ -32,8 +32,8 @@ public class AuthMutation
 
         var account = Account.CreateRestaurant(email, password);
 
-        var accessToken = jwtTokenGenerator.GenerateToken(account);
-        var refreshToken = jwtTokenGenerator.GenerateToken(account);
+        var accessToken = jwtTokenGenerator.GenerateAccessToken(account);
+        var refreshToken = jwtTokenGenerator.GenerateRefreshToken(account);
 
         account.RefreshToken = refreshToken;
         store.Accounts.Add(account);
@@ -69,8 +69,8 @@ public class AuthMutation
 
         var account = Account.CreateCustomer(email, password);
 
-        var accessToken = jwtTokenGenerator.GenerateToken(account);
-        var refreshToken = jwtTokenGenerator.GenerateToken(account);
+        var accessToken = jwtTokenGenerator.GenerateAccessToken(account);
+        var refreshToken = jwtTokenGenerator.GenerateRefreshToken(account);
 
         account.RefreshToken = refreshToken;
         store.Accounts.Add(account);
@@ -113,8 +113,8 @@ public class AuthMutation
             return null;
         }
 
-        var accessToken = jwtTokenGenerator.GenerateToken(account);
-        var refreshToken = jwtTokenGenerator.GenerateToken(account);
+        var accessToken = jwtTokenGenerator.GenerateAccessToken(account);
+        var refreshToken = jwtTokenGenerator.GenerateRefreshToken(account);
 
         account.RefreshToken = refreshToken;
 
@@ -163,8 +163,8 @@ public class AuthMutation
             return null;
         }
 
-        var accessToken = jwtTokenGenerator.GenerateToken(account);
-        var refreshToken = jwtTokenGenerator.GenerateToken(account);
+        var accessToken = jwtTokenGenerator.GenerateAccessToken(account);
+        var refreshToken = jwtTokenGenerator.GenerateRefreshToken(account);
 
         account.RefreshToken = refreshToken;
         httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh_token", refreshToken);

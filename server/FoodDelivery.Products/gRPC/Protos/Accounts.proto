@@ -1,0 +1,30 @@
+syntax = "proto3";
+option csharp_namespace = "FoodDelivery.OAuth.gRPC";
+package accounts;
+
+service Accounts {
+    rpc GetRestaurantInfo (RestaurantInfoRequest) returns (RestaurantInfoResponse);
+    rpc GetCustomerInfo (CustomerInfoRequest) returns (CustomerInfoResponse);
+}
+
+message RestaurantInfoRequest {
+    string id = 1;
+}
+
+message RestaurantInfoResponse  {
+    string id = 1;
+    string email = 2;
+    string name = 3;
+    string description = 4;
+    string bannerUrl = 5;
+}
+
+message CustomerInfoRequest {
+    string id = 1;
+}
+
+message CustomerInfoResponse  {
+    string id = 1;
+    string email = 2;
+    string userName = 3;
+}

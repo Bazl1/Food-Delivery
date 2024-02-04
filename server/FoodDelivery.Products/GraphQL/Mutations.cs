@@ -5,6 +5,7 @@ using FoodDelivery.Products.Stores;
 using HotChocolate;
 using HotChocolate.Authorization;
 using HotChocolate.Resolvers;
+using FoodDelivery.OAuth.gRPC;
 
 namespace FoodDelivery.GraphQL;
 
@@ -15,7 +16,7 @@ public class Mutations
         IResolverContext context,
         ClaimsPrincipal claimsPrincipal,
         [Service] FakeStore store,
-        [Service] GrpcService.Restaurant.RestaurantClient _restaurantClient,
+        [Service] Accounts.AccountsClient accountClient,
         string title,
         string description,
         string picture,
@@ -65,11 +66,11 @@ public class Mutations
         }
         store.Products.Add(product);
 
-        GrpcService.RestaurantInfoResponse restaurantInfo = null;
+        RestaurantInfoResponse restaurantInfo = null;
         try
         {
-            restaurantInfo = await _restaurantClient.GetRestaurantInfoAsync(
-                new GrpcService.RestaurantInfoRequest
+            restaurantInfo = await accountClient.GetRestaurantInfoAsync(
+                new RestaurantInfoRequest
                 {
                     Id = accountId
                 }

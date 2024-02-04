@@ -1,8 +1,9 @@
 using System.Text;
 using FoodDelivery.GraphQL;
-using FoodDelivery.OAuth.Settings;
+using FoodDelivery.Products.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using FoodDelivery.OAuth.gRPC;
 
 namespace FoodDelivery.Products;
 
@@ -53,10 +54,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection DI_AddGrpcClients(this IServiceCollection services)
+    public static IServiceCollection DI_AddGrpc(this IServiceCollection services)
     {
+        services.AddGrpc();
+
         services
-            .AddGrpcClient<GrpcService.Restaurant.RestaurantClient>(options =>
+            .AddGrpcClient<Accounts.AccountsClient>(options =>
             {
                 options.Address = new Uri("https://localhost:7254");
             });
