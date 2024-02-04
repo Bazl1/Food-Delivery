@@ -6,11 +6,13 @@ public class ProductsType
 {
     public IEnumerable<ProductType> Products { get; set; }
     public int PageCount { get; set; }
+    public int ProductCount { get; set; }
 
-    public static ProductsType From(IEnumerable<ProductType> products, int pageCount)
+    public static ProductsType From(IEnumerable<ProductType> products, int pageCount, int productCount)
         => new ProductsType
         {
             Products = products,
-            PageCount = pageCount
+            PageCount = pageCount,
+            ProductCount = productCount
         };
 }
