@@ -23,3 +23,13 @@ export const RESTAURANT_PRODUCTS = gql(`
         }
     }
 `);
+
+export const GET_RESTAURANT_BY_ID = gql{`
+    query getRestaurantById($id: String!){
+        dgfdgd(id: $id){
+            id
+            bannerUrl
+            name
+        }
+    }
+`}
