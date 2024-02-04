@@ -94,7 +94,7 @@ public class Queries
                 case "PriceLowestFirst":
                     {
                         products = products
-                            .OrderByDescending(product => product.Price)
+                            .OrderBy(product => product.Price)
                             .ToList();
                     }
                     break;
@@ -102,7 +102,7 @@ public class Queries
                 case "PriceHighestFirst":
                     {
                         products = products
-                            .OrderBy(product => product.Price)
+                            .OrderByDescending(product => product.Price)
                             .ToList();
                     }
                     break;
