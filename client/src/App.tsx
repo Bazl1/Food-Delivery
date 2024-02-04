@@ -11,9 +11,13 @@ import { useMutation } from "@apollo/client";
 import SettingsRestaurantPage from "./pages/SettingsRestaurantPage/SettingsRestaurantPage";
 import RestaurantsPage from "./pages/RestaurantsPage/RestaurantsPage";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
-import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import CartPage from "./pages/CartPage/CartPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import MyRestaurantPage from "./pages/MyRestaurantPage/MyRestaurantPage";
+import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
+import Catalog from "./pages/Catalog/Catalog";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -34,15 +38,24 @@ function App() {
                 <ScrollToTop />
                 <Header />
                 <Routes>
+                    {/* register */}
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
 
+                    {/* user */}
+                    <Route path="/settings" element={<SettingsPage />} />
+
+                    {/* restaurant */}
+                    <Route path="/my-restaurant/:id" element={<MyRestaurantPage />} />
                     <Route path="/restaurant-settings" element={<SettingsRestaurantPage />} />
                     <Route path="/create-product" element={<CreateProduct />} />
 
+                    {/* all */}
                     <Route path="/authorization" element={<LoginPage />} />
                     <Route path="/registration" element={<SignupPage />} />
                     <Route path="/registration-restaurant" element={<SignupPageRestaurant />} />
 
+                    <Route path="/catalog" element={<Catalog />} />
                     <Route path="/product/:id" element={<SingleProduct />} />
                     <Route path="/restaurant/:id" element={<RestaurantPage />} />
                     <Route path="/restaurants" element={<RestaurantsPage />} />

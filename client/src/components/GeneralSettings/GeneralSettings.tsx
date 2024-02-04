@@ -27,7 +27,11 @@ const GeneralSettings = () => {
         },
     });
 
-    const [updateRestaurant] = useMutation(CHANGE_GENERAL_SETTINGS);
+    const [updateRestaurant] = useMutation(CHANGE_GENERAL_SETTINGS, {
+        onCompleted() {
+            toast.success("Settings saved successfully");
+        },
+    });
 
     const {
         register,

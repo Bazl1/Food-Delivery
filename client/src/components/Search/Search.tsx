@@ -4,7 +4,7 @@ import s from "./Search.module.scss";
 import { useState } from "react";
 import { ProductType } from "../../__generated__/graphql";
 import { useLazyQuery } from "@apollo/client";
-import { SEARCH } from "../../graphql/Search.mutation";
+import { SEARCH } from "../../graphql/Search.query";
 
 interface IForm {
     search: string;

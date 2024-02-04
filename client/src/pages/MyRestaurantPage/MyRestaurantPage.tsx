@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import s from "./RestaurantPage.module.scss";
-import { useQuery } from "@apollo/client";
+import ProductItems from "../../components/ProductItems/ProductItems";
+import s from "./MyRestaurantPage.module.scss";
 import { ProductType } from "../../__generated__/graphql";
+import { useQuery } from "@apollo/client";
+import { RESTAURANT_INFO, RESTAURANT_PRODUCTS } from "../../graphql/GetRastaurantInfo.query";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search/Search";
-import ProductItems from "../../components/ProductItems/ProductItems";
 
-const RestaurantPage = () => {
+const MyRestaurantPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [activePage, setActivePage] = useState<number>(0);
     const [pages, setPages] = useState<number>(0);
@@ -101,4 +102,4 @@ const RestaurantPage = () => {
     );
 };
 
-export default RestaurantPage;
+export default MyRestaurantPage;

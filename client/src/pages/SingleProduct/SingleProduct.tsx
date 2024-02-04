@@ -2,6 +2,7 @@ import s from "./SingleProduct.module.scss";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../../graphql/GetProductById.query";
+import { useCart } from "../../assets/hooks/useCart";
 
 const SingleProduct = () => {
     const { id = "" } = useParams<string>();
@@ -22,7 +23,7 @@ const SingleProduct = () => {
                                 <div className={s.product__columns}>
                                     <img
                                         className={s.product__img}
-                                        src={data?.productById?.picture}
+                                        src={data?.productById?.picture || ""}
                                         alt="img"
                                     />
                                 </div>
@@ -30,7 +31,12 @@ const SingleProduct = () => {
                                     <h2 className={s.product__title}>{data?.productById?.title}</h2>
                                     <h4 className={s.product__price}>{data?.productById?.price}$</h4>
                                     <p className={s.product__text}>{data?.productById?.description}</p>
-                                    <button className={`${s.product__btn} btn-style-one`}>Add to cart</button>
+                                    <button
+                                        onClick={() => useCart(data?.productById?.id || "", true)}
+                                        className={`${s.product__btn} btn-style-one`}
+                                    >
+                                        Add to cart
+                                    </button>
                                 </div>
                             </>
                         ) : (

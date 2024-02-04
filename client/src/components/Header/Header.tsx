@@ -58,12 +58,12 @@ const Header = () => {
                     <nav className={s.header__menu}>
                         <ul className={s.header__list}>
                             <li className={s.header__item}>
-                                <Link className={s.header__link} to={"#"}>
+                                <Link className={s.header__link} to={"/"}>
                                     Home
                                 </Link>
                             </li>
                             <li className={s.header__item}>
-                                <Link className={s.header__link} to={"#"}>
+                                <Link className={s.header__link} to={"/catalog"}>
                                     Catalog
                                 </Link>
                             </li>
@@ -75,7 +75,7 @@ const Header = () => {
                             {userRole === "Restaurant" && (
                                 <Link
                                     className={`${s.header__btn_one} btn-style-one`}
-                                    to={`/restaurant/:${userId}`}
+                                    to={`/my-restaurant/:${userId}`}
                                 >
                                     My Restaurant
                                 </Link>
@@ -93,7 +93,7 @@ const Header = () => {
                                     <IoSettingsSharp />
                                 </Link>
                             )}
-                            <Link to={"#"} className={s.header__small_btn}>
+                            <Link to={"/cart"} className={s.header__small_btn}>
                                 <IoBag />
                             </Link>
                             <button
