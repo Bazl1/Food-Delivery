@@ -22,7 +22,7 @@ const Catalog = () => {
             limit: 12,
             restaurantId: null,
             predicate: null,
-            filtering: priceFilter,
+            filtering: priceFilter?.value,
         },
         onCompleted(data) {
             setProducts(data.search.products);

@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 import { ProductType } from "../../__generated__/graphql";
 import { Link, useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
-import ProductItems from "../../components/ProductItems/ProductItems";
 import { GET_RESTAURANT_BY_ID, RESTAURANT_PRODUCTS } from "../../graphql/GetRastaurantInfo.query";
 import CatalogProductItems from "../../components/CatalogProductItems/CatalogProductItems";
 
@@ -12,6 +11,7 @@ const RestaurantPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [activePage, setActivePage] = useState<number>(0);
     const [pages, setPages] = useState<number>(0);
+    const [productCount, setProductCount] = useState<number>(0);
     const [userId, setUserId] = useState<string | null | undefined>(undefined);
 
     const { id = "" } = useParams<string>();
@@ -38,6 +38,7 @@ const RestaurantPage = () => {
         onCompleted: (data) => {
             setProducts(data.search.products);
             setPages(data.search.pageCount);
+            setProductCount(data.search.productCount);
         },
     });
 
@@ -61,7 +62,7 @@ const RestaurantPage = () => {
                             >
                                 <h2 className={s.restaurant__title}>{data?.restaurantById?.name}</h2>
                                 <h3 className={s.restaurant__subtitle}>
-                                    Found <span>{products.length}</span> products
+                                    Found <span>{productCount}</span> products
                                 </h3>
                                 <img
                                     className={s.restaurant__banner}

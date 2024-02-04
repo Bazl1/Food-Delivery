@@ -20,6 +20,7 @@ export const RESTAURANT_PRODUCTS = gql(`
                 price
             }
             pageCount
+            productCount
         }
     }
 `);
