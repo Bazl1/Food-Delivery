@@ -68,7 +68,8 @@ public class Queries
         int limit = 4,
         string? restaurantId = null,
         List<string>? categories = null,
-        string? predicate = null)
+        string? predicate = null,
+        string? filtering = null)
     {
         if (page <= 0)
         {
@@ -85,6 +86,28 @@ public class Queries
 
         int pageCount;
         List<ProductType> productsPage;
+
+        if (filtering == null)
+        {
+            switch (filtering)
+            {
+                case "PriceLowestFirst":
+                    {
+                        products = products
+                            .OrderByDescending(product => product.Price)
+                            .ToList();
+                    }
+                    break;
+
+                case "PriceHighestFirst":
+                    {
+                        products = products
+                            .OrderBy(product => product.Price)
+                            .ToList();
+                    }
+                    break;
+            }
+        }
 
         if (limit == -1)
         {
@@ -131,7 +154,6 @@ public class Queries
                 .ToList();
         }
 
-
-        return ProductsType.From(productsPage, pageCount);
+        return ProductsType.From(productsPage, pageCount, products.Count);
     }
 }
