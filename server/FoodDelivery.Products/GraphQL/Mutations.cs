@@ -9,6 +9,8 @@ using FoodDelivery.OAuth.gRPC;
 
 namespace FoodDelivery.GraphQL;
 
+#pragma warning disable CS1998, CS8604, CS8602, CS0168
+
 public class Mutations
 {
     [Authorize(Roles = ["Restaurant"])]

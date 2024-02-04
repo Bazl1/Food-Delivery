@@ -11,6 +11,6 @@ public class RestaurantType
     public string? Description { get; set; } = null;
     public string? BannerUrl { get; set; } = null;
 
-    public static RestaurantType Create(Account account, Restaurant restaurant)
+    public static RestaurantType From(Account account, Restaurant restaurant)
         => new RestaurantType { Id = account.Id, Email = account.Email, Password = account.Password, Name = restaurant.Name, Description = restaurant.Description, BannerUrl = restaurant.BannerUrl };
 }
