@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="./gRPC/Protos/Restaurant.proto" />
+    <Protobuf Include="./gRPC/Protos/Products.proto" />
+    <Protobuf Include="./gRPC/Protos/Accounts.proto" />
   </ItemGroup>
 
 </Project>

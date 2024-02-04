@@ -15,8 +15,8 @@ public class JwtTokenGenerator
     {
         _jwtSettings = options.Value;
     }
-    
-    public string GenerateToken(Account account)
+
+    public string GenerateAccessToken(Account account)
     {
         var claims = new List<Claim>
         {
@@ -34,7 +34,33 @@ public class JwtTokenGenerator
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.Expiry),
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.AccessExpiry),
+            signingCredentials: signingCredentials
+        );
+
+        return new JwtSecurityTokenHandler()
+            .WriteToken(securityToken);
+    }
+
+    public string GenerateRefreshToken(Account account)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
+            new Claim(ClaimTypes.Email, account.Email),
+            new Claim(ClaimTypes.Role, account.Role.ToString())
+        };
+
+        var signingCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
+            SecurityAlgorithms.HmacSha256
+        );
+
+        var securityToken = new JwtSecurityToken(
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.RefreshExpiry),
             signingCredentials: signingCredentials
         );
 

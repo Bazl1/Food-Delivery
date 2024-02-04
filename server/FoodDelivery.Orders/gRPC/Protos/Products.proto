@@ -1,0 +1,34 @@
+syntax = "proto3";
+option csharp_namespace = "FoodDelivery.Products.gRPC";
+package products;
+
+service Products {
+    rpc GetProdcutsByIds (ProductsByIdsRequest) returns (ProductsByIdsResponse);
+}
+
+message ProductsByIdsRequest {
+    repeated string ids = 1;
+}
+message ProductsByIdsResponse  {
+    repeated Product products = 1;
+}
+
+message Product {
+    string id = 1;
+    Restaurant restaurant = 2;
+    string title = 3;
+    string description = 4;
+    string picture = 5;
+    double price = 6;
+    repeated Category categories = 7;
+}
+
+message Restaurant {
+    string id = 1;
+    string name = 2;
+};
+
+message Category {
+    int32 id = 1;
+    string title = 2;
+}
