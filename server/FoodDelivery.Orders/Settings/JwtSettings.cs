@@ -1,4 +1,4 @@
-namespace FoodDelivery.Products.Settings;
+namespace FoodDelivery.Orders.Settings;
 
 public class JwtSettings
 {

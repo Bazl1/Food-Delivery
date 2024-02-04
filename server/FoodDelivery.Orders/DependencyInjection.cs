@@ -1,11 +1,11 @@
 using System.Text;
-using FoodDelivery.OAuth.GraphQL.Mutations;
-using FoodDelivery.OAuth.GraphQL.Queries;
-using FoodDelivery.OAuth.Settings;
+using FoodDelivery.Orders.GraphQL;
+using FoodDelivery.Orders.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using FoodDelivery.OAuth.gRPC;
 
-namespace FoodDelivery.OAuth;
+namespace FoodDelivery.Orders;
 
 public static class DependencyInjection
 {
@@ -47,8 +47,8 @@ public static class DependencyInjection
         services
             .AddGraphQLServer()
             .AddAuthorization()
-            .AddMutationType<AuthMutation>()
-            .AddQueryType<AuthQuery>()
+            .AddMutationType<Mutations>()
+            .AddQueryType<Queries>()
             .UseDefaultPipeline();
 
         return services;
@@ -56,7 +56,18 @@ public static class DependencyInjection
 
     public static IServiceCollection DI_AddGrpc(this IServiceCollection services)
     {
-        services.AddGrpc();
+        services
+            .AddGrpcClient<Accounts.AccountsClient>(options =>
+            {
+                options.Address = new Uri("https://localhost:7254");
+            });
+
+        services
+            .AddGrpcClient<Products.gRPC.Products.ProductsClient>(options =>
+            {
+                options.Address = new Uri("https://localhost:7098");
+            });
+
         return services;
     }
 

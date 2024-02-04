@@ -1,4 +1,6 @@
 using FoodDelivery.Domain.Entities;
+using FoodDelivery.Orders.GraphQL.Types;
+using FoodDelivery.OAuth.gRPC;
 
 namespace FoodDelivery.GraphQL.Types;
 
@@ -12,7 +14,7 @@ public class ProductType
     public decimal? Price { get; set; }
     public List<CategoryType>? Categories { get; set; } = new();
 
-    public static ProductType From(Product product, GrpcService.RestaurantInfoResponse? restaurantInfo)
+    public static ProductType From(Product product, RestaurantInfoResponse? restaurantInfo)
         => new ProductType
         {
             Id = product.Id,

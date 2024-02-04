@@ -3,6 +3,9 @@ using FoodDelivery.GraphQL.Types;
 using FoodDelivery.Products.Stores;
 using HotChocolate.Resolvers;
 using FoodDelivery.Products.GraphQL.Types;
+using FoodDelivery.Products.gRPC.Utils;
+using FoodDelivery.OAuth.gRPC;
+using System.Security.Claims;
 
 namespace FoodDelivery.GraphQL;
 
@@ -10,8 +13,9 @@ public class Queries
 {
     public async Task<ProductType?> GetProductById(
         IResolverContext context,
+        ClaimsPrincipal claimsPrincipal,
         [Service] FakeStore store,
-        [Service] GrpcService.Restaurant.RestaurantClient _restaurantClient,
+        [Service] Accounts.AccountsClient accountClient,
         string id)
     {
         if (store.Products.SingleOrDefault(product => product.Id == id) is not Product product)
@@ -24,11 +28,11 @@ public class Queries
             return null;
         }
 
-        GrpcService.RestaurantInfoResponse restaurantInfo = null;
+        RestaurantInfoResponse? restaurantInfo = null;
         try
         {
-            restaurantInfo = await _restaurantClient.GetRestaurantInfoAsync(
-                new GrpcService.RestaurantInfoRequest
+            restaurantInfo = await accountClient.GetRestaurantInfoAsync(
+                new RestaurantInfoRequest
                 {
                     Id = id
                 }
@@ -42,10 +46,22 @@ public class Queries
         return ProductType.From(product, restaurantInfo);
     }
 
+    public async Task<List<ProductType>> GetProductsByIds(
+        IResolverContext context,
+        [Service] FakeStore store,
+        [Service] Accounts.AccountsClient accountClient,
+        List<string> ids)
+    {
+        return store.Products
+            .Where(product => ids.Contains(product.Id))
+            .Select(product => ProductType.From(product, accountClient.GetRestaurantInfoOrNull(product.RestaurantId)))
+            .ToList();
+    }
+
     public async Task<ProductsType> Search(
         IResolverContext context,
         [Service] FakeStore store,
-        [Service] GrpcService.Restaurant.RestaurantClient _restaurantClient,
+        [Service] Accounts.AccountsClient accountClient,
         int page,
         int limit = 4,
         string? restaurantId = null,
@@ -74,11 +90,11 @@ public class Queries
             productsPage = products
                 .Select(product =>
                 {
-                    GrpcService.RestaurantInfoResponse restaurantInfo = null;
+                    RestaurantInfoResponse? restaurantInfo = null;
                     try
                     {
-                        restaurantInfo = _restaurantClient.GetRestaurantInfo(
-                            new GrpcService.RestaurantInfoRequest { Id = product.RestaurantId }
+                        restaurantInfo = accountClient.GetRestaurantInfo(
+                            new RestaurantInfoRequest { Id = product.RestaurantId }
                         );
                     }
                     catch
@@ -97,11 +113,11 @@ public class Queries
                 .Take(limit)
                 .Select(product =>
                 {
-                    GrpcService.RestaurantInfoResponse restaurantInfo = null;
+                    RestaurantInfoResponse? restaurantInfo = null;
                     try
                     {
-                        restaurantInfo = _restaurantClient.GetRestaurantInfo(
-                            new GrpcService.RestaurantInfoRequest { Id = product.RestaurantId }
+                        restaurantInfo = accountClient.GetRestaurantInfo(
+                            new RestaurantInfoRequest { Id = product.RestaurantId }
                         );
                     }
                     catch
