@@ -80,7 +80,10 @@ public class Queries
             .Where(product =>
                 (restaurantId == null || product.RestaurantId == restaurantId) &&
                 (category == null || product.Categories.Any(item => item.Title == category)) &&
-                (predicate == null || (product.Title.ToUpper().Contains(predicate.ToUpper()) || product.Description.ToUpper().Contains(predicate.ToUpper())))
+                (predicate == null || (
+                    predicate.ToUpper().Split().Any(keyWord => product.Title.ToUpper().Contains(keyWord)) ||
+                    predicate.ToUpper().Split().Any(keyWord => product.Description.ToUpper().Contains(keyWord)))
+                )
             )
             .ToList();
 
