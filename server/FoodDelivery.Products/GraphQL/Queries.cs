@@ -67,7 +67,7 @@ public class Queries
         int page,
         int limit = 4,
         string? restaurantId = null,
-        List<string>? categories = null,
+        string? category = null,
         string? predicate = null,
         string? filtering = null)
     {
@@ -79,7 +79,7 @@ public class Queries
         var products = store.Products
             .Where(product =>
                 (restaurantId == null || product.RestaurantId == restaurantId) &&
-                (categories == null || product.Categories.Any(category => categories.Any(categoryTitle => categoryTitle == category.Title))) &&
+                (category == null || product.Categories.Any(item => item.Title == category)) &&
                 (predicate == null || (product.Title.ToUpper().Contains(predicate.ToUpper()) || product.Description.ToUpper().Contains(predicate.ToUpper())))
             )
             .ToList();
@@ -87,7 +87,7 @@ public class Queries
         int pageCount;
         List<ProductType> productsPage;
 
-        if (filtering == null)
+        if (filtering != null)
         {
             switch (filtering)
             {
