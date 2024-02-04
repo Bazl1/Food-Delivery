@@ -2,23 +2,30 @@ import { useEffect, useState } from "react";
 import s from "./RestaurantPage.module.scss";
 import { useQuery } from "@apollo/client";
 import { ProductType } from "../../__generated__/graphql";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
 import ProductItems from "../../components/ProductItems/ProductItems";
+import { GET_RESTAURANT_BY_ID, RESTAURANT_PRODUCTS } from "../../graphql/GetRastaurantInfo.query";
+import CatalogProductItems from "../../components/CatalogProductItems/CatalogProductItems";
 
 const RestaurantPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [activePage, setActivePage] = useState<number>(0);
     const [pages, setPages] = useState<number>(0);
-    const [userId, setUserId] = useState<string | undefined>(undefined);
+    const [userId, setUserId] = useState<string | null | undefined>(undefined);
+
+    const { id = "" } = useParams<string>();
 
     const {
         loading: restaurantInfoLoading,
         data,
         refetch: restaurantInfoRefetch,
-    } = useQuery(RESTAURANT_INFO, {
+    } = useQuery(GET_RESTAURANT_BY_ID, {
+        variables: {
+            id: id.slice(1),
+        },
         onCompleted(data) {
-            setUserId(data.restaurantInfo?.id);
+            setUserId(data.restaurantById?.id);
         },
     });
 
@@ -47,18 +54,18 @@ const RestaurantPage = () => {
                         {!restaurantInfoLoading ? (
                             <div
                                 className={
-                                    data?.restaurantInfo?.bannerUrl === ""
+                                    data?.restaurantById?.bannerUrl === ""
                                         ? `${s.restaurant__box}`
                                         : `${s.restaurant__box} ${s.restaurant__box_banner}`
                                 }
                             >
-                                <h2 className={s.restaurant__title}>{data?.restaurantInfo?.name}</h2>
+                                <h2 className={s.restaurant__title}>{data?.restaurantById?.name}</h2>
                                 <h3 className={s.restaurant__subtitle}>
                                     Found <span>{products.length}</span> products
                                 </h3>
                                 <img
                                     className={s.restaurant__banner}
-                                    src={data?.restaurantInfo?.bannerUrl}
+                                    src={data?.restaurantById?.bannerUrl || ""}
                                     alt="banner"
                                 />
                                 <div className={s.restaurant__overlay}></div>
@@ -68,12 +75,6 @@ const RestaurantPage = () => {
                         )}
                         {!restaurantInfoLoading ? (
                             <div className={s.restaurant__panel}>
-                                <Link
-                                    to={"/create-product"}
-                                    className={`${s.restaurant__panel_create} btn-style-one`}
-                                >
-                                    Create product
-                                </Link>
                                 <Search
                                     setProducts={setProducts}
                                     setPages={setPages}
@@ -86,7 +87,7 @@ const RestaurantPage = () => {
                                 <div className={s.restaurant__panel_skeleton_btn}></div>
                             </div>
                         )}
-                        <ProductItems
+                        <CatalogProductItems
                             products={products}
                             pages={pages}
                             loading={productLoading}

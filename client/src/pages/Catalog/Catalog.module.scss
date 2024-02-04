@@ -1,0 +1,9 @@
+.catalog {
+    padding: 50px 0;
+    &__top {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+}

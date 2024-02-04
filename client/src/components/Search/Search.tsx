@@ -48,11 +48,6 @@ const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null })
             <div className={s.search__box}>
                 <input
                     {...register("search", {
-                        required: "Required field",
-                        minLength: {
-                            value: 2,
-                            message: "Minimum password length 2 characters",
-                        },
                         maxLength: {
                             value: 100,
                             message: "Maximum password length 100 characters",

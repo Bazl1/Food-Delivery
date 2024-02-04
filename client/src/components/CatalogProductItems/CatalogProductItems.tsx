@@ -1,7 +1,99 @@
+import { useEffect } from "react";
 import s from "./CatalogProductItems.module.scss";
+import { ProductType } from "../../__generated__/graphql";
+import ProductItemSkeleton from "../ProductItemSkeleton/ProductItemSkeleton";
+import { Link } from "react-router-dom";
+import { useCart } from "../../assets/hooks/useCart";
 
-const CatalogProductItems = () => {
-    return <div>CatalogProductItems</div>;
+interface ProductItemsProps {
+    products: ProductType[];
+    pages: number;
+    loading: boolean;
+    setActivePage: (value: number) => void;
+    activePage: number;
+    productsRefetch: any;
+}
+
+const CatalogProductItems: React.FC<ProductItemsProps> = ({
+    products,
+    pages,
+    loading,
+    setActivePage,
+    activePage,
+    productsRefetch,
+}) => {
+    useEffect(() => {
+        productsRefetch();
+    }, [activePage]);
+
+    return (
+        <>
+            <div className={s.restaurant__items}>
+                {!loading ? (
+                    products &&
+                    products.map((product) => {
+                        return (
+                            <Link
+                                key={product.id}
+                                to={`/product/:${product.id}`}
+                                className={s.restaurant__item}
+                            >
+                                <img
+                                    className={s.restaurant__item_img}
+                                    src={product.picture || ""}
+                                    alt="img"
+                                />
+                                <h4 className={s.restaurant__item_title}>{product.title}</h4>
+                                <div className={s.restaurant__item_price}>{product.price}$</div>
+                                <div className={s.restaurant__item_btns}>
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            useCart(product.id || "", true);
+                                        }}
+                                        className={`${s.restaurant__item_btn} btn-style-one`}
+                                    >
+                                        Add to cart
+                                    </button>
+                                </div>
+                            </Link>
+                        );
+                    })
+                ) : (
+                    <>
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
+                        <ProductItemSkeleton />
+                    </>
+                )}
+            </div>
+            <div className={s.restaurant__pagination}>
+                {!loading ? (
+                    pages !== 1 && (
+                        <>
+                            {Array.from({ length: pages }, (_, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => setActivePage(index + 1)}
+                                    className={s.restaurant__pagination_item}
+                                >
+                                    {index + 1}
+                                </div>
+                            ))}
+                        </>
+                    )
+                ) : (
+                    <>
+                        <div className={s.restaurant__pagination_skeleton}></div>
+                        <div className={s.restaurant__pagination_skeleton}></div>
+                        <div className={s.restaurant__pagination_skeleton}></div>
+                        <div className={s.restaurant__pagination_skeleton}></div>
+                    </>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default CatalogProductItems;

@@ -22,6 +22,7 @@ const documents = {
     "\n    query productById($id: String!){\n        productById(id: $id){\n            id\n            picture\n            title\n            description\n            price\n        }\n    }\n": types.ProductByIdDocument,
     "\n    query restaurantInfo {\n        restaurantInfo {\n            id\n            bannerUrl\n            name\n        }\n    }\n": types.RestaurantInfoDocument,
     "\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n": types.GetProductsDocument,
+    "\n    query getRestaurantById($id: String!){\n        restaurantById(id: $id){\n            id\n            bannerUrl\n            name\n        }\n    }\n": types.GetRestaurantByIdDocument,
     "\n    query restaurantBanner {\n        restaurantInfo {\n            bannerUrl\n        }\n    }\n": types.RestaurantBannerDocument,
     "\n    query accountInfo {\n        accountInfo {\n            id\n            role\n        }\n    }\n": types.AccountInfoDocument,
     "\n    mutation  signOut{\n        signOut\n    }\n": types.SignOutDocument,
@@ -81,6 +82,10 @@ export function gql(source: "\n    query restaurantInfo {\n        restaurantInf
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"): (typeof documents)["\n    query GetProducts($page: Int!, $limit: Int!, $restaurantId: String){\n        search(page: $page, limit: $limit, restaurantId: $restaurantId){\n            products{\n                id\n                picture\n                title\n                price\n            }\n            pageCount\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query getRestaurantById($id: String!){\n        restaurantById(id: $id){\n            id\n            bannerUrl\n            name\n        }\n    }\n"): (typeof documents)["\n    query getRestaurantById($id: String!){\n        restaurantById(id: $id){\n            id\n            bannerUrl\n            name\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -39,6 +39,9 @@
         margin-bottom: 50px;
     }
     &__btn {
-        display: inline-block;
+        max-width: 160px;
+        display: flex;
+        text-align: center;
+        justify-content: center;
     }
 }
