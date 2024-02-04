@@ -240,6 +240,6 @@ public class AuthMutation
         }
 
         var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
-        return RestaurantType.Create(account, restaurant);
+        return RestaurantType.From(account, restaurant);
     }
 }

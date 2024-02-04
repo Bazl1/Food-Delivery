@@ -4,6 +4,8 @@ using Grpc.Core;
 
 namespace FoodDelivery.OAuth.gRPC.Services;
 
+#pragma warning disable CS1998, CS8604, CS8602, CS0168
+
 public class AccountsService(
     FakeStore _store
 ) : Accounts.AccountsBase

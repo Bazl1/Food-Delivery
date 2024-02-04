@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using FoodDelivery.OAuth.Data.Stores;
+using FoodDelivery.OAuth.Domain.Entities;
 using FoodDelivery.OAuth.GraphQL.Schemas;
 using FoodDelivery.OAuth.Services;
 using HotChocolate.Authorization;
@@ -7,6 +8,8 @@ using HotChocolate.Resolvers;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FoodDelivery.OAuth.GraphQL.Queries;
+
+#pragma warning disable CS1998, CS8604, CS8602, CS0168
 
 public class AuthQuery
 {
@@ -64,7 +67,7 @@ public class AuthQuery
         var accountId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
         var account = store.Accounts.SingleOrDefault(account => account.Id == accountId);
         var restaurant = store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == account?.Id);
-        return RestaurantType.Create(account, restaurant);
+        return RestaurantType.From(account, restaurant);
     }
 
     public async Task<List<RestaurantType>> GetRestaurants(
@@ -75,8 +78,33 @@ public class AuthQuery
         foreach (var restaurant in store.Restaurants)
         {
             var account = store.Accounts.SingleOrDefault(account => account.Id == restaurant.Id);
-            restaurants.Add(RestaurantType.Create(account, restaurant));
+            restaurants.Add(RestaurantType.From(account, restaurant));
         }
         return restaurants;
+    }
+
+    public async Task<RestaurantType?> GetRestaurantById(
+        IResolverContext context,
+        [Service] FakeStore store,
+        string id)
+    {
+        try
+        {
+            if (store.Accounts.SingleOrDefault(account => account.Id == id) is not Account account)
+            {
+                throw new Exception("The restaurant is not found.");
+            }
+            var restaurant = store.Restaurants.SingleOrDefault(restaurant => restaurant.Id == id);
+            return RestaurantType.From(account, restaurant);
+        }
+        catch (Exception ex)
+        {
+            context.ReportError(
+                ErrorBuilder.New()
+                    .SetMessage(ex.Message)
+                    .Build()
+            );
+            return null;
+        }
     }
 }
