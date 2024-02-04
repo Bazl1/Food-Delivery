@@ -18,6 +18,7 @@ import MyRestaurantPage from "./pages/MyRestaurantPage/MyRestaurantPage";
 import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
 import Catalog from "./pages/Catalog/Catalog";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -55,6 +56,7 @@ function App() {
                     <Route path="/registration" element={<SignupPage />} />
                     <Route path="/registration-restaurant" element={<SignupPageRestaurant />} />
 
+                    <Route path="/search/:search" element={<SearchPage />} />
                     <Route path="/catalog" element={<Catalog />} />
                     <Route path="/product/:id" element={<SingleProduct />} />
                     <Route path="/restaurant/:id" element={<RestaurantPage />} />

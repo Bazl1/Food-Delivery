@@ -1,30 +1,26 @@
-import { useQuery } from "@apollo/client";
-import CatalogProductItems from "../../components/CatalogProductItems/CatalogProductItems";
-import s from "./Catalog.module.scss";
-import "./Select.scss";
-import { SEARCH } from "../../graphql/Search.query";
 import { useEffect, useState } from "react";
+import CatalogProductItems from "../../components/CatalogProductItems/CatalogProductItems";
+import s from "./SearchPage.module.scss";
 import { ProductType } from "../../__generated__/graphql";
-import Search from "../../components/Search/Search";
+import { useQuery } from "@apollo/client";
+import { SEARCH } from "../../graphql/Search.query";
+import { useParams } from "react-router-dom";
 import Select from "react-select";
-import { categorys } from "../../assets/utils/Categorys";
 
-const Catalog = () => {
-    const [isClearable, setIsClearable] = useState(true);
+const SearchPage = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [pages, setPages] = useState<number>(0);
-    const [activePage, setActivePage] = useState<number>(0);
-    const [category, setCategory] = useState<any>(null);
     const [priceFilter, setPriceFilter] = useState<any>(null);
+    const [activePage, setActivePage] = useState<number>(0);
 
-    const { refetch, loading } = useQuery(SEARCH, {
+    const { search } = useParams();
+
+    const { loading, refetch } = useQuery(SEARCH, {
         variables: {
             page: activePage,
             limit: 12,
-            restaurantId: null,
-            predicate: null,
+            predicate: search?.slice(1),
             filtering: priceFilter?.value,
-            category: category?.value,
         },
         onCompleted(data) {
             setProducts(data.search.products);
@@ -34,20 +30,15 @@ const Catalog = () => {
 
     useEffect(() => {
         refetch();
-    }, []);
+    });
 
     return (
         <main className="main">
-            <section className={s.catalog}>
+            <section className={s.search}>
                 <div className="container">
-                    <div className={s.catalog__inner}>
-                        <div className={s.catalog__top}>
-                            <Search
-                                setProducts={setProducts}
-                                setPages={setPages}
-                                userId={null}
-                                redirect={true}
-                            />
+                    <div className={s.search__inner}>
+                        <div className={s.search__top}>
+                            <h2 className={s.search__title}>Your search query</h2>
                             <Select
                                 name="categorys"
                                 options={[
@@ -65,21 +56,12 @@ const Catalog = () => {
                                 className="basic-select"
                                 classNamePrefix="select"
                             />
-                            <Select
-                                name="categorys"
-                                isClearable={isClearable}
-                                options={categorys}
-                                value={category}
-                                onChange={(selectedOptions) => setCategory(selectedOptions)}
-                                className="basic-select"
-                                classNamePrefix="select"
-                            />
                         </div>
                         <CatalogProductItems
                             products={products}
                             pages={pages}
-                            activePage={activePage}
                             setActivePage={setActivePage}
+                            activePage={activePage}
                             loading={loading}
                             productsRefetch={refetch}
                         />
@@ -90,4 +72,4 @@ const Catalog = () => {
     );
 };
 
-export default Catalog;
+export default SearchPage;

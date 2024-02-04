@@ -5,18 +5,20 @@ import { useState } from "react";
 import { ProductType } from "../../__generated__/graphql";
 import { useLazyQuery } from "@apollo/client";
 import { SEARCH } from "../../graphql/Search.query";
+import { useNavigate } from "react-router-dom";
 
 interface IForm {
     search: string;
 }
 
 interface SearchProps {
-    setProducts: (value: ProductType[]) => void;
-    setPages: (value: number) => void;
-    userId: string | null;
+    setProducts?: (value: ProductType[]) => void;
+    setPages?: (value: number) => void;
+    userId?: string | null;
+    redirect?: boolean;
 }
 
-const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null }) => {
+const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null, redirect = false }) => {
     const [text, setText] = useState<string>("");
     const {
         register,
@@ -26,6 +28,8 @@ const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null })
         mode: "onBlur",
     });
 
+    const navigate = useNavigate();
+
     const [searchOnRestaurant] = useLazyQuery(SEARCH, {
         onCompleted(data) {
             setProducts(data.search.products);
@@ -33,14 +37,18 @@ const Search: React.FC<SearchProps> = ({ setProducts, setPages, userId = null })
         },
     });
     const Submit = async () => {
-        searchOnRestaurant({
-            variables: {
-                page: 0,
-                limit: -1,
-                restaurantId: userId,
-                predicate: text,
-            },
-        });
+        if (redirect) {
+            navigate(`/search/:${text}`);
+        } else {
+            searchOnRestaurant({
+                variables: {
+                    page: 0,
+                    limit: -1,
+                    restaurantId: userId,
+                    predicate: text,
+                },
+            });
+        }
     };
 
     return (

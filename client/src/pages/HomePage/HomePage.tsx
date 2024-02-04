@@ -23,7 +23,7 @@ const HomePage = () => {
                         <p className={s.hero__text}>
                             Order from different restaurants and get them all in one delivery.
                         </p>
-                        <Search />
+                        <Search redirect={true} />
                     </div>
                 </div>
             </section>
