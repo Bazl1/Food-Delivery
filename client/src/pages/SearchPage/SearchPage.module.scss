@@ -1,0 +1,14 @@
+.search {
+    padding: 50px 0;
+    &__title {
+        font-size: 42px;
+        font-family: "Arlon";
+    }
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 50px;
+    }
+}

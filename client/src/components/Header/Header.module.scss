@@ -1,0 +1,79 @@
+.header {
+    padding: 5px 0;
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 100px;
+    }
+    &__logo_link {
+        img {
+            max-width: 90px;
+            width: 100%;
+            max-height: 90px;
+            height: 100vh;
+            object-fit: cover;
+        }
+    }
+
+    &__menu {
+        margin-right: auto;
+    }
+
+    &__list {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: #171717;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3;
+
+        &:hover {
+            color: #f7761f;
+        }
+    }
+    &__btns {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    &__btn_one,
+    &__logout_btn {
+        color: #f7761f !important;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+    &__user_box {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    &__small_btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #f7761f;
+        color: #f7761f;
+        border-radius: 8px;
+        transition:
+            background 0.2s,
+            color 0.2s;
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        &:hover {
+            background: #f7761f;
+            color: #fff;
+        }
+    }
+}
