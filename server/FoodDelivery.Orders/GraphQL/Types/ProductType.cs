@@ -9,8 +9,9 @@ public class ProductType
     public string? Picture { get; set; } = null;
     public decimal? Price { get; set; } = null;
     public List<CategoryType>? Categories { get; set; } = null;
+    public int? Count { get; set; } = null;
 
-    public static ProductType? From(Products.gRPC.Product product)
+    public static ProductType? From(Products.gRPC.Product product, int count)
         => new ProductType
         {
             Id = product.Id,
@@ -21,6 +22,7 @@ public class ProductType
             Price = (decimal)product.Price,
             Categories = product.Categories
                 .Select(category => CategoryType.From(category))
-                .ToList()
+                .ToList(),
+            Count = count
         };
 }

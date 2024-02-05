@@ -21,26 +21,20 @@ public class OrderType
             Id = order.Id,
             Customer = customer == null ? null : CustomerType.From(customer),
             Items = products
-                .Select(product => ProductType.From(product))
-                .ToList(),
-            Status = order.Status.ToString(),
-            TotalPrice = 0.00m
-        };
-        foreach (
-            var
-            item
-            in
-            orderType.Items
                 .Join(
                     order.Items,
                     product => product.Id,
                     item => item.ProductId,
                     (product, item) => new { Product = product, Count = item.Count }
                 )
-                .ToList()
-        )
+                .Select(item => ProductType.From(item.Product, item.Count))
+                .ToList(),
+            Status = order.Status.ToString(),
+            TotalPrice = 0.00m
+        };
+        foreach (var item in orderType.Items)
         {
-            orderType.TotalPrice += (item.Product.Price * item.Count);
+            orderType.TotalPrice += (item.Price * item.Count);
         }
         return orderType;
     }

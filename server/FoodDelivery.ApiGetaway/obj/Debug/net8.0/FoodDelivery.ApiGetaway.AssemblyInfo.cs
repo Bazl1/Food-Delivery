@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FoodDelivery.ApiGetaway")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aed90195599df2f239982dd2b917591398dbd8de")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("FoodDelivery.ApiGetaway")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FoodDelivery.ApiGetaway")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
