@@ -27,8 +27,8 @@ const Header = () => {
     const { refetch } = useQuery(GET_ROLE, {
         fetchPolicy: "cache-and-network",
         onCompleted(data) {
-            setUserRole(data.accountInfo?.role);
-            setUserId(data.accountInfo?.id);
+            setUserRole(data.accountInfo?.role || "");
+            setUserId(data.accountInfo?.id || "");
         },
     });
 

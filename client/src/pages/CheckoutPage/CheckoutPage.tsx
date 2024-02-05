@@ -16,9 +16,11 @@ const CheckoutPage = () => {
     });
 
     useEffect(() => {
+        const products = JSON.parse(localStorage.getItem("cart") || "[]");
+        console.log(products);
         createOrder({
             variables: {
-                items: JSON.parse(localStorage.getItem("cart") || "[]"),
+                items: products,
             },
         });
     }, []);
