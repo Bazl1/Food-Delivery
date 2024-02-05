@@ -8,11 +8,10 @@ export const CREATE_ORDER = gql(`
                 email
             }
             items{
-                product{
-                    picture
-                    title
-                    price
-                }
+                picture
+                title
+                price
+                count
             }
             totalPrice
         }

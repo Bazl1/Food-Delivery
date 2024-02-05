@@ -93,9 +93,11 @@ const Header = () => {
                                     <IoSettingsSharp />
                                 </Link>
                             )}
-                            <Link to={"/cart"} className={s.header__small_btn}>
-                                <IoBag />
-                            </Link>
+                            {userRole === "Restaurant" ? null : (
+                                <Link to={"/cart"} className={s.header__small_btn}>
+                                    <IoBag />
+                                </Link>
+                            )}
                             <button
                                 onClick={() => signOut()}
                                 className={`${s.header__logout_btn} btn-style-one`}

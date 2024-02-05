@@ -44,4 +44,33 @@
         text-align: center;
         justify-content: center;
     }
+    &__items {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 12px;
+        padding-right: 20px;
+        border: 1px solid rgba(#171717, 0.3);
+        border-radius: 12px;
+    }
+    &__img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    &__item_title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+    &__price {
+        margin-left: auto;
+        font-size: 21px;
+        font-weight: 700;
+    }
 }

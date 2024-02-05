@@ -19,6 +19,7 @@ import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
 import Catalog from "./pages/Catalog/Catalog";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
     const [refreshToken] = useMutation(REFRESH_TOKEN, {
@@ -39,19 +40,18 @@ function App() {
                 <ScrollToTop />
                 <Header />
                 <Routes>
-                    {/* register */}
+                    {/* <Route element={<PrivateRoute protectedRole="Customer" />}> */}
+                    <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
+                    {/* </Route> */}
 
-                    {/* user */}
-                    <Route path="/settings" element={<SettingsPage />} />
-
-                    {/* restaurant */}
+                    {/* <Route element={<PrivateRoute protectedRole="Restaurant" />}> */}
                     <Route path="/my-restaurant/:id" element={<MyRestaurantPage />} />
                     <Route path="/restaurant-settings" element={<SettingsRestaurantPage />} />
                     <Route path="/create-product" element={<CreateProduct />} />
+                    {/* </Route> */}
 
-                    {/* all */}
                     <Route path="/authorization" element={<LoginPage />} />
                     <Route path="/registration" element={<SignupPage />} />
                     <Route path="/registration-restaurant" element={<SignupPageRestaurant />} />
