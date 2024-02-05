@@ -13,7 +13,7 @@ namespace FoodDelivery.OAuth.GraphQL.Queries;
 
 public class AuthQuery
 {
-    public async Task<bool> Verify(
+    public async Task<VerifyType> Verify(
         IResolverContext context,
         [Service] JwtTokenGenerator jwtTokenGenerator,
         [Service] IHttpContextAccessor httpContextAccessor)
@@ -21,17 +21,17 @@ public class AuthQuery
         try
         {
             var token = httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(" ")[1] ?? string.Empty;
-            jwtTokenGenerator.VerifyToken(token);
-            return true;
+            var securityToken = jwtTokenGenerator.VerifyToken(token);
+            string? role = securityToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
+            if (role == null)
+            {
+                return VerifyType.Create(null, false);
+            }
+            return VerifyType.Create(role, true);
         }
-        catch (SecurityTokenValidationException ex)
+        catch
         {
-            context.ReportError(
-                ErrorBuilder.New()
-                    .SetMessage("Invalid token.")
-                    .Build()
-            );
-            return false;
+            return VerifyType.Create(null, false);
         }
     }
 
