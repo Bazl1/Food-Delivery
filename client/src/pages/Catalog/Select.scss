@@ -1,0 +1,32 @@
+.select {
+    &__control {
+        width: 250px;
+        border: 1px solid rgba(#171717, 0.1) !important;
+        &:hover {
+            border-color: rgba(#171717, 0.1) !important;
+        }
+    }
+    &__control--is-focused {
+        border-color: #f7761f !important;
+        box-shadow: 0 0 0 1px #f7761f !important;
+    }
+    &__value-container {
+        padding: 12px 20px !important;
+    }
+    &__placeholder {
+        font-family: "Raleway" !important;
+        line-height: normal !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        color: rgba(#171717, 0.3) !important;
+    }
+    &__multi-value__label {
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        padding: 5px 10px !important;
+    }
+    &__multi-value__remove {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+}

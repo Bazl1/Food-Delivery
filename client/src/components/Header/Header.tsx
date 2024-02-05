@@ -1,30 +1,46 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/Logo.svg";
 import s from "./Header.module.scss";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { USER_EMAIL } from "../../graphql/GetUserInfo.query";
+import { GET_ROLE } from "../../graphql/GetUserInfo.query";
 import { IoBag } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
-// import { LOGOUT } from "../../graphql/Logout.mutatuin";
+import { LOGOUT } from "../../graphql/Logout.mutatuin";
 
 const Header = () => {
-    const [userName, setUserName] = useState<string | undefined>(undefined);
     const [userRole, setUserRole] = useState<string | undefined>(undefined);
+    const [userId, setUserId] = useState<string | undefined>(undefined);
 
-    const { data } = useQuery(USER_EMAIL, {
-        fetchPolicy: "cache-and-network",
+    const [signOut] = useMutation(LOGOUT, {
+        onCompleted(data) {
+            if (data.signOut) {
+                localStorage.removeItem("token");
+                navigate("/");
+                refetch();
+                setUserRole(undefined);
+                setUserId(undefined);
+            }
+        },
     });
 
-    // const [signOut] = useMutation(LOGOUT);
+    const { refetch } = useQuery(GET_ROLE, {
+        fetchPolicy: "cache-and-network",
+        onCompleted(data) {
+            setUserRole(data.accountInfo?.role || "");
+            setUserId(data.accountInfo?.id || "");
+        },
+    });
 
-    useEffect(() => {
-        setUserName(data?.accountInfo?.email);
-        setUserRole(data?.accountInfo?.role);
-    }, [data]);
-
+    const navigate = useNavigate();
     const location = useLocation();
     const pathsWithoutHeader = ["/registration", "/registration-restaurant", "/authorization"];
+
+    useEffect(() => {
+        if (!pathsWithoutHeader.includes(location.pathname)) {
+            refetch();
+        }
+    }, [location.pathname]);
 
     if (pathsWithoutHeader.includes(location.pathname)) {
         return null;
@@ -42,35 +58,50 @@ const Header = () => {
                     <nav className={s.header__menu}>
                         <ul className={s.header__list}>
                             <li className={s.header__item}>
-                                <Link className={s.header__link} to={"#"}>
+                                <Link className={s.header__link} to={"/"}>
                                     Home
                                 </Link>
                             </li>
                             <li className={s.header__item}>
-                                <Link className={s.header__link} to={"#"}>
+                                <Link className={s.header__link} to={"/catalog"}>
                                     Catalog
                                 </Link>
                             </li>
+                            <li className={s.header__item}>
+                                <Link className={s.header__link} to={"/restaurants"}>
+                                    Restaurants
+                                </Link>
+                            </li>
                             {userRole === "Restaurant" && (
-                                <Link className={`${s.header__btn_one} btn-style-one`} to={"/"}>
+                                <Link
+                                    className={`${s.header__btn_one} btn-style-one`}
+                                    to={`/my-restaurant/:${userId}`}
+                                >
                                     My Restaurant
                                 </Link>
                             )}
                         </ul>
                     </nav>
-                    {userName !== undefined ? (
+                    {userRole !== undefined ? (
                         <div className={s.header__user_box}>
                             {userRole === "Customer" ? (
-                                ""
+                                <Link to={"/settings"} className={s.header__small_btn}>
+                                    <IoSettingsSharp />
+                                </Link>
                             ) : (
-                                <Link to={"#"} className={s.header__small_btn}>
+                                <Link to={"/restaurant-settings"} className={s.header__small_btn}>
                                     <IoSettingsSharp />
                                 </Link>
                             )}
-                            <Link to={"#"} className={s.header__small_btn}>
-                                <IoBag />
-                            </Link>
-                            <button onClick={() => {}} className={`${s.header__logout_btn} btn-style-one`}>
+                            {userRole === "Restaurant" ? null : (
+                                <Link to={"/cart"} className={s.header__small_btn}>
+                                    <IoBag />
+                                </Link>
+                            )}
+                            <button
+                                onClick={() => signOut()}
+                                className={`${s.header__logout_btn} btn-style-one`}
+                            >
                                 Logout
                             </button>
                         </div>

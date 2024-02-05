@@ -28,3 +28,110 @@
         margin-bottom: 50px;
     }
 }
+
+.partners {
+    &__inner {
+        padding: 80px 0;
+    }
+
+    &__title {
+        font-size: 42px;
+        font-family: "Arlon";
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    &__items_box + &__items_box {
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+    &__items_box {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        height: 100px;
+        width: 100%;
+        &::after {
+            position: absolute;
+            background-image: linear-gradient(to right, #eceef8 0%, rgba(255, 255, 255, 0) 100%);
+            content: "";
+            height: 100%;
+            width: 25%;
+            z-index: 2;
+            pointer-events: none;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto 0;
+        }
+        &::before {
+            position: absolute;
+            background-image: linear-gradient(to right, #eceef8 0%, rgba(255, 255, 255, 0) 100%);
+            content: "";
+            height: 100%;
+            width: 25%;
+            z-index: 2;
+            pointer-events: none;
+            right: 0;
+            top: 0;
+            margin: auto 0;
+            bottom: 0;
+            transform: rotateZ(180deg);
+        }
+    }
+
+    &__items {
+        width: calc(150px * 20);
+        display: flex;
+        gap: 20px;
+        animation: scrollFrom 20s linear infinite;
+        justify-content: space-between;
+    }
+    &__items_to {
+        animation: scrollTo 20s linear infinite;
+    }
+    &__item {
+        width: 150px;
+        text-align: center;
+        padding: 10px;
+    }
+    &__item_img {
+        max-width: 150px;
+        width: 100%;
+        max-height: 80px;
+        height: 100vh;
+        object-fit: contain;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    @keyframes scrollFrom {
+        0% {
+            transform: translateX(0px);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+    @keyframes scrollTo {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(0px);
+        }
+    }
+
+    &__btn {
+        max-width: 210px;
+        display: flex;
+        justify-content: center;
+        font-size: 18px !important;
+        text-align: center;
+        margin: 0 auto;
+        color: #f7761f !important;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+}

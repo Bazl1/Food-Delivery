@@ -1,5 +1,4 @@
 import s from "./Input.module.scss";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
     text: string;
@@ -7,9 +6,9 @@ interface InputProps {
     name: string;
     value: string;
     setValue: (value: string) => void;
-    register: UseFormRegister<any>;
+    register: any;
     errors: any;
-    validationOptions?: RegisterOptions;
+    validationOptions?: any;
 }
 
 const Input: React.FC<InputProps> = ({

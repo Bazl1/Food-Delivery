@@ -1,4 +1,6 @@
 .input {
+    font-family: "Raleway";
+    line-height: normal;
     outline: none;
     font-size: 16px;
     font-weight: 400;
@@ -8,6 +10,8 @@
     cursor: pointer;
 
     &::placeholder {
+        font-family: "Raleway";
+        line-height: normal;
         font-size: 16px;
         font-weight: 400;
         color: rgba(#171717, 0.3);

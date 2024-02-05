@@ -45,6 +45,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.60.0, )"
+            },
             "HotChocolate.AspNetCore": {
               "target": "Package",
               "version": "[13.8.1, )"

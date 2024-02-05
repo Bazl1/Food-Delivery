@@ -9,7 +9,7 @@ namespace FoodDelivery.OAuth;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection DI_AddAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
@@ -36,13 +36,13 @@ public static class DependencyInjection
                         )
                     };
                 });
-        
+
         services.AddAuthorization();
 
         return services;
     }
 
-    public static IServiceCollection AddGraphQL(this IServiceCollection services)
+    public static IServiceCollection DI_AddGraphQL(this IServiceCollection services)
     {
         services
             .AddGraphQLServer()
@@ -50,6 +50,29 @@ public static class DependencyInjection
             .AddMutationType<AuthMutation>()
             .AddQueryType<AuthQuery>()
             .UseDefaultPipeline();
+
+        return services;
+    }
+
+    public static IServiceCollection DI_AddGrpc(this IServiceCollection services)
+    {
+        services.AddGrpc();
+        return services;
+    }
+
+    public static IServiceCollection DI_AddCorsWithOrigins(this IServiceCollection services, params string[] origins)
+    {
+        services.AddCors(corsOptions =>
+        {
+            corsOptions.AddDefaultPolicy(policyOptions =>
+            {
+                policyOptions
+                    .WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
 
         return services;
     }
