@@ -122,7 +122,7 @@ export type MutationUpdateRestaurantArgs = {
 
 export type OrderItemInput = {
   count: Scalars['Int']['input'];
-  productId: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type OrderItemType = {
@@ -166,9 +166,9 @@ export type ProductsService_RestaurantType = {
 
 export type ProductsType = {
   __typename?: 'ProductsType';
-  pageCount: Scalars['Int']['output'];
-  productCount: Scalars['Int']['output'];
-  products: Array<ProductType>;
+  pageCount?: Maybe<Scalars['Int']['output']>;
+  productCount?: Maybe<Scalars['Int']['output']>;
+  products?: Maybe<Array<ProductType>>;
 };
 
 export type Query = {
@@ -301,7 +301,7 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', search: { __typename?: 'ProductsType', pageCount: number, productCount: number, products: Array<{ __typename?: 'ProductType', id?: string | null, picture?: string | null, title?: string | null, price?: any | null }> } };
+export type GetProductsQuery = { __typename?: 'Query', search: { __typename?: 'ProductsType', pageCount?: number | null, productCount?: number | null, products?: Array<{ __typename?: 'ProductType', id?: string | null, picture?: string | null, title?: string | null, price?: any | null }> | null } };
 
 export type GetRestaurantByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -359,7 +359,7 @@ export type SearchOnRestaurantQueryVariables = Exact<{
 }>;
 
 
-export type SearchOnRestaurantQuery = { __typename?: 'Query', search: { __typename?: 'ProductsType', pageCount: number, products: Array<{ __typename?: 'ProductType', id?: string | null, picture?: string | null, title?: string | null, price?: any | null }> } };
+export type SearchOnRestaurantQuery = { __typename?: 'Query', search: { __typename?: 'ProductsType', pageCount?: number | null, products?: Array<{ __typename?: 'ProductType', id?: string | null, picture?: string | null, title?: string | null, price?: any | null }> | null } };
 
 
 export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
