@@ -7,7 +7,7 @@ public class OrderType
 {
     public string? Id { get; set; } = null;
     public CustomerType? Customer { get; set; } = null;
-    public List<OrderItemType>? Items { get; set; } = null;
+    public List<ProductType>? Items { get; set; } = null;
     public string? Status { get; set; } = null;
     public decimal? TotalPrice { get; set; } = null;
 
@@ -21,20 +21,26 @@ public class OrderType
             Id = order.Id,
             Customer = customer == null ? null : CustomerType.From(customer),
             Items = products
+                .Select(product => ProductType.From(product))
+                .ToList(),
+            Status = order.Status.ToString(),
+            TotalPrice = 0.00m
+        };
+        foreach (
+            var
+            item
+            in
+            orderType.Items
                 .Join(
                     order.Items,
                     product => product.Id,
                     item => item.ProductId,
                     (product, item) => new { Product = product, Count = item.Count }
                 )
-                .Select(item => OrderItemType.From(item.Product, item.Count))
-                .ToList(),
-            Status = order.Status.ToString(),
-            TotalPrice = 0.00m
-        };
-        foreach (var item in orderType.Items)
+                .ToList()
+        )
         {
-            orderType.TotalPrice += (item.Product?.Price * item.Count);
+            orderType.TotalPrice += (item.Product.Price * item.Count);
         }
         return orderType;
     }
