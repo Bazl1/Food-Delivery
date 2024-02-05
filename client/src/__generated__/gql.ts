@@ -14,7 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n    mutation signIn($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            accessToken\n        }\n    }\n": types.SignInDocument,
+    "\n    query productsByIds($ids: [String!]!){\n        productsByIds(ids: $ids){\n                id\n                title\n                price\n                picture\n        }\n    }\n": types.ProductsByIdsDocument,
     "\n    mutation passwordChange($oldPassword: String!, $password: String!){\n        passwordChange(oldPassword: $oldPassword, password: $password){\n            id\n        }\n    }\n": types.PasswordChangeDocument,
+    "\n    mutation createOrder($items: [OrderItemInput!]!){\n        createOrder(items: $items){\n            customer{\n                userName,\n                email\n            }\n            items{\n                product{\n                    picture\n                    title\n                    price\n                }\n            }\n            totalPrice\n        }\n    }\n": types.CreateOrderDocument,
     "\n    mutation createProduct(\n        $title: String!\n        $description: String!\n        $picture: String!\n        $price: String!\n        $categories: [String!]!\n    ) {\n        createProduct(\n            title: $title\n            description: $description\n            picture: $picture\n            price: $price\n            categories: $categories\n        ) {\n            id\n        }\n    }\n": types.CreateProductDocument,
     "\n    mutation deleteProduct($id: String!){\n        deleteProduct(id: $id)\n    }\n": types.DeleteProductDocument,
     "\n    mutation updateRestaurant($name: String!, $description: String!, $bannerUrl: String!) {\n        updateRestaurant(name: $name, description: $description, bannerUrl: $bannerUrl) {\n            id\n        }\n    }\n": types.UpdateRestaurantDocument,
@@ -53,7 +55,15 @@ export function gql(source: "\n    mutation signIn($email: String!, $password: S
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n    query productsByIds($ids: [String!]!){\n        productsByIds(ids: $ids){\n                id\n                title\n                price\n                picture\n        }\n    }\n"): (typeof documents)["\n    query productsByIds($ids: [String!]!){\n        productsByIds(ids: $ids){\n                id\n                title\n                price\n                picture\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n    mutation passwordChange($oldPassword: String!, $password: String!){\n        passwordChange(oldPassword: $oldPassword, password: $password){\n            id\n        }\n    }\n"): (typeof documents)["\n    mutation passwordChange($oldPassword: String!, $password: String!){\n        passwordChange(oldPassword: $oldPassword, password: $password){\n            id\n        }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation createOrder($items: [OrderItemInput!]!){\n        createOrder(items: $items){\n            customer{\n                userName,\n                email\n            }\n            items{\n                product{\n                    picture\n                    title\n                    price\n                }\n            }\n            totalPrice\n        }\n    }\n"): (typeof documents)["\n    mutation createOrder($items: [OrderItemInput!]!){\n        createOrder(items: $items){\n            customer{\n                userName,\n                email\n            }\n            items{\n                product{\n                    picture\n                    title\n                    price\n                }\n            }\n            totalPrice\n        }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
