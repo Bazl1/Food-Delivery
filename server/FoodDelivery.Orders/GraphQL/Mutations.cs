@@ -29,10 +29,10 @@ public class Mutations
             var accountId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var customer = await accountsClient.GetCustomerInfoAsync(new CustomerInfoRequest { Id = accountId });
-            var products = await productsClient.GetProdcutsByIdsAsync(items.Select(item => item.ProductId).ToList());
+            var products = await productsClient.GetProdcutsByIdsAsync(items.Select(item => item.Id).ToList());
 
             var order = Order.Create(accountId);
-            order.Items.AddRange(items.Select(item => OrderItem.Create(order.Id, item.ProductId, item.Count)));
+            order.Items.AddRange(items.Select(item => OrderItem.Create(order.Id, item.Id, item.Count)));
             store.Add(order);
 
             return OrderType.From(order, customer, products);
